@@ -1,0 +1,30 @@
+environments{
+    development {
+        repourl = 'http://133.1.236.168/repository/maven-public/'
+        hostname = 'localhost'
+        portnumber = 8080
+        protocol = 'http'
+        username = 'tomcat'
+        password = 'spiral'
+        curlpath = '../curl/curl.exe'
+    }
+ 
+    jenkins{
+        repourl = 'http://133.1.236.168/repository/maven-public/'
+        hostname = '133.1.236.167'
+        portnumber = 802
+        protocol = 'http'
+        username = 'tomcat'
+        password = 'spiral'
+        curlpath = 'curl'
+    }
+    
+    amazon {
+    	repourl = 'http://133.1.236.168/repository/maven-public/'
+        hostname = 'team2017-2.spiral.cloud'
+        portnumber = 443
+        protocol = 'https'
+        username = 'tomcat'
+        password = 'teamB2'
+        curlpath = '../curl/curl.exe'
+}
