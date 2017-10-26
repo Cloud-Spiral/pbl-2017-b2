@@ -7,7 +7,7 @@ $(document).ready(function(){
 		var color = colors[0];
 		var color_index = 0;
 		var drawing;
-		var sWidth = 1;
+		var sWidth = 5;
 		var swUpButton, swDownButton;
 		var redButton;
 		var record_index = 0;
