@@ -22,7 +22,7 @@ public class Member {
         return this.name;
     }
     // ip のsetter
-    public void setIp(string ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
     // ip のgetter
