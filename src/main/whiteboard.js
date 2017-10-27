@@ -87,7 +87,7 @@ $(document).ready(function(){
 			sWidth++;
 			con.lineWidth = sWidth;
 		}
-		//線を補足
+		//線を細く
 		function swDown(e){
 			if(sWidth > 0)sWidth--;
 			con.lineWidth = sWidth;
@@ -99,26 +99,27 @@ $(document).ready(function(){
 			con.strokeStyle = color = my_color;
 		}
 		
-		//画像をパブリッシュ
-		function imgPublish(e){
-			var img=new Image();
-		    //保存できるタイプは、'image/png'と'image/jpeg'の2種類
-		    var type = 'image/png'; 
-		    //imgオブジェクトのsrcに格納。
-		    img.src = canvas.toDataURL(type);
-		    //念のため、onloadで読み込み完了を待つ。
-		    img.onload = function(){
-		       //例：現在のウィンドウに出力。
-		    	location.href = img.src;
-		    };
-		}
+//		//画像をパブリッシュ
+//		function imgPublish(e){
+//			var img=new Image();
+//			//保存できるタイプは、'image/png'と'image/jpeg'の2種類
+//			var type = 'image/png'; 
+//			//imgオブジェクトのsrcに格納。
+//			img.src = canvas.toDataURL(type);
+//			//念のため、onloadで読み込み完了を待つ。
+//			img.onload = function(){
+//				//例：現在のウィンドウに出力。
+//				location.href = img.src;
+//			};
+//		}
 		
 		//アンドゥ
 		function undo(e){
 			if(record_index > 0){
 				record_index--;
 				//キャンバスを初期化
-				con.clearRect(0,0,600,500);
+				//画面サイズに応じて変更せなあかん
+				con.clearRect(0,0,1000,1000);
 				if(record_index == 0){
 					//recordArray = [];
 				}else{
@@ -143,7 +144,7 @@ $(document).ready(function(){
 			if(record_index < recordArray.length){
 				record_index++;
 				//キャンバスを初期化
-				con.clearRect(0,0,600,500);
+				con.clearRect(0,0,1000,1000);
 				for(var i=0; i < record_index; i++){
 					var record = recordArray[i];
 					for(var v=0; v<record.length; v++){
