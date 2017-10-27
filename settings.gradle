@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'pbl-2017-b2'
+rootProject.name = '/lama'
