@@ -1,0 +1,39 @@
+table.task-table {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: center;
+	line-height: 1.5;
+}
+table.task-table th {
+	width: 320px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+	background: #036;
+}
+table.task-table td {
+	width: 320px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+table#close-tasks td {
+	width: 320px;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #FFFFFF;
+}
+
+
+.yubi {
+  cursor : pointer;
+}
+
+ul{ list-style:none;}
+.tab{overflow:hidden;}
+.tab li{background:#ccc; padding:5px 25px; float:left; margin-right:1px;}
+.tab li.select{background:#eee;}
+.content li{background:#eee; padding:20px;}
+.hide {display:none;}

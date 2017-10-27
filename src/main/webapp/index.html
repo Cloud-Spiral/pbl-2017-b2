@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8">
+<title>lama</title>
+<link rel="stylesheet" href="css/default.css" />
+<link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+
+	<input id="message" type="text" placeholder="タスク内容">
+	<input id="priority" type="number" value=0 placeholder="優先度"
+		style="ime-mode: disabled">
+	<input id="submit-task" type="button" value="追加">
+
+	<div id="board"></div>
+
+	<ul class="tab">
+		<li class="select"><span class=yubi>open</span></li>
+		<li><span class="yubi">close</span></li>
+	</ul>
+	<ul class="content">
+		<li>open
+			<table class="task-table" id="open-tasks">
+				<thead>
+					<tr>
+						<th>タスク内容</th>
+						<th>日付</th>
+						<th>優先度</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</li>
+
+		<li class="hide">close
+			<table class="task-table" id="close-tasks">
+				<thead>
+					<tr>
+						<th>タスク内容</th>
+						<th>日付</th>
+						<th>優先度</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</li>
+	</ul>
+
+	<script src="js/jquery-3.2.1.js"></script>
+	<script src="js/lama.js"></script>
+	<script src="js/task.js"></script>
+<script src="js/websocket.js"></script>
+</body>
+
+</html>
