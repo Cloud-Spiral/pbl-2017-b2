@@ -1,6 +1,7 @@
 // forked from nekodon's "HTML5 でペイントツール" http://jsdo.it/nekodon/iaSK
 $(document).ready(function(){
 					
+	
 		var oldx, oldy;
 		var canvas, con, canvas_top = 20;
 		var colors = ["black", "red", "blue"];
