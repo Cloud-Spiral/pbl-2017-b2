@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 		var oldx, oldy;
 		var canvas, con, canvas_top = 20;
-		var colors = ["black", "red", "blue"];
+		var colors = ["black"];
 		var color = colors[0];
 		var color_index = 0;
 		var drawing;
@@ -22,7 +22,7 @@ $(document).ready(function(){
 			canvas = document.getElementById("my_canvas");
 			con = canvas.getContext("2d");
 			con.lineWidth = sWidth;
-			con.strokeStyle = "black";
+			var colors = ["black", "red", "blue"];
 			con.lineCap = "round";
 			
 			swUpButton = $("#plus");
@@ -31,7 +31,7 @@ $(document).ready(function(){
 			swDownButton.mousedown(function (e){swDown(e);});
 			
 			$("#red,#black,#blue,#yellow").mousedown(function (e){colorChange(e,$(this));});
-			$("#publish li").mousedown(function (e){imgPublish(e);});
+			$("#publish li").mousedown(function (e){clear(e);});
 			
 			$("#undo").mousedown(function (e){undo(e);});
 			$("#redo").mousedown(function (e){redo(e);});
@@ -98,6 +98,12 @@ $(document).ready(function(){
 			var my_color = $(target).css("background-color");
 			con.strokeStyle = color = my_color;
 		}
+		//画面を全削除
+		function clear(e){
+				//キャンバスを初期化
+				//画面サイズに応じて変更せなあかん
+				con.clearRect(0,0,1000,1000);
+		}
 		
 //		//画像をパブリッシュ
 //		function imgPublish(e){
@@ -115,6 +121,7 @@ $(document).ready(function(){
 		
 		//アンドゥ
 		function undo(e){
+			console.log("undo");
 			if(record_index > 0){
 				record_index--;
 				//キャンバスを初期化
@@ -128,19 +135,19 @@ $(document).ready(function(){
 						for(var v=0; v<record.length; v++){
 							if(typeof record[v] == "object"){
 								var xy = record[v];
+								
 								//描画処理
-								draw(v,xy.x,xy.y,color);
+								draw(v,xy.x,xy.y,xy.color);
 							}
 						}
 					}
 				}
-				
-				
 			}
 		}
 		
 		//リドゥ
 		function redo(e){
+			console.log("redo");
 			if(record_index < recordArray.length){
 				record_index++;
 				//キャンバスを初期化
@@ -151,7 +158,7 @@ $(document).ready(function(){
 						if(typeof record[v] == "object"){
 							var xy = record[v];
 							//描画処理
-							draw(v,xy.x,xy.y,color);
+							draw(v,xy.x,xy.y,xy.color);
 						}
 					}
 				}
