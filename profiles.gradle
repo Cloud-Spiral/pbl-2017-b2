@@ -27,5 +27,5 @@ environments{
         username = 'tomcat'
         password = 'teamB2'
         curlpath = '../curl/curl.exe'
-        }
+    }
 }
