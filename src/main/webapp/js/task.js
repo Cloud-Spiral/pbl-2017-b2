@@ -108,7 +108,7 @@ var changeColor = function(task) {
 //taskの内容を変更
 var changeTaskBody = function(task) {
 	var key = window.event.keyCode;
-	if(key == 13) {
+	//if(key == 13) {
 		var tid = task.id.replace("task-body","");
 		var body = $('#task-body'+tid).val();
 		var priority = $('#task-priority'+tid).val();
@@ -125,7 +125,7 @@ var changeTaskBody = function(task) {
 				ws.send("change-task-body:"+tid)
 			}
 		});
-	}
+	//}
 }
 
 //taskの優先度を変更
@@ -157,7 +157,7 @@ var createTaskTable = function(tasks) {
 		if(tasks[i].status == "close")
 			buttonStatus = "open";
 		$('<tr id=task-id' + tasks[i].tid +'>'
-				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeypress="changeTaskBody(this)">'
+				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)">'
 				+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
 				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)"></td>'
 				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
