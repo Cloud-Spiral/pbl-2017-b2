@@ -1,19 +1,21 @@
 package jp.enpit.lama.ws;
 
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import javax.websocket.EncodeException;
 
 
-
-@ServerEndpoint(value = "/ws", decoders = { TaskDecoder.class }, encoders = { TaskEncoder.class })
+//参考サイト　https://www.rocher.kyoto.jp/arbr/?p=286
+//@ServerEndpoint(value = "/ws", decoders = { TaskDecoder.class }, encoders = { TaskEncoder.class })
+@ServerEndpoint(value = "/ws")
 public class LamaWs {
 
     /**
@@ -39,24 +41,26 @@ public class LamaWs {
      * @param session
      */
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(Session session, CloseReason reason) {
         // チャット接続者一覧から自分を消す
         sessions.remove(session);
-
+        System.out.println("code = " + reason.getCloseCode().getCode() + ", reason = " + reason.getReasonPhrase());
     }
 
     /**
      *  クライアントからのwsテキストメッセージ受信時の処理
-     * @param msg
-     * @throws EncodeException 
      */
     @OnMessage
-    public void onMessage(Task task) {
-        System.out.println("send:" + task);
+    public void onMessage(String message) {
+        System.out.println("send:" + message);
         //return task;
         // チャット接続者一覧の全てにメッセージを送る
         for (Session session : sessions) {
-            session.getAsyncRemote().sendObject(task);
+            try {
+                session.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

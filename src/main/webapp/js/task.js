@@ -17,54 +17,69 @@ var postTask = function() {
 			priority: priority
 		},
 		success : function(data) {
-			var message = {tid: data.tid, type: "post-task"};
-			ws.send(JSON.stringify(message));
+			//var message = {tid: data.tid, type: "post-task"};
+			//ws.send(JSON.stringify(message));
+			ws.send("post-task:"+data.tid);
 		}
 	});
 }
 
 //ブラウザのテーブルにタスクを追加する。
 //https://qiita.com/i_am_207/items/2f7dc462aaaaac74592e
-var insertTask = function(tid) {
+var insertTask = function(tid) {	
 	$.ajax({
 		type: 'GET',
 		url: '/lama/api/tasks/'+tid,
 		success: function(json)　{
-			var task = json.tasks[0];
-			var taskNumber = json.taskNumber;
-		    var table = document.getElementById(task.status+"-tasks");
-		    var tr = table.insertRow(taskNumber+1);
-		    var td1 = tr.insertCell(-1),
-	        td2 = tr.insertCell(-1),
-	        td3 = tr.insertCell(-1),
-		    td4 = tr.insertCell(-1);
-		    var button = '<input type="button" value="行削除" onclick="delLine(this)" />';
-		    // input用 タグ
-		    var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">',
-		        date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
-		        priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
-				status = '<input id=task-status' + task.tid + ' type="button" value="' + task.status + '" onclick="changeTaskStatus(this)">'
-		    td1.innerHTML = body;
-		    td2.innerHTML = date;
-		    td3.innerHTML = priority;
-		    td4.innerHTML = status;
+			for(var i = 0; i < json.tasks.length; i++) {
+				if(json.tasks[i].tid == tid) {
+					var task = json.tasks[i];
+					var taskNumber = i; 
+				}
+			}
+			var buttonStatus = "close";
+			if(task.status == "close")
+				buttonStatus = "open";
+			var table = document.getElementById(task.status+"-tbody");
+			var tr = table.insertRow(taskNumber);
+			var td1 = tr.insertCell(-1),
+			td2 = tr.insertCell(-1),
+			td3 = tr.insertCell(-1),
+			td4 = tr.insertCell(-1);
+			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">',
+			date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
+			priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
+			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
+			td1.innerHTML = body;
+			td2.innerHTML = date;
+			td3.innerHTML = priority;
+			td4.innerHTML = status;
 		}
 	});
 }
 
 //ブラウザのテーブルからタスクを削除する
-
+var deleteTask = function(tid) {
+	var target = document.getElementById("task-status"+tid);
+	tr = target.parentNode.parentNode;
+	tr.parentNode.deleteRow(tr.sectionRowIndex);
+}
 
 //タスクの状態を切り替える tidを受け取る
 var changeTaskStatus = function(button) {
 	var tid = button.id.replace("task-status","");
+	console.log(button)
+	//var message = {tid: tid, type: "delete-task"};
+	//ws.send(JSON.stringify(message));
+	ws.send("delete-task:"+tid);
 	$.ajax({
 		type : 'PUT',
 		url : endpoint + '/tasks/status',
 		data: {tid: tid},
 		success : function(data) {
-			//update(); //websocketでやる
-			ws.send("tasks")
+			//message = {tid: data.tid, type: "post-task"};
+			//ws.send(JSON.stringify(message));
+			ws.send("post-task:"+tid);
 		}
 	});
 }
@@ -97,7 +112,7 @@ var changeTaskBody = function(task) {
 			},
 			success : function(data) {
 				//update(); //websocketでやる
-				ws.send("tasks")
+				//ws.send("tasks")
 			}
 		});
 	}
@@ -120,7 +135,7 @@ var changeTaskPriority = function(task) {
 		},
 		success : function(data) {
 			//update(); //websocketでやる
-			ws.send("tasks")
+			//ws.send("tasks")
 		}
 	});
 }

@@ -74,7 +74,6 @@ public class TaskModel extends BaseModel{
                 .find(eq("status", status))
                 .sort(sort)
                 ));
-        tasks.setTaskNumber(task);
         return tasks;
     }
 

@@ -12,17 +12,25 @@ window.onload = function() {
 
 	// サーバからのメッセージ受信時の処理
 	ws.onmessage = function(message) {
-		message = JSON.parse(message.data)
-		// messageの中身はmessage.dataに格納
-		console.log(message.type);
-
+		//message = JSON.parse(message.data)
+		message = message.data.split(":")
+		console.log(message)
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
-		if(message.type == "post-task") {
-			insertTask(message.tid);
+		if(message[0] == "post-task") {
+			insertTask(message[1]);
+		}
+		else if(message[0] == "delete-task") {
+			deleteTask(message[1]);
 		}
 	};
+	
+	ws.onclose = function(closeEvent) {
+	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	};
+
+
 }
 
 // send押下時の処理

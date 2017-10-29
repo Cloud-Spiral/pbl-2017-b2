@@ -12,10 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tasks {
     @XmlElement(name="tasks")
     private List<Task> list = new ArrayList<>();
-    //実際に何番目に表示されるか
-    @XmlElement(name="taskNumber")
-    private int taskNumber;
-
+    
     public Tasks(){
     }
 
@@ -39,15 +36,4 @@ public class Tasks {
         return list.toArray(new Task[size()]);
     }
     
-    //特定のtidのタスクが何番目に表示されているのか返す。
-    public void setTaskNumber(Task task){
-        for(int i = 0; i < list.size(); i++) {
-            if(list.get(i).tid() == task.tid()) {
-                taskNumber = i;
-                break;
-            }
-        }
-        list.removeAll(list);
-        list.add(task);
-    }
 }
