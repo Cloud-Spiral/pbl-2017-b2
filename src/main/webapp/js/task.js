@@ -135,6 +135,7 @@ var changeTaskPriority = function(task) {
 	var body = $('#task-body'+tid).val();
 	var priority = $('#task-priority'+tid).val();
 	if(priority == "") return;
+	ws.send("delete-task:"+tid);
 	$.ajax({
 		type : 'PUT',
 		url : endpoint + '/tasks',
@@ -144,13 +145,13 @@ var changeTaskPriority = function(task) {
 			priority: priority
 		},
 		success : function(data) {
-			ws.send("change-task-priority:"+tid)
+			ws.send("post-task:"+tid);
 		}
 	});
 }
 
 
-
+// taskbodyはonkeypressのほうがいい
 var createTaskTable = function(tasks) {
 	for(var i in tasks){
 		var buttonStatus = "close";
