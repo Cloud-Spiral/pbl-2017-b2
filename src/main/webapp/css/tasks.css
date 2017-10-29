@@ -1,6 +1,9 @@
+
 table.task-table {
-	border-collapse: separate;
-	border-spacing: 1px;
+	/* border-collapse: separate;
+	border-spacing: 1px; */
+	border-collapse: collapse;
+    border-spacing: 0;
 	text-align: center;
 	line-height: 1.5;
 }
@@ -24,8 +27,15 @@ table#close-tasks td {
 	vertical-align: top;
 	border-bottom: 1px solid #ccc;
 	background: #FFFFFF;
-}
+} 
 
+thead, tbody {
+    display: block;
+}
+tbody {
+    overflow-y: scroll;
+    height: 150px;
+}
 
 .yubi {
   cursor : pointer;
