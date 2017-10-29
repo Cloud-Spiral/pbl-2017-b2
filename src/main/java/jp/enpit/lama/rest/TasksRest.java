@@ -30,9 +30,26 @@ public class TasksRest {
     }
     
     @GET
-    @Path("{tid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getComment(@PathParam("tid") String toString){
+    @Path("{tid}")
+    public Response getTasks(@PathParam("tid") String idString){
+        try(TaskModel model = createModel()){
+            int tid = toInteger(idString);
+            if(tid <= 0)
+                return errorMessage(400, "Bad request");
+            Task task = model.findById(tid);
+            if(task == null)
+                return errorMessage(404, "Not found");
+            return Response.status(200)
+                    .entity(task)
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("/status/{tid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStatusTasks(@PathParam("tid") String toString){
         try(TaskModel model = createModel()){
             int tid = toInteger(toString);
             if(tid <= 0)

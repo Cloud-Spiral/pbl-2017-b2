@@ -29,7 +29,7 @@ var postTask = function() {
 var insertTask = function(tid) {	
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/tasks/'+tid,
+		url: '/lama/api/tasks/status/'+tid,
 		success: function(json)　{
 			for(var i = 0; i < json.tasks.length; i++) {
 				if(json.tasks[i].tid == tid) {
@@ -63,6 +63,17 @@ var deleteTask = function(tid) {
 	var target = document.getElementById("task-status"+tid);
 	tr = target.parentNode.parentNode;
 	tr.parentNode.deleteRow(tr.sectionRowIndex);
+}
+
+//ブラウザのテーブルの内容を変更する
+var updateTaskBody = function(tid) {
+	$.ajax({
+		type: 'GET',
+		url: '/lama/api/tasks/'+tid,
+		success: function(task)　{
+			document.getElementById("task-body"+tid).value = task.body;
+		}
+	});
 }
 
 //タスクの状態を切り替える tidを受け取る
@@ -111,8 +122,7 @@ var changeTaskBody = function(task) {
 				priority: priority
 			},
 			success : function(data) {
-				//update(); //websocketでやる
-				//ws.send("tasks")
+				ws.send("change-task-body:"+tid)
 			}
 		});
 	}
@@ -134,8 +144,7 @@ var changeTaskPriority = function(task) {
 			priority: priority
 		},
 		success : function(data) {
-			//update(); //websocketでやる
-			//ws.send("tasks")
+			ws.send("change-task-priority:"+tid)
 		}
 	});
 }

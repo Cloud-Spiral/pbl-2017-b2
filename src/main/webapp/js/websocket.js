@@ -24,6 +24,8 @@ window.onload = function() {
 		else if(message[0] == "delete-task") {
 			deleteTask(message[1]);
 		}
+		else if(message[0] == "change-task-body")
+			updateTaskBody(message[1]);
 	};
 	
 	ws.onclose = function(closeEvent) {
