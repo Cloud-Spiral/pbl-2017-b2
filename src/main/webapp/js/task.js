@@ -46,7 +46,7 @@ var insertTask = function(tid) {
 			td2 = tr.insertCell(-1),
 			td3 = tr.insertCell(-1),
 			td4 = tr.insertCell(-1);
-			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">',
+			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
 			priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
 			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
@@ -151,7 +151,7 @@ var changeTaskPriority = function(task) {
 }
 
 
-// taskbodyはonkeypressのほうがいい
+//taskbodyはonkeypressのほうがいい
 var createTaskTable = function(tasks) {
 	for(var i in tasks){
 		var buttonStatus = "close";
