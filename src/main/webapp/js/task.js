@@ -37,14 +37,47 @@ var changeTaskStatus = function(button) {
 	});
 }
 
-//タスク自体を変更する tidを受け取る
-//bodyが空のときの処理がまだ未実装
-var changeTask = function(button) {
-	var tid = button.id.replace("task-change-button","");
-	var body = $('#task-body-text'+tid).val();
-	var priority = $('#task-priority-number'+tid).val();
-	if(priority == "")
-		priority = 0;
+//セルの色を変える
+var changeColor = function(task) {
+	var currentDate = moment();
+	var taskDate = moment(task.date);
+	if(currentDate.diff(taskDate, "seconds") > 10) { //minutes１分以上たったら
+		var taskId = '#task-id' + task.tid;
+		$(taskId).css('background-color', 'red');
+	}
+}
+
+//taskの内容を変更
+var changeTaskBody = function(task) {
+	var key = window.event.keyCode;
+	if(key == 13) {
+		var tid = task.id.replace("task-body","");
+		var body = $('#task-body'+tid).val();
+		var priority = $('#task-priority'+tid).val();
+		if(body == "") return;
+		$.ajax({
+			type : 'PUT',
+			url : endpoint + '/tasks',
+			data: {
+				tid: tid,
+				body: body,
+				priority: priority
+			},
+			success : function(data) {
+				//update(); //websocketでやる
+				ws.send("tasks")
+			}
+		});
+	}
+}
+
+//taskの優先度を変更
+var changeTaskPriority = function(task) {
+	var key = window.event.keyCode;
+	var tid = task.id.replace("task-priority","");
+	var body = $('#task-body'+tid).val();
+	var priority = $('#task-priority'+tid).val();
+	if(priority == "") return;
 	$.ajax({
 		type : 'PUT',
 		url : endpoint + '/tasks',
@@ -60,15 +93,6 @@ var changeTask = function(button) {
 	});
 }
 
-//セルの色を変える
-var changeColor = function(task) {
-	var currentDate = moment();
-	var taskDate = moment(task.date);
-	if(currentDate.diff(taskDate, "seconds") > 10) { //minutes１分以上たったら
-		var taskId = '#task-id' + task.tid;
-		$(taskId).css('background-color', 'red');
-	}
-}
 
 
 var createTaskTable = function(tasks) {
@@ -77,11 +101,10 @@ var createTaskTable = function(tasks) {
 		if(tasks[i].status == "close")
 			buttonStatus = "open";
 		$('<tr id=task-id' + tasks[i].tid +'>'
-				+ '<td><input id=task-body-text' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" style="ime-mode:disabled">'
+				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeypress="changeTaskBody(this)">'
 				+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
-				+ '<td><input id=task-priority-number' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" style="ime-mode:disabled">'
+				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)">'
 				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
-				+ '<td><input id=task-change-button' + tasks[i].tid + ' type="button" value="変更" onclick="changeTask(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
 		if(tasks[i].status)
@@ -89,7 +112,7 @@ var createTaskTable = function(tasks) {
 	}
 } 
 
-//websocketで変更があったときに、このメソッドを呼ぶ。（誰かがボタンを押すなど）誰も操作しない時間が続いても呼ぶ。
+//websocketで変更があったときに、このメソッドを呼ぶ。（誰かがボタンを押すなど）誰も操作しない時間が続いても呼ぶ。（予定）
 /*
  * http://webworkersclip.com/2875/
  * http://www.ezgate-mt.sakura.ne.jp/jquery/161.html
@@ -133,4 +156,4 @@ var tabChange = function() {
 
 $('#submit-task').click(postTask);
 $('.tab li').click(tabChange);
-window.onload = update;
+
