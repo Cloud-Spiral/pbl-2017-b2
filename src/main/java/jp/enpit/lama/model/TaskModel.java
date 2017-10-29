@@ -63,6 +63,20 @@ public class TaskModel extends BaseModel{
                 .sort(sort)
                 ));
     }
+    
+    //statusで検索する。
+    public Tasks findStatus(Task task) {
+        String status = task.status();
+        BasicDBObject sort = new BasicDBObject();
+        sort.put("priority", -1);
+        sort.put("date", -1);
+        Tasks tasks = new Tasks(toList(tasks()
+                .find(eq("status", status))
+                .sort(sort)
+                ));
+        tasks.setTaskNumber(task);
+        return tasks;
+    }
 
     public Tasks findWithRange(int start, int length){
         return new Tasks(toList(list()

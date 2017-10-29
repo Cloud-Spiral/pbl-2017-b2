@@ -12,18 +12,16 @@ window.onload = function() {
 
 	// サーバからのメッセージ受信時の処理
 	ws.onmessage = function(message) {
-
+		message = JSON.parse(message.data)
 		// messageの中身はmessage.dataに格納
-		//console.log(message.data);
+		console.log(message.type);
 
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
-		if(message.data == "tasks") {
-			
-			update();
+		if(message.type == "post-task") {
+			insertTask(message.tid);
 		}
-		
 	};
 }
 

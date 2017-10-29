@@ -17,11 +17,43 @@ var postTask = function() {
 			priority: priority
 		},
 		success : function(data) {
-			//update(); //websocketでやる
-			ws.send("tasks")
+			var message = {tid: data.tid, type: "post-task"};
+			ws.send(JSON.stringify(message));
 		}
 	});
 }
+
+//ブラウザのテーブルにタスクを追加する。
+//https://qiita.com/i_am_207/items/2f7dc462aaaaac74592e
+var insertTask = function(tid) {
+	$.ajax({
+		type: 'GET',
+		url: '/lama/api/tasks/'+tid,
+		success: function(json)　{
+			var task = json.tasks[0];
+			var taskNumber = json.taskNumber;
+		    var table = document.getElementById(task.status+"-tasks");
+		    var tr = table.insertRow(taskNumber+1);
+		    var td1 = tr.insertCell(-1),
+	        td2 = tr.insertCell(-1),
+	        td3 = tr.insertCell(-1),
+		    td4 = tr.insertCell(-1);
+		    var button = '<input type="button" value="行削除" onclick="delLine(this)" />';
+		    // input用 タグ
+		    var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">',
+		        date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
+		        priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
+				status = '<input id=task-status' + task.tid + ' type="button" value="' + task.status + '" onclick="changeTaskStatus(this)">'
+		    td1.innerHTML = body;
+		    td2.innerHTML = date;
+		    td3.innerHTML = priority;
+		    td4.innerHTML = status;
+		}
+	});
+}
+
+//ブラウザのテーブルからタスクを削除する
+
 
 //タスクの状態を切り替える tidを受け取る
 var changeTaskStatus = function(button) {
@@ -103,11 +135,11 @@ var createTaskTable = function(tasks) {
 		$('<tr id=task-id' + tasks[i].tid +'>'
 				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeypress="changeTaskBody(this)">'
 				+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
-				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)">'
+				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)"></td>'
 				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
-		if(tasks[i].status)
+		if(tasks[i].status == "open")
 			changeColor(tasks[i]);
 	}
 } 

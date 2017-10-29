@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,6 +25,23 @@ public class TasksRest {
         try(TaskModel model = createModel()){
             return Response.status(200)
                     .entity(model.findTasks())
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("{tid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getComment(@PathParam("tid") String toString){
+        try(TaskModel model = createModel()){
+            int tid = toInteger(toString);
+            if(tid <= 0)
+                return errorMessage(400, "Bad request");
+            Task task = model.findById(tid);
+            if(task == null)
+                return errorMessage(404, "Not found");
+            return Response.status(200)
+                    .entity(model.findStatus(task))
                     .build();
         }
     }
@@ -73,5 +91,13 @@ public class TasksRest {
 
     private TaskModel createModel(){
         return new TaskModel();
+    }
+    
+    private int toInteger(String string){
+        try{
+            return Integer.parseInt(string);
+        } catch(NumberFormatException e){
+            return -1;
+        }
     }
 }
