@@ -1,5 +1,6 @@
 ### https://raw.github.com/github/gitignore/613394b3a9753546f8c5656960e44a666d010459/gradle.gitignore
 .settings
+.classpath
 .gradle
 build/
 
