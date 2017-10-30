@@ -6,8 +6,11 @@ var ws;
 window.onload = function() {
 
 	// WebSocketオブジェクト作成
-	// 接続先は 'ws://localhost:8080/alpaca/ws'
 	ws = new WebSocket('ws://' + window.location.host + '/lama/ws');
+	//　本番環境用
+	//ws = new WebSocket('wss://' + window.location.host + '/lama/ws');
+	
+	
 	update();
 
 	// サーバからのメッセージ受信時の処理
