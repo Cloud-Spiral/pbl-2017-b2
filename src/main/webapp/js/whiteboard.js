@@ -1,4 +1,3 @@
-//forked from nekodon's "HTML5 でペイントツール" http://jsdo.it/nekodon/iaSK
 $(document).ready(function(){
 
 
@@ -50,6 +49,15 @@ $(document).ready(function(){
 	function stop(event) {
 		if (!drawing) return;
 		if (event.type == "mouseup"){
+			if(!freeHand){
+				console.log("直線かくで");
+				//console.log("stx, y: "+stx+sty);
+				//console.log("oldx, y: "+oldx+oldy);
+				con.beginPath();
+				con.moveTo(stx,sty);
+				con.lineTo(oldx,oldy);
+				con.stroke();
+			}
 			//履歴を記録
 			recordArray[record_index] = lineRecords;
 			//座標初期化
@@ -260,22 +268,22 @@ $(document).ready(function(){
 			}
 		}
 	}
-	
 
-function draw(num,x,y,color){
-	var mx = x;
-	var my = y;
-	if(num == 0){
-		oldx = mx -1;
-		oldy = my -1;
+
+	function draw(num,x,y,color){
+		var mx = x;
+		var my = y;
+		if(num == 0){
+			oldx = mx -1;
+			oldy = my -1;
+		}
+		con.beginPath();
+		con.moveTo(oldx,oldy);
+		con.lineTo(mx,my);
+		con.strokeStyle = color;
+		con.stroke();
+		oldx = mx;
+		oldy = my;
 	}
-	con.beginPath();
-	con.moveTo(oldx,oldy);
-	con.lineTo(mx,my);
-	con.strokeStyle = color;
-	con.stroke();
-	oldx = mx;
-	oldy = my;
-}
 
 });
