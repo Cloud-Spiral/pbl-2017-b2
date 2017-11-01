@@ -14,6 +14,8 @@ $(document).ready(function(){
 	var record_index = 0;
 	var recordArray = new Array();
 	var lineRecords = new Array();
+	var freeHand = true
+	var stx, sty;
 
 	init();
 
@@ -22,7 +24,7 @@ $(document).ready(function(){
 		canvas = document.getElementById("my_canvas");
 		con = canvas.getContext("2d");
 		con.lineWidth = sWidth;
-		var colors = ["black", "red", "blue"];
+		var colors = ["black", "red", "blue", "yellow"];
 		con.lineCap = "round";
 
 		swUpButton = $("#plus");
@@ -31,7 +33,9 @@ $(document).ready(function(){
 		swDownButton.mousedown(function (e){swDown(e);});
 
 		$("#red,#black,#blue,#yellow").mousedown(function (e){colorChange(e,$(this));});
-		$("#publish li").mousedown(function (e){clear(e);});
+		$("#clear li").mousedown(function (e){clear(e);});
+		$("#straight li").mousedown(function (e){straight(e);});
+		$("#freehand li").mousedown(function (e){freehand(e);});
 
 		$("#undo").mousedown(function (e){undo(e);});
 		$("#redo").mousedown(function (e){redo(e);});
@@ -39,7 +43,8 @@ $(document).ready(function(){
 		canvas.onmousedown = function (e){drawLine(e,true);};
 		canvas.onmousemove = function (e){drawLine(e,false);};
 		canvas.onmouseup =  function (e){drawLine(e,false);};
-		window.addEventListener('mouseup', stop, false);   // window上のmouseupイベントでstop()を呼び出す
+		// window上のmouseupイベントでstop()を呼び出す
+		window.addEventListener('mouseup', stop, false);
 	}
 
 	function stop(event) {
@@ -56,11 +61,13 @@ $(document).ready(function(){
 			}
 		}
 		drawing = false;   // ドラッグ中フラグを落とす
-
 	}
 
 	function drawLine(event,isStart){
-		if(event.type == "mousedown")drawing = true;
+		//console.log("drawLine");
+		if(event.type == "mousedown"){
+			drawing = true;
+		}
 		if(event.type == "mouseup")drawing = false;
 		event.preventDefault();
 		if(drawing){
@@ -69,13 +76,18 @@ $(document).ready(function(){
 			var mx = event.pageX - offset.left;
 			var my = event.pageY - offset.top;
 			if(isStart){
-				oldx = mx -1;
-				oldy = my -1;
+				if(freeHand){
+					oldx = mx -1;
+					oldy = my -1;
+				} else {
+					stx = mx -1;
+					sty = my -1;
+				}
 			}
 			con.beginPath();
 			con.moveTo(oldx,oldy);
 			con.lineTo(mx,my);
-			con.stroke();
+			if(freeHand) con.stroke();
 			oldx = mx;
 			oldy = my;
 
@@ -85,9 +97,19 @@ $(document).ready(function(){
 			xy.y = my;
 			xy.color = color;
 			xy.size = con.lineWidth;
+			xy.line = freeHand;
 			lineRecords.push(xy);
 		}else{
 			if (event.type == "mouseup"){
+				if(!freeHand){
+					console.log("直線かくで");
+					//console.log("stx, y: "+stx+sty);
+					//console.log("oldx, y: "+oldx+oldy);
+					con.beginPath();
+					con.moveTo(stx,sty);
+					con.lineTo(oldx,oldy);
+					con.stroke();
+				}
 				//履歴を記録
 				recordArray[record_index] = lineRecords;
 				//座標初期化
@@ -119,24 +141,21 @@ $(document).ready(function(){
 	}
 	//画面を全削除
 	function clear(e){
+		console.log("clear");
 		//キャンバスを初期化
 		//画面サイズに応じて変更せなあかん
 		con.clearRect(0,0,1000,1000);
 	}
 
-//	//画像をパブリッシュ
-//	function imgPublish(e){
-//	var img=new Image();
-//	//保存できるタイプは、'image/png'と'image/jpeg'の2種類
-//	var type = 'image/png'; 
-//	//imgオブジェクトのsrcに格納。
-//	img.src = canvas.toDataURL(type);
-//	//念のため、onloadで読み込み完了を待つ。
-//	img.onload = function(){
-//	//例：現在のウィンドウに出力。
-//	location.href = img.src;
-//	};
-//	}
+	//直線、フリーハンド切り替え
+	function straight(e){
+		freeHand = false;
+		console.log(freeHand);
+	}
+	function freehand(e){
+		freeHand = true;
+		console.log(freeHand);
+	}
 
 	//アンドゥ
 	function undo(e){
@@ -149,16 +168,44 @@ $(document).ready(function(){
 			if(record_index == 0){
 				//recordArray = [];
 			}else{
+
+				//線一本ずつ再現する
 				for(var i=0; i < record_index; i++){
 					var record = recordArray[i];
-					for(var v=0; v<record.length; v++){
-						if(typeof record[v] == "object"){
-							var xy = record[v];
-							con.lineWidth = xy.size;
-							//描画処理
-							draw(v,xy.x,xy.y,xy.color);
-							con.lineWidth = sWidth;
+
+					//フラグ取り出す
+					var xy = record[0];
+					line = xy.line;
+					console.log("line: "+line);
+					if(line){
+						for(var v=0; v<record.length; v++){
+							if(typeof record[v] == "object"){
+								var xy = record[v];
+								//太さを描いたときの状態に戻す
+								con.lineWidth = xy.size;
+								//描画処理
+								draw(v,xy.x,xy.y,xy.color);
+								//現在の設定に戻す
+								con.lineWidth = sWidth;
+								con.strokeStyle = color;
+							}
 						}
+					} else {
+						console.log("直線の履歴やで");
+						var start = record[0];
+						var end = record[record.length-1];
+						con.beginPath();
+						//描いたときの状態に戻す
+						con.lineWidth = start.size;
+						con.strokeStyle = start.color;
+
+						con.moveTo(start.x,start.y);
+						con.lineTo(end.x,end.y);
+						con.stroke();
+
+						//現在の設定に戻す
+						con.lineWidth = sWidth;
+						con.strokeStyle = color;
 					}
 				}
 			}
@@ -177,9 +224,11 @@ $(document).ready(function(){
 				for(var v=0; v<record.length; v++){
 					if(typeof record[v] == "object"){
 						var xy = record[v];
+						//太さを描いたときの状態に戻す
 						con.lineWidth = xy.size;
 						//描画処理
 						draw(v,xy.x,xy.y,xy.color);
+						//現在の設定に戻す
 						con.lineWidth = sWidth;
 					}
 				}
