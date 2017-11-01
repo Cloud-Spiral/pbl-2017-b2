@@ -219,38 +219,63 @@ $(document).ready(function(){
 			record_index++;
 			//キャンバスを初期化
 			con.clearRect(0,0,1000,1000);
+			//線一本ずつ再現する
 			for(var i=0; i < record_index; i++){
 				var record = recordArray[i];
-				for(var v=0; v<record.length; v++){
-					if(typeof record[v] == "object"){
-						var xy = record[v];
-						//太さを描いたときの状態に戻す
-						con.lineWidth = xy.size;
-						//描画処理
-						draw(v,xy.x,xy.y,xy.color);
-						//現在の設定に戻す
-						con.lineWidth = sWidth;
+
+				//フラグ取り出す
+				var xy = record[0];
+				line = xy.line;
+				console.log("line: "+line);
+				if(line){
+					for(var v=0; v<record.length; v++){
+						if(typeof record[v] == "object"){
+							var xy = record[v];
+							//太さを描いたときの状態に戻す
+							con.lineWidth = xy.size;
+							//描画処理
+							draw(v,xy.x,xy.y,xy.color);
+							//現在の設定に戻す
+							con.lineWidth = sWidth;
+							con.strokeStyle = color;
+						}
 					}
+				} else {
+					console.log("直線の履歴やで");
+					var start = record[0];
+					var end = record[record.length-1];
+					con.beginPath();
+					//描いたときの状態に戻す
+					con.lineWidth = start.size;
+					con.strokeStyle = start.color;
+
+					con.moveTo(start.x,start.y);
+					con.lineTo(end.x,end.y);
+					con.stroke();
+
+					//現在の設定に戻す
+					con.lineWidth = sWidth;
+					con.strokeStyle = color;
 				}
 			}
-
 		}
 	}
+	
 
-	function draw(num,x,y,color){
-		var mx = x;
-		var my = y;
-		if(num == 0){
-			oldx = mx -1;
-			oldy = my -1;
-		}
-		con.beginPath();
-		con.moveTo(oldx,oldy);
-		con.lineTo(mx,my);
-		con.strokeStyle = color;
-		con.stroke();
-		oldx = mx;
-		oldy = my;
+function draw(num,x,y,color){
+	var mx = x;
+	var my = y;
+	if(num == 0){
+		oldx = mx -1;
+		oldy = my -1;
 	}
+	con.beginPath();
+	con.moveTo(oldx,oldy);
+	con.lineTo(mx,my);
+	con.strokeStyle = color;
+	con.stroke();
+	oldx = mx;
+	oldy = my;
+}
 
 });
