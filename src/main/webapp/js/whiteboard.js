@@ -162,7 +162,7 @@ $(document).ready(function(){
 	function clear(e){
 		console.log("clear");
 		//キャンバスを初期化
-		con.clearRect(0,0,1000, 1000);
+		con.clearRect(0,0,width,height);
 		//座標を配列に保存				
 		var xy = new Object();
 		xy.clear = true;
@@ -194,7 +194,7 @@ $(document).ready(function(){
 		if(record_index > 0){
 			record_index--;
 			//キャンバスを初期化
-			con.clearRect(0,0,1000, 1000);
+			con.clearRect(0,0,width,height);
 			if(record_index == 0){
 				//recordArray = [];
 			}else{
@@ -240,7 +240,7 @@ $(document).ready(function(){
 							con.strokeStyle = color;
 						}
 					} else {
-						con.clearRect(0,0,1000, 1000);
+						con.clearRect(0,0,width,height);
 					}
 				}
 			}
@@ -253,7 +253,7 @@ $(document).ready(function(){
 		if(record_index < recordArray.length){
 			record_index++;
 			//キャンバスを初期化
-			con.clearRect(0,0,1000, 1000);
+			con.clearRect(0,0,width,height);
 			//線一本ずつ再現する
 			for(var i=0; i < record_index; i++){
 				var record = recordArray[i];
@@ -295,7 +295,7 @@ $(document).ready(function(){
 						con.strokeStyle = color;
 					}
 				} else {
-					con.clearRect(0,0,1000, 1000);
+					con.clearRect(0,0,width,height);
 				}
 			}
 		}
