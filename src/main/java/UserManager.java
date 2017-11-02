@@ -12,7 +12,7 @@ import com.mongodb.DBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.FinedIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.BasicDBObject;
 import org.json.Document;
@@ -135,7 +135,7 @@ public class UserManager {
     }
 
     /**
-     * Macアドレスから名前を検索
+     * MACアドレスから名前を検索
      **/
     public String whoAreYou(MongoCollection<Document> coll, String macAddress) {
         String name;
@@ -145,10 +145,11 @@ public class UserManager {
 
         try {
             if(cursor.hasNext()) {
-                name = cursor.getString("name");
+                DBObject obj = cursor.next();
+                name = obj.get("name");
             }
             else {
-                system.out.println("ありえない...");
+                System.out.println("ありえない...");
                 name = "NotFound";
             }
         } finally {
