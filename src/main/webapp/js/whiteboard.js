@@ -15,16 +15,23 @@ $(document).ready(function(){
 	var lineRecords = new Array();
 	var freeHand = true
 	var stx, sty;
+	
+	//最初に実行される
+	//init();
 
-	init();
-
-	function init(){
+//	function init(){
 		//canvasのコンテキストを取得
 		canvas = document.getElementById("my_canvas");
 		con = canvas.getContext("2d");
 		con.lineWidth = sWidth;
 		var colors = ["black", "red", "blue", "yellow"];
 		con.lineCap = "round";
+
+		// キャンパスの描画領域の横幅を取得
+		var width = canvas.width;
+		var height = canvas.height;
+		console.log("width: "+width);
+		console.log("height: "+height);
 
 		swUpButton = $("#plus");
 		swDownButton = $("#minus");
@@ -44,7 +51,7 @@ $(document).ready(function(){
 		canvas.onmouseup =  function (e){drawLine(e,false);};
 		// window上のmouseupイベントでstop()を呼び出す
 		window.addEventListener('mouseup', stop, false);
-	}
+	//}
 
 	function stop(event) {
 		if (!drawing) return;
@@ -134,10 +141,14 @@ $(document).ready(function(){
 	//線を太く
 	function swUp(e){
 		sWidth++;
+		sWidth++;
+		sWidth++;
 		con.lineWidth = sWidth;
 	}
 	//線を細く
 	function swDown(e){
+		if(sWidth > 0)sWidth--;
+		if(sWidth > 0)sWidth--;
 		if(sWidth > 0)sWidth--;
 		con.lineWidth = sWidth;
 	}
@@ -151,8 +162,20 @@ $(document).ready(function(){
 	function clear(e){
 		console.log("clear");
 		//キャンバスを初期化
-		//画面サイズに応じて変更せなあかん
-		con.clearRect(0,0,1000,1000);
+		con.clearRect(0,0,1000, 1000);
+		//座標を配列に保存				
+		var xy = new Object();
+		xy.clear = true;
+		lineRecords.push(xy);
+		//履歴を記録
+		recordArray[record_index] = lineRecords;
+		//座標初期化
+		lineRecords = new Array();
+		//履歴を更新された場合最新の
+		record_index++;
+		if(record_index < recordArray.length){
+			recordArray.splice(record_index,recordArray.length);
+		}
 	}
 
 	//直線、フリーハンド切り替え
@@ -171,8 +194,7 @@ $(document).ready(function(){
 		if(record_index > 0){
 			record_index--;
 			//キャンバスを初期化
-			//画面サイズに応じて変更せなあかん
-			con.clearRect(0,0,1000,1000);
+			con.clearRect(0,0,1000, 1000);
 			if(record_index == 0){
 				//recordArray = [];
 			}else{
@@ -184,7 +206,64 @@ $(document).ready(function(){
 					//フラグ取り出す
 					var xy = record[0];
 					line = xy.line;
-					console.log("line: "+line);
+					var clear = xy.clear;
+					console.log("clear: "+clear);
+					if(!clear){
+						if(line){
+							for(var v=0; v<record.length; v++){
+								if(typeof record[v] == "object"){
+									var xy = record[v];
+									//太さを描いたときの状態に戻す
+									con.lineWidth = xy.size;
+									//描画処理
+									draw(v,xy.x,xy.y,xy.color);
+									//現在の設定に戻す
+									con.lineWidth = sWidth;
+									con.strokeStyle = color;
+								}
+							}
+						} else {
+							console.log("直線の履歴やで");
+							var start = record[0];
+							var end = record[record.length-1];
+							con.beginPath();
+							//描いたときの状態に戻す
+							con.lineWidth = start.size;
+							con.strokeStyle = start.color;
+
+							con.moveTo(start.x,start.y);
+							con.lineTo(end.x,end.y);
+							con.stroke();
+
+							//現在の設定に戻す
+							con.lineWidth = sWidth;
+							con.strokeStyle = color;
+						}
+					} else {
+						con.clearRect(0,0,1000, 1000);
+					}
+				}
+			}
+		}
+	}
+
+	//リドゥ
+	function redo(e){
+		console.log("redo");
+		if(record_index < recordArray.length){
+			record_index++;
+			//キャンバスを初期化
+			con.clearRect(0,0,1000, 1000);
+			//線一本ずつ再現する
+			for(var i=0; i < record_index; i++){
+				var record = recordArray[i];
+
+				//フラグ取り出す
+				var xy = record[0];
+				line = xy.line;
+				var clear = xy.clear;
+				console.log("clear: "+clear);
+				if(!clear){
 					if(line){
 						for(var v=0; v<record.length; v++){
 							if(typeof record[v] == "object"){
@@ -215,55 +294,8 @@ $(document).ready(function(){
 						con.lineWidth = sWidth;
 						con.strokeStyle = color;
 					}
-				}
-			}
-		}
-	}
-
-	//リドゥ
-	function redo(e){
-		console.log("redo");
-		if(record_index < recordArray.length){
-			record_index++;
-			//キャンバスを初期化
-			con.clearRect(0,0,1000,1000);
-			//線一本ずつ再現する
-			for(var i=0; i < record_index; i++){
-				var record = recordArray[i];
-
-				//フラグ取り出す
-				var xy = record[0];
-				line = xy.line;
-				console.log("line: "+line);
-				if(line){
-					for(var v=0; v<record.length; v++){
-						if(typeof record[v] == "object"){
-							var xy = record[v];
-							//太さを描いたときの状態に戻す
-							con.lineWidth = xy.size;
-							//描画処理
-							draw(v,xy.x,xy.y,xy.color);
-							//現在の設定に戻す
-							con.lineWidth = sWidth;
-							con.strokeStyle = color;
-						}
-					}
 				} else {
-					console.log("直線の履歴やで");
-					var start = record[0];
-					var end = record[record.length-1];
-					con.beginPath();
-					//描いたときの状態に戻す
-					con.lineWidth = start.size;
-					con.strokeStyle = start.color;
-
-					con.moveTo(start.x,start.y);
-					con.lineTo(end.x,end.y);
-					con.stroke();
-
-					//現在の設定に戻す
-					con.lineWidth = sWidth;
-					con.strokeStyle = color;
+					con.clearRect(0,0,1000, 1000);
 				}
 			}
 		}
