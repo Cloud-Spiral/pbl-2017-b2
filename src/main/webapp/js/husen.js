@@ -1,12 +1,10 @@
 /**
  * husen you no JavaScript
  */
-
 var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
-
 
 function buttonCounter(name,txt){
 	document.getElementsByName(name)[0].value = txt;
@@ -52,7 +50,7 @@ function getBackColor(count){
 	}else if(count % 6 === 2){
 		return "#FFBBFF";
 	}else if(count % 6 === 3){
-		return "#CFBBFF";
+		return "#CFCBFF";
 	}else if(count % 6 === 4){
 		return "#CCEEFF";
 	}
@@ -90,7 +88,8 @@ function Card() {
 	this.container = document.createElement('div');
 	this.container.id = "container"+String(uniHusenCount);
 	this.container.style="width:300px;background-color:"+ getBackColor(colorCount) +";" +
-			"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;";
+			"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
+					"left:100px;top:130px";
 	
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
@@ -106,6 +105,8 @@ function Card() {
 			"display:block;resize:vertical;" +
 			"border:0px;" +
 			"font-size:20px;font-family:Arial";
+
+	var height = this.txtarea.style.height;
 
 	this.buttonContainer = document.createElement('div');
 	this.buttonContainer.style = "width:100%;height:20px;display:block";
@@ -153,6 +154,27 @@ function Card() {
 	
 	document.body.appendChild(this.container);
 	draggable(this.handle, this.container);
-	
+
+	$.ajax({
+		type : 'POST',
+		url : endpoint + '/husens',
+		data : {
+			cid : uniHusenCount,
+			text : String(this.txtarea.value),
+			xPosition : String(this.container.style.left),
+			yPosition : String(this.container.style.top),
+			height : String(this.txtarea.style.height),
+			good : 0,
+			bad : 0,
+			color : 0,
+			canEdit : 0
+		},
+		success: function(){
+			console.log('a');
+		},
+		error: function(){
+			console.log('b');
+		}
+	});
 	return this.container;
 }

@@ -22,26 +22,30 @@ var postMessage = function() {
 	});
 }
 
-var deleteComment = function(cid) {
-	$.ajax({
-		type : 'DELETE',
-		url : endpoint + '/comments/'+ cid,
-	});
-}
+// 
+//var deleteComment = function(cid) {
+//	$.ajax({
+//		type : 'DELETE',
+//		url : endpoint + '/comments/'+ cid,
+//	});
+//}
 
-var update = function() {
-	$('#board').empty();
+var getLikes = function() {
 	$.ajax({
-		type : 'GET',
-		url : endpoint + '/likes',
-		success : function(json) {
+		type: 'GET',
+		url: endpoint + '/likes',
+		success: function(json) {
 			$('#total').text(json.likes.length);
 		}
-	});
+		});
+	}
+ 
+var getComments = function() {
 	$.ajax({
-		type : 'GET',
-		url : endpoint + '/comments?start=' + current,
-		success : function(json) {
+		type: 'GET',
+		url: endpoint + '/comments',
+		success: function(json) {			
+			$('#board').empty();
 			current += json.comments.length;
 			json.comments.forEach(function(v) {
 				var cid = v.cid;
@@ -49,10 +53,10 @@ var update = function() {
 			});
 		}
 	});
-}
+	}
 
-var l = window.setInterval(update, 3000);
-window.onload = update;
+setInterval(getLikes,2000);
+setInterval(getComments,2000);
 
 $('#like').click(postLike);
 $('#submit').click(postMessage);

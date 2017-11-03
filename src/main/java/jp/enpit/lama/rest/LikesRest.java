@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import jp.enpit.lama.entities.Like;
 import jp.enpit.lama.model.LikeModel;
 
-@Path("likes")
+@Path("/likes")
 public class LikesRest {
     public LikesRest(){
     }

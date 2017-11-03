@@ -21,5 +21,4 @@ public class HelloRest{
                 .entity(msg)
                 .build();
     }
-
 }
