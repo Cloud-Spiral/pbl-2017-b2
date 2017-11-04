@@ -43,7 +43,7 @@ public class UserManager {
         // hostとport設定
         this.host = host;
         this.port = port;
-        MongoClient client = openDb(host, port);
+        client = openDb(host, port);
         
         // 複数のサーバを対象としたアクセスの場合
         // private ServerAddress primary = new ServerAddress("hoge", port);
@@ -54,7 +54,7 @@ public class UserManager {
         // DB取得
         // 無いなら勝手に作られる
         dbName = "Team2db";
-        db = client.getDatabase(databaseName);
+        db = client.getDatabase(dbName);
         
         // Collection取得
         // String collectionName = "Users";
@@ -74,7 +74,7 @@ public class UserManager {
     /**
      * DBを開く
      **/
-    public MongoClient opneDb(String host, int port) {
+    public MongoClient openDb(String host, int port) {
         MongoClient client = new MongoClient(host, port);
         return client;
     }
@@ -103,7 +103,7 @@ public class UserManager {
         else {
             // Insertする内容をここに記述する
             BasicDBObject doc = new BasicDBObject("name", user.getName())
-                .append("macAddress", user.getMacAddress);
+                .append("macAddress", user.getMacAddress());
             // Insertする
             coll.insert(doc);
         }
@@ -147,6 +147,7 @@ public class UserManager {
             if(cursor.hasNext()) {
                 DBObject obj = cursor.next();
                 name = obj.get("name");
+                //name = cursor.next();
             }
             else {
                 System.out.println("ありえない...");
