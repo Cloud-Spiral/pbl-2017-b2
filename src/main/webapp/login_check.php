@@ -11,27 +11,30 @@ $password = $_POST['password'];
 //ログイン判定
 
 //DB接続
-$db = MDB2::connect(DNS);
+// ここをmongoに書き換える
+/*$db = MDB2::connect(DNS);
 if (PEAR::isError($db)) {
     die($db->getMessage());
-}
+}*/
+$db = $client->selectDB('dbname');
 
 //プレースホルダで SQL 作成
-$sql = "SELECT * FROM USERS WHERE ID = ? AND IS_USER = 1;";
+//$sql = "SELECT * FROM USERS WHERE ID = ? AND IS_USER = 1;";
+$rs = $db->users->find(array("ID" => ?),array("IS_USER" => 1));
 
 //パラメーターの型を指定
-$stmt = $db->prepare($sql, array('text'));
+//$stmt = $db->prepare($sql, array('text'));
 
 //パラメーターを渡して SQL 実行
-$rs = $stmt->execute(array($id));
+//$rs = $stmt->execute(array($id));
 
 $count = 0;
 
-while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC)) {
-    $id = $row["id"];
-    $salt = $row["salt"];
-    $db_password = $row["password"];
-    $reset = $row["reset"];
+while ($document = $rs->fetchRow(MDB2_FETCHMODE_ASSOC)) {
+    $id = $document["id"];
+    $salt = $document["salt"];
+    $db_password = $document["password"];
+    $reset = $document["reset"];
     $count++;
 }
 
@@ -69,7 +72,7 @@ if ($hash == $db_password) {
     $_SESSION["token"] = get_csrf_token();
 
     //DB接続
-    $db = MDB2::connect(DNS);
+    /*$db = MDB2::connect(DNS);
     if (PEAR::isError($db)) {
         die($db->getMessage());
     }
@@ -82,6 +85,10 @@ if ($hash == $db_password) {
 
     //パラメーターを渡して SQL 実行
     $stmt->execute(array(date('Y-m-d H:i:s'), $id));
+    */
+
+    $db = $client->selectDB('dbname');
+    $db.users.update({ID:?},{ $set: {last_login_time:?}})
 
     $db->disconnect();
 

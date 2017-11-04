@@ -23,7 +23,7 @@ if ($password != $confirm_password) {
 //IDチェック
 
 //DB接続
-$db = MDB2::connect(DNS);
+/*$db = MDB2::connect(DNS);
 if (PEAR::isError($db)) {
     die($db->getMessage());
 }
@@ -35,13 +35,20 @@ $sql = "SELECT COUNT(*) AS CNT FROM USERS WHERE ID = ? ;";
 $stmt = $db->prepare($sql, array('text'));
 
 //パラメーターを渡して SQL 実行
-$rs = $stmt->execute(array($id));
+$rs = $stmt->execute(array($id));*/
 
-while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC)) {
+$client = new MongoClient();
+$db = $client->selectDB('Team2db');
+$col = $db->selectCollection('Users');
+$cursor = $col->find();
+$count = $cursor->array("ID" => ?).count();
+// $sum = $col->aggregate(array("ID" => ?);
+
+/*while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC)) {
     $count = $row['cnt'];
-}
+}*/
 
-$db->disconnect();
+$db.logout();
 
 //既にIDが登録されていた
 if ($count != 0) {
