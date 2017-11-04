@@ -1,9 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+ <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+ <meta http-equiv="Content-Script-Type" content="text/javascript">
+
+ <script type="text/javascript" src="./js/simple_login.js">
+ </script>
+
+ <title>Simpleなログイン画面</title>
+
 <html>
 <body>
 
-<input type="text" name="userName" size="30" maxlength="30" value="ゲスト">
+<input type="text" name="userName" size="30" maxlength="30" value="ゲスト" id="userName">
 
-<p><input type="submit" value="送信する"></p>
+<p><input type="submit" value="送信する" onClick="login(userName)"></p>
 
 <p>
 <a href="https://team2017-2.spiral.cloud/lama/">会議ページへ</a>

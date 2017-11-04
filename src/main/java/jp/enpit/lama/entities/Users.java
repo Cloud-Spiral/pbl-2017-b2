@@ -1,0 +1,38 @@
+package jp.enpit.lama.entities;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Tasks {
+    @XmlElement(name="users")
+    private List<User> list = new ArrayList<>();
+
+    public Users(){
+    }
+    public Users(List<User> userList) {
+        list.addAll(userList);
+    }
+
+    public List<user> users(){
+        return Collections.unmodifiableList(list);
+    }
+
+    public int size(){
+        return list.size();
+    }
+
+    public Iterator<User> iterator(){
+        return list.iterator();
+    }
+
+    public Task[] toArray(){
+        return list.toArray(new User[size()]);
+    }
+
+}
