@@ -18,14 +18,14 @@ import com.mongodb.client.MongoCollection;
 import jp.enpit.lama.entities.User;
 import jp.enpit.lama.entities.Users;
 
-public class RegisterModel extends BaseModel {
+public class UserModel extends BaseModel {
     private MongoCollection<Document> users(){
         return super.collection("Users");
     }
 
     // userを登録する機構
     public User register(User user) {
-        user.setName();
+        //user.setUserName(user.getUserName());
         users().insertOne(toDocument(user));
         return user;
     }
@@ -33,6 +33,6 @@ public class RegisterModel extends BaseModel {
     // Documentへの変換
     private Document toDocument(User user){
         return new Document()
-            .append("name", user.name());
+            .append("name", user.getName());
     }
 }

@@ -1,21 +1,22 @@
 package jp.enpit.lama.entities;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlElement;
 
 public class User {
-    @XmlElement(name="userName")
-        private string userName;
+    @XmlElement(name="name")
+        private String name;
 
     public User(){
-        this.userName = "ゲスト";
+        setName("ゲスト");
     }
-    public User(string name) {
-        setUserName(name);
+    public User(String name) {
+        setName(name);
     }
 
-   public void setUserName(string name) {
-        this.userName = name;
+   public void setName(String name) {
+        this.name = name;
+   }
+   public String getName() {
+	   return this.name;
    }
 }

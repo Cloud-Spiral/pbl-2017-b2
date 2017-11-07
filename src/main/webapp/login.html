@@ -10,11 +10,13 @@
  <title>Simpleなログイン画面</title>
 
 <html>
+	<script src="js/jquery-3.2.1.js"></script>
+	<script src="js/simple_login.js"></script>
 <body>
 
-<input type="text" name="userName" size="30" maxlength="30" value="ゲスト" id="userName">
+<input type="text" name="loginBox" size="30" maxlength="30" value="ゲスト" id="userName">
 
-<p><input type="submit" value="送信する" onClick="login(userName)"></p>
+<p><input type="button" value="送信する" onClick="postName()"></p>
 
 <p>
 <a href="https://team2017-2.spiral.cloud/lama/">会議ページへ</a>

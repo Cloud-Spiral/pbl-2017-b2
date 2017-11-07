@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Tasks {
+public class Users {
     @XmlElement(name="users")
     private List<User> list = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class Tasks {
         list.addAll(userList);
     }
 
-    public List<user> users(){
+    public List<User> users(){
         return Collections.unmodifiableList(list);
     }
 
@@ -31,7 +31,7 @@ public class Tasks {
         return list.iterator();
     }
 
-    public Task[] toArray(){
+    public User[] toArray(){
         return list.toArray(new User[size()]);
     }
 

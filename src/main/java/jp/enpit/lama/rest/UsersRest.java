@@ -14,11 +14,10 @@ import jp.enpit.lama.entities.ErrorMessage;
 import jp.enpit.lama.entities.User;
 import jp.enpit.lama.model.UserModel;
 
-@Path("users")
+@Path("/users")
 public class UsersRest {
     public UsersRest(){
     }
-
 
     public Response errorMessage(int statusCode, String message){
         return Response.status(statusCode)
@@ -29,27 +28,29 @@ public class UsersRest {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response postUser(@FormParam("name") String name){
+    	System.out.println(name);
         if(name == null || name.trim().equals(""))
             return errorMessage(400, "Empty name");
-        if(body.length() > 30)
-            return errorMessage(400, "Too long name);
-            try(UserModel model = createModel()){
-                User user = model.register(new User(name));
-                return Response.status(201)
-                    .entity(user)
-                    .build();
-            }
+        if(name.length() > 30)
+            return errorMessage(400, "Too long name");
+            
+        try(UserModel model = createModel()){
+            User user = model.register(new User(name));
+            return Response.status(201)
+                .entity(user)
+                .build();
+        }
     }
 
     private UserModel createModel(){
-        return new userModel();
+        return new UserModel();
     }
 
-    private int toInteger(String string){
+    /*private int toInteger(String string){
         try{
             return Integer.parseInt(string);
         } catch(NumberFormatException e){
             return -1;
         }
-    }
+    }*/
 }
