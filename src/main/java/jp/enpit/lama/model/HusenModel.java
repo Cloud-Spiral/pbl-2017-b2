@@ -1,13 +1,11 @@
 package jp.enpit.lama.model;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.regex;
 import static com.mongodb.client.model.Sorts.ascending;
 import static com.mongodb.client.model.Sorts.descending;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.bson.Document;
 
@@ -16,7 +14,6 @@ import com.mongodb.client.MongoCollection;
 
 import jp.enpit.lama.entities.Husen;
 import jp.enpit.lama.entities.Husens;
-import jp.enpit.lama.entities.Likes;
 
 public class HusenModel extends BaseModel{
 	private String collectionName = "husens";
@@ -32,40 +29,57 @@ public class HusenModel extends BaseModel{
     private MongoCollection<Document> husens(){
         return super.collection(collectionName);
     }
+    
+    private MongoCollection<Document> latesthids(){
+        return super.collection("latesthids");
+    }
+    
+    public int latestId(){
+        MongoCollection<Document> hids = latesthids();
+        if(hids.count() == 0L)
+            return 0;
+        return hids.find()
+                .sort(descending("hid"))
+                .first()
+                .getInteger("hid", 0);
+    }
 
     public Husen findById(Integer id){
-        Document document = husens().find(eq("cid", id))
+        Document document = husens().find(eq("hid", id))
                 .limit(1).first();
         return toHusen(document);
     }
 
-    public void deleteComment(Integer cid){
-        husens().deleteOne(eq("cid", cid));
+    public void deleteComment(Integer hid){
+        husens().deleteOne(eq("hid", hid));
     }
 
     public Husen register(Husen husen){
+        husen.setHid(latestId() + 1);
         husens().insertOne(toDocument(husen));
+        latesthids().insertOne(new Document("hid", husen.getHid()));
         return husen;
     }
-
-    public Husens list(){
-        return new Husens(toList());
+    
+    public Husens findHusens(){
+        return new Husens(toList(list()));
     }
-
-    private List<Husen> toList(){
-    	Iterable<Document> iterable = husens().find();
+    
+    private FindIterable<Document> list(){
+        return husens().find()
+                .sort(ascending("hid"));
+    }
+    
+    private List<Husen> toList(FindIterable<Document> iterable){
         List<Husen> list = new ArrayList<>();
         for(Document document: iterable){
             list.add(toHusen(document));
         }
-//        List<Husen> list2 = new ArrayList<>();
-//        list2.add(new Husen(1,"","","","",1,1,1,1));
-//        return list2;
         return list;
     }
     
     private Document toDocument(Husen husen){
-        return new Document("cid", husen.getCid())
+        return new Document("hid", husen.getHid())
                 .append("text", husen.getText())
                 .append("xPosition", husen.getxPosition())
                 .append("yPosition", husen.getyPosition())
@@ -80,7 +94,7 @@ public class HusenModel extends BaseModel{
         if(document == null)
             return null;
         return new Husen(
-        		document.getInteger("cid"),
+        		document.getInteger("hid"),
                 document.getString("text"),
                 document.getString("xPosition"),
                 document.getString("yPosition"),
@@ -88,6 +102,6 @@ public class HusenModel extends BaseModel{
                 document.getInteger("good"),
                 document.getInteger("bad"),
                 document.getInteger("color"),
-                document.getInteger("canEdit"));
+                document.getBoolean("canEdit"));
     }
 }
