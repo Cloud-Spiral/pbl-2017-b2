@@ -5,6 +5,7 @@ var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
+var endpoint = "http://localhost:8080/lama/api"
 
 function buttonCounter(name,txt){
 	document.getElementsByName(name)[0].value = txt;
