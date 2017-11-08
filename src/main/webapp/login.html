@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+ <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+ <meta http-equiv="Content-Script-Type" content="text/javascript">
+
+ <link rel="stylesheet" type="text/css" href="./css/login.css"></link>
+ <script type="text/javascript" src="./js/simple_login.js"></script>
+ <script type="text/javascript" src="./js/jquery-3.2.1.js""></script>
+
+<!--
+ <title>Simpleなログイン画面</title>
+
+<html>
+	<script src="js/jquery-3.2.1.js"></script>
+	<script src="js/simple_login.js"></script>
+<body>
+
+<input type="text" name="loginBox" size="30" maxlength="30" value="ゲスト" id="userName">
+
+<p><input type="button" value="送信する" onClick="postName()"></p>
+
+<p>
+<a href="https://team2017-2.spiral.cloud/lama/">会議ページへ</a>
+</p>
+
+</body>
+</html> -->
+
+<div class="form-wrapper">
+  <h1>Sign In</h1>
+  <form>
+    <!-- <div class="form-item">
+      <label for="email"></label>
+      <input type="email" name="email" class="form-control validate[groupRequired[account],custom[email]]" placeholder="Email Address"></input>
+    </div>
+    -->
+    
+    <div class="form-item">
+      <label for="name"></label>
+      <input type="name" name="name" class="form-control validate[groupRequired[account]]" placeholder="User Name" id="userName"></input>
+    </div>
+    
+    <div class="form-item">
+      <label for="password"></label>
+      <input type="password" name="password" required="required" placeholder="Password" id="password"></input>
+    </div>
+    
+    <div class="button-panel">
+      <input type="button" class="button" title="Sign In" value="Sign In" onClick="login()"></input>
+    </div>
+  </form>
+  <div class="form-footer">
+    <p><a href="signup.html">Create an account</a></p>
+    <p><a href="#">Forgot password?</a></p>
+    <p><a href="https://team2017-2.spiral.cloud/lama/">テスト用：本番会議ページ</a></p>
+    <p><a href="http://localhost:8080/lama/">テスト用：local会議ページ</a></p>
+  </div>
+</div>
