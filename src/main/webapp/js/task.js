@@ -47,6 +47,7 @@ var insertTask = function(tid) {
 			td2 = tr.insertCell(-1),
 			td3 = tr.insertCell(-1),
 			td4 = tr.insertCell(-1);
+			
 			var symbol = '<img src=image/default-symbol.png id=task-symbol' + task.tid + '>',
 			body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
@@ -56,6 +57,12 @@ var insertTask = function(tid) {
 			td2.innerHTML = body;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
+			
+			$("#task-symbol"+task.tid).parent().addClass('symbol-cell');
+			$("#task-body"+task.tid).parent().addClass('body-cell');
+			$("#task-priority"+task.tid).parent().addClass('priority-cell');
+			$("#task-status"+task.tid).parent().addClass('status-cell');
+			
 			$("#task-priority"+task.tid).raty({
 				number:5,
 				score: task.priority,
@@ -99,8 +106,6 @@ var changeTaskStatus = function(button) {
 		url : endpoint + '/tasks/status',
 		data: {tid: tid},
 		success : function(data) {
-			//message = {tid: data.tid, type: "post-task"};
-			//ws.send(JSON.stringify(message));
 			ws.send("post-task:"+tid);
 		}
 	});
@@ -166,12 +171,11 @@ var createTaskTable = function(tasks) {
 		if(tasks[i].status == "close")
 			buttonStatus = "open";
 		$('<tr id=task-id' + tasks[i].tid +'>'
-				+ '<td><img src="image/default-symbol.png" id=task-symbol' + tasks[i].tid + '></td>'
-				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)"></td>'
+				+ '<td class=symbol-cell><img src="image/default-symbol.png" id=task-symbol' + tasks[i].tid + '></td>'
+				+ '<td class=body-cell><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)"></td>'
 				//+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
-				//+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" onchange="changeTaskPriority(this)"></td>' //oniput
-				+ '<td class=task-priority id=task-priority' + tasks[i].tid + '></td>' 
-				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
+				+ '<td class=priority-cell class=task-priority id=task-priority' + tasks[i].tid + '></td>' 
+				+ '<td class=status-cell><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
 		$("#task-priority"+tasks[i].tid).raty({

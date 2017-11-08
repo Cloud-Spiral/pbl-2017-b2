@@ -39,7 +39,8 @@
 				</ul>
 
 			</nav>
-			<canvas id="my_canvas" width="800" height="600"></canvas>
+			<!-- <canvas id="my_canvas" width="800" height="600"></canvas> -->
+			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
 		</div>
 		<div id="side">
 			<input id="message" type="text" placeholder="タスク内容">
@@ -50,16 +51,16 @@
 				<li><span class="yubi">close</span></li>
 			</ul>
 			<ul class="task-content">
-				<li>open
+				<li><!-- open -->
 					<div class="y_data_area">
 						<table class="task-table" id="open-tasks">
 							<thead>
 								<tr>
-									<th></th>
-									<th>タスク内容</th>
+									<th class="symbol-cell"></th>
+									<th class="body-cell">タスク内容</th>
 									<!-- <th>日付</th> -->
-									<th>優先度</th>
-									<th></th>
+									<th class="priority-cell">優先度</th>
+									<th class="status-cell"></th>
 								</tr>
 							</thead>
 							<tbody id="open-tbody">
@@ -69,15 +70,15 @@
 				</li>
 
 
-				<li class="hide">close
+				<li class="hide"><!-- close -->
 					<table class="task-table" id="close-tasks">
 						<thead>
 							<tr>
-								<th></th>
-								<th>タスク内容</th>
+								<th class="symbol-cell"></th>
+								<th class="body-cell">タスク内容</th>
 								<!-- <th>日付</th> -->
-								<th>優先度</th>
-								<th></th>
+								<th class="priority-cell">優先度</th>
+								<th class="status-cell"></th>
 							</tr>
 						</thead>
 						<tbody id="close-tbody">

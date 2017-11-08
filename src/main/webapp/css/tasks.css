@@ -8,16 +8,16 @@ table.task-table {
 	line-height: 1.5;
 }
 table.task-table th {
-	width: 320px;
-	padding: 10px;
+	/* width: 320px;*/
+	padding: 2px;
 	font-weight: bold;
 	vertical-align: top;
 	color: #fff;
 	background: #036;
 }
 table.task-table td {
-	width: 320px;
-	padding: 10px;
+/* 	width: 320px;*/
+	padding: 2px;
 	vertical-align: top;
 	border-bottom: 1px solid #ccc;
 	background: #FFFFFF;
@@ -26,9 +26,29 @@ table.task-table td {
 thead, tbody {
     display: block;
 }
+
 tbody {
     overflow-y: scroll;
     height: 150px;
+}
+
+.symbol-cell{
+	width: 30px;
+}
+
+.body-cell{
+	width: 270px;
+}
+.body-cell input{
+	width: 95%;
+}
+
+.priority-cell{
+	width: 102px;
+}
+
+.status-cell{
+	width: 50px;
 }
 
 .yubi {
@@ -36,12 +56,12 @@ tbody {
 }
 
 .task-content {
-	width: 520px;/*  todoリストのテーブルのサイズ */
+	width: 510px;/*  todoリストのテーブルのサイズ */
 }
 
 ul{ list-style:none;}
 .tab{overflow:hidden;}
 .tab li{background:#ccc; padding:5px 25px; float:left; margin-right:1px;}
 .tab li.select{background:#eee;}
-.task-content li{background:#eee; padding:20px;}
+.task-content li{background:#eee; padding:10px;}
 .hide {display:none;}

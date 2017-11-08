@@ -14,13 +14,13 @@ div#container{
 
 div#contents {
 /* 	padding-bottom: 140px; */
-	margin-right: -500px;
+	margin-right: -510px;
 	width: 100%;
 	float: left;
 }
 
 div#side {
-	width: 500px;
+	width: 510px;
 	float: right;
 }
 
