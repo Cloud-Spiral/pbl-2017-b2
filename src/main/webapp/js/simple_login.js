@@ -125,4 +125,5 @@ var login = function() {
 	if(password == pass) {
 		window.location.href = "../lama/";
 	}
+	else window.location.reload();
 }
