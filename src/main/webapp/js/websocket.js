@@ -11,7 +11,9 @@ window.onload = function() {
 	//ws = new WebSocket('wss://' + window.location.host + '/lama/ws');
 	
 	$.fn.raty.defaults.path="image";
-	$("#priority").raty();
+	$("#priority").raty({
+		score: 1
+	});
 	update();
 
 	// サーバからのメッセージ受信時の処理

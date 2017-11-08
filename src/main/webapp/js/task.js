@@ -10,7 +10,7 @@ var postTask = function() {
 	//var priority = $('#priority-hidden').val();
 	var priority = $('#priority').raty('score');
 	if(priority == "") {
-		priority = 0;
+		priority = 1;
 	}
 	$.ajax({
 		type : 'POST',
@@ -23,6 +23,7 @@ var postTask = function() {
 			//var message = {tid: data.tid, type: "post-task"};
 			//ws.send(JSON.stringify(message));
 			ws.send("post-task:"+data.tid);
+			
 		}
 	});
 }
