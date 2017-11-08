@@ -45,15 +45,15 @@ var insertTask = function(tid) {
 			var table = document.getElementById(task.status+"-tbody");
 			var tr = table.insertRow(taskNumber);
 			var td1 = tr.insertCell(-1),
-			td2 = tr.insertCell(-1),
+			//td2 = tr.insertCell(-1),
 			td3 = tr.insertCell(-1),
 			td4 = tr.insertCell(-1);
 			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
-			date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
+			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
 			priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
 			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
 			td1.innerHTML = body;
-			td2.innerHTML = date;
+			//td2.innerHTML = date;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
 		}
@@ -161,7 +161,7 @@ var createTaskTable = function(tasks) {
 			buttonStatus = "open";
 		$('<tr id=task-id' + tasks[i].tid +'>'
 				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)">'
-				+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
+				//+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
 				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)"></td>'
 				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
@@ -198,10 +198,10 @@ var tabChange = function() {
 	var index = $('.tab li').index(this);
 
 	//コンテンツを一度すべて非表示にし、
-	$('.content li').css('display', 'none');
+	$('.task-content li').css('display', 'none');
 
 	//クリックされたタブと同じ順番のコンテンツを表示します。
-	$('.content li').eq(index).css('display', 'block');
+	$('.task-content li').eq(index).css('display', 'block');
 
 	//一度タブについているクラスselectを消し、
 	$('.tab li').removeClass('select');
