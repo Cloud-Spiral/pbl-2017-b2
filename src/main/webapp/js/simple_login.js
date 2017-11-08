@@ -4,6 +4,8 @@ var endpoint = 'http://localhost:8080/lama/api';
 // document.write("<script type='text/javascript'
 // src='js/Moment.js'></script>");
 
+//一定時間ごとにユーザ一覧の更新
+
 // Userを登録
 var register = function() {
 

@@ -1,3 +1,19 @@
+//自動更新
+setInterval(function(){
+	$.ajax({
+		type: 'GET',
+		url: '/lama/api/users',
+		success: function(json){
+			$('#board').empty();			
+			for(var i=0; i<json.users.length;i++){
+				var str = '<p>' + json.users[i].name+  '</p>' ;
+				$('#board').append(str);
+			}
+		}
+	});
+}, 50);
+
+
 // forked from nekodon's "HTML5 でペイントツール" http://jsdo.it/nekodon/iaSK
 $(document).ready(function(){
 					
