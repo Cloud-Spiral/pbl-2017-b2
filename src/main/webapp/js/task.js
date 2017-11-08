@@ -1,4 +1,5 @@
 var endpoint = 'http://localhost:8080/lama/api';
+
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/lama/api';
 document.write("<script type='text/javascript' src='js/Moment.js'></script>");
@@ -6,11 +7,11 @@ document.write("<script type='text/javascript' src='js/Moment.js'></script>");
 //タスクを投稿
 var postTask = function() {
 	var message = $('#message').val();
-	var priority = $('#priority').val();
-	if(priority == "")　{
+	//var priority = $('#priority-hidden').val();
+	var priority = $('#priority').raty('score');
+	if(priority == "") {
 		priority = 0;
 	}
-
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/tasks',
@@ -50,12 +51,19 @@ var insertTask = function(tid) {
 			td4 = tr.insertCell(-1);
 			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
-			priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" oninput="changeTaskPriority(this)">',
+			//priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" onchange="changeTaskPriority(this)">', //oninpupt
+			priority = '<class=task-priority id=task-priority' + task.tid + '>', //oninpupt
 			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
 			td1.innerHTML = body;
 			//td2.innerHTML = date;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
+			$("#task-priority"+task.tid).raty({
+				number:5,
+				score: task.priority
+			});
+			if(task.status == "open")
+				changeColor(task);
 		}
 	});
 }
@@ -81,7 +89,6 @@ var updateTaskBody = function(tid) {
 //タスクの状態を切り替える tidを受け取る
 var changeTaskStatus = function(button) {
 	var tid = button.id.replace("task-status","");
-	console.log(button)
 	//var message = {tid: tid, type: "delete-task"};
 	//ws.send(JSON.stringify(message));
 	ws.send("delete-task:"+tid);
@@ -162,10 +169,15 @@ var createTaskTable = function(tasks) {
 		$('<tr id=task-id' + tasks[i].tid +'>'
 				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)">'
 				//+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
-				+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" oninput="changeTaskPriority(this)"></td>'
+				//+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" onchange="changeTaskPriority(this)"></td>' //oniput
+				+ '<td class=task-priority id=task-priority' + tasks[i].tid + '></td>' 
 				+ '<td><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
+		$("#task-priority"+tasks[i].tid).raty({
+			number:5,
+			score: tasks[i].priority
+		});
 		if(tasks[i].status == "open")
 			changeColor(tasks[i]);
 	}
@@ -212,7 +224,7 @@ var tabChange = function() {
 
 
 //var l = window.setInterval(update, 10000);
-
+//
 $('#submit-task').click(postTask);
 $('.tab li').click(tabChange);
 

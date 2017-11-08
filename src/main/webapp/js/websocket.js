@@ -10,7 +10,8 @@ window.onload = function() {
 	//　本番環境用
 	//ws = new WebSocket('wss://' + window.location.host + '/lama/ws');
 	
-	
+	$.fn.raty.defaults.path="image";
+	$("#priority").raty();
 	update();
 
 	// サーバからのメッセージ受信時の処理
