@@ -22,7 +22,41 @@ public class UserModel extends BaseModel {
     private MongoCollection<Document> users(){
         return super.collection("Users");
     }
-
+    
+    // Userが登録されているか確認する
+    /*public boolean containUser(String name) {
+    	if(users().find().filter(regex("name", Pattern.compile(name))) != null) return true;
+    	return false;
+    }*/
+    public Users findUsers(String name) {
+    	Users users;
+    	users = new Users( toList( users().find().filter( regex("name", Pattern.compile(name)) ).sort(descending("id")) ));
+    	//if(users != null) {
+    		return users;
+    	//}
+    	//else return null;;
+    }
+    
+    public Users findUsers() {
+    	Users users;
+    	users = new Users( toList( users().find().sort(descending("id")) ) );
+    	return users;
+    }
+    
+    public User findUser(String name) {
+    	Users users;
+    	users = findUsers(name);
+    	
+    	if(users.size() == 0) return null;
+    	
+    	return users.users().get(0);
+    }
+    
+    public boolean isContainUser(String name) {
+    	Users users = findUsers(name);
+    	if(users.size() > 0) return true;
+    	else return false;
+    }
     // userを登録する機構
     public User register(User user) {
         //user.setUserName(user.getUserName());
@@ -34,5 +68,23 @@ public class UserModel extends BaseModel {
     private Document toDocument(User user){
         return new Document()
             .append("name", user.getName());
+    }
+    
+    // Userへの変換
+    private User toUser(Document document) {
+    	if(document == null)
+    		return null;
+    	return new User(
+    			document.getString("name")
+    			);
+    }
+    
+    // List形式への変換
+    private List<User> toList(FindIterable<Document> iterable) {
+    	List<User> list = new ArrayList<>();
+    	for(Document document: iterable) {
+    		list.add(toUser(document));
+    	}
+    	return list;
     }
 }
