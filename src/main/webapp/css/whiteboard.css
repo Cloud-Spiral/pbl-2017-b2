@@ -102,10 +102,3 @@ ul li {
   list-style-type: none!important;
 }
 
-ul li:before {/*疑似要素*/
-  font-family: FontAwesome;
-  content: "\f075";/*アイコンの種類*/
-  position: absolute;
-  left : 1em; /*左端からのアイコンまで*/
-  color: skyblue; /*アイコン色*/
-}

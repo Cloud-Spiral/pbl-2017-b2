@@ -6,12 +6,31 @@ setInterval(function(){
 		success: function(json){
 			$('#board').empty();			
 			for(var i=0; i<json.users.length;i++){
-				var str = '<li>' + json.users[i].name+  '</li>' ;
+				var str = '<li>' + (i+1) + ' ' + json.users[i].name+  '</li>' ;
 				$('#board').append(str);
 			}
 		}
 	});
 }, 50);
+
+//参加しているユーザの中から抽選で一人を決定する
+var startLottery = function() {
+	$.ajax({
+		type: 'GET',
+		url: '/lama/api/users',
+		success: function(json){			
+			var min = 1;
+			var max = json.users.length;
+			var ran = Math.floor( Math.random() * (max + 1 - min) ) + min ;
+			
+			$('#lotterybox').empty();		
+			var str = '<input type=text id="lotterybox" size="10" value="'+ json.users[ran-1].name +'"></input>';
+			$('#lotterybox').append(str);
+
+		}
+	});
+	
+}
 
 
 // forked from nekodon's "HTML5 でペイントツール" http://jsdo.it/nekodon/iaSK
