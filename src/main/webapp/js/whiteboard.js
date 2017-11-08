@@ -6,7 +6,7 @@ setInterval(function(){
 		success: function(json){
 			$('#board').empty();			
 			for(var i=0; i<json.users.length;i++){
-				var str = '<p>' + json.users[i].name+  '</p>' ;
+				var str = '<li>' + json.users[i].name+  '</li>' ;
 				$('#board').append(str);
 			}
 		}
