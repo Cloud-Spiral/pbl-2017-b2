@@ -12,6 +12,7 @@ window.onload = function() {
 	
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
+		number: 5,
 		score: 1
 	});
 	update();

@@ -9,9 +9,6 @@ var postTask = function() {
 	var message = $('#message').val();
 	//var priority = $('#priority-hidden').val();
 	var priority = $('#priority').raty('score');
-	if(priority == "") {
-		priority = 1;
-	}
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/tasks',
@@ -61,7 +58,10 @@ var insertTask = function(tid) {
 			td4.innerHTML = status;
 			$("#task-priority"+task.tid).raty({
 				number:5,
-				score: task.priority
+				score: task.priority,
+				click: function(score, evt) {
+					changeTaskPriority(this, score)
+				}
 			});
 			if(task.status == "open")
 				changeColor(task);
@@ -121,7 +121,7 @@ var changeTaskBody = function(task) {
 	//if(key == 13) {
 		var tid = task.id.replace("task-body","");
 		var body = $('#task-body'+tid).val();
-		var priority = $('#task-priority'+tid).val();
+		var priority = $('#task-priority'+tid).raty('score');
 		if(body == "") return;
 		$.ajax({
 			type : 'PUT',
@@ -139,12 +139,10 @@ var changeTaskBody = function(task) {
 }
 
 //taskの優先度を変更
-var changeTaskPriority = function(task) {
-	var key = window.event.keyCode;
+var changeTaskPriority = function(task, priority) {
 	var tid = task.id.replace("task-priority","");
 	var body = $('#task-body'+tid).val();
-	var priority = $('#task-priority'+tid).val();
-	if(priority == "") return;
+	//var priority = $('#task-priority'+tid).raty('score');
 	ws.send("delete-task:"+tid);
 	$.ajax({
 		type : 'PUT',
@@ -177,7 +175,10 @@ var createTaskTable = function(tasks) {
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
 		$("#task-priority"+tasks[i].tid).raty({
 			number:5,
-			score: tasks[i].priority
+			score: tasks[i].priority,
+			click: function(score, evt) {
+				changeTaskPriority(this, score)
+			}
 		});
 		if(tasks[i].status == "open")
 			changeColor(tasks[i]);
