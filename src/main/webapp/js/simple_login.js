@@ -27,16 +27,17 @@ var register = function() {
 	if (!confirmCheck())
 		return;
 	
-	/*if( !checkContain() ) {
+	if( !checkContain() ) {
 		console.log("Contain01");
 		return;
-	}*/
+	}
 	
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/users',
 		data : {
-			name : userName
+			name : userName,
+			password : password
 		},
 		success : function() {
 				// flag = true;
@@ -91,4 +92,37 @@ var checkContain = function() {
 	});
 	
 	return error;
+}
+
+// login
+var login = function() {
+	var userName = $('#userName').val();
+	//var email = $('#email').val();
+	var password = $('#password').val();
+	var pass;
+	
+	$.ajax({
+		type : 'GET',
+		url : endpoint + '/users/'+userName,
+		data : {
+			name : userName
+		},
+		async: false
+	}).fail(function(response) {
+		// 含まれていない
+		console.log(response);
+		console.log("Not contain");
+	}).done(function(response) {
+		// 含まれている
+		console.log(response);
+		console.log("Contain00");
+		pass = response['password'];
+	});
+	
+	console.log(password);
+	console.log(pass);
+	
+	if(password == pass) {
+		window.location.href = "../lama/";
+	}
 }

@@ -67,7 +67,8 @@ public class UserModel extends BaseModel {
     // Documentへの変換
     private Document toDocument(User user){
         return new Document()
-            .append("name", user.getName());
+            .append("name", user.getName())
+            .append("password", user.getPassword());
     }
     
     // Userへの変換
@@ -75,7 +76,8 @@ public class UserModel extends BaseModel {
     	if(document == null)
     		return null;
     	return new User(
-    			document.getString("name")
+    			document.getString("name"),
+    			document.getString("password")
     			);
     }
     

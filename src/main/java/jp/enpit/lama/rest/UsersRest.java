@@ -46,10 +46,10 @@ public class UsersRest {
     		User user = model.findUser(name);
     		//System.out.println(user);
     		
-    		/*if(user == null) {
+    		if(user == null) {
     			//System.out.println(user);
     			return errorMessage(400, "That user is no registration");
-    		}*/
+    		}
     		return Response.status(200)
     				.entity(user)
     				.build();
@@ -58,7 +58,7 @@ public class UsersRest {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postUser(@FormParam("name") String name){
+    public Response postUser(@FormParam("name") String name, @FormParam("password") String password){
     	//System.out.println(name);
         if(name == null || name.trim().equals(""))
             return errorMessage(400, "Empty name");
@@ -66,7 +66,7 @@ public class UsersRest {
             return errorMessage(400, "Too long name");
             
         try(UserModel model = createModel()){
-            User user = model.register(new User(name));
+            User user = model.register(new User(name, password));
             return Response.status(201)
                 .entity(user)
                 .build();

@@ -5,12 +5,20 @@ import javax.xml.bind.annotation.XmlElement;
 public class User {
     @XmlElement(name="name")
         private String name;
+    
+    private String password;
 
     public User(){
         setName("ゲスト");
+        setPassword("password");
     }
     public User(String name) {
         setName(name);
+        setPassword("password");
+    }
+    public User(String name, String password) {
+    	setName(name);
+    	setPassword(password);
     }
 
    public void setName(String name) {
@@ -18,5 +26,11 @@ public class User {
    }
    public String getName() {
 	   return this.name;
+   }
+   public void setPassword(String password) {
+	   this.password = password;
+   }
+   public String getPassword() {
+	   return this.password;
    }
 }
