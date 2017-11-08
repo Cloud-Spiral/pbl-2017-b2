@@ -44,16 +44,16 @@ var insertTask = function(tid) {
 			var table = document.getElementById(task.status+"-tbody");
 			var tr = table.insertRow(taskNumber);
 			var td1 = tr.insertCell(-1),
-			//td2 = tr.insertCell(-1),
+			td2 = tr.insertCell(-1),
 			td3 = tr.insertCell(-1),
 			td4 = tr.insertCell(-1);
-			var body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
+			var symbol = '<img src=image/default-symbol.png id=task-symbol' + task.tid + '>',
+			body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
-			//priority = '<input class=task-priority id=task-priority' + task.tid + ' value=' + task.priority +' type="number" onchange="changeTaskPriority(this)">', //oninpupt
 			priority = '<class=task-priority id=task-priority' + task.tid + '>', //oninpupt
 			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
-			td1.innerHTML = body;
-			//td2.innerHTML = date;
+			td1.innerHTML = symbol;
+			td2.innerHTML = body;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
 			$("#task-priority"+task.tid).raty({
@@ -63,8 +63,9 @@ var insertTask = function(tid) {
 					changeTaskPriority(this, score)
 				}
 			});
-			if(task.status == "open")
-				changeColor(task);
+			if(task.status == "open") {
+				changeSymbol(task);
+			}
 		}
 	});
 }
@@ -105,13 +106,12 @@ var changeTaskStatus = function(button) {
 	});
 }
 
-//セルの色を変える
-var changeColor = function(task) {
+//シンボルを変える
+var changeSymbol = function(task) {
 	var currentDate = moment();
 	var taskDate = moment(task.date);
 	if(currentDate.diff(taskDate, "seconds") > 10) { //minutes１分以上たったら
-		var taskId = '#task-id' + task.tid;
-		$(taskId).css('background-color', 'red');
+		document.getElementById("task-symbol"+task.tid).src = "image/warning-symbol.png";
 	}
 }
 
@@ -166,7 +166,8 @@ var createTaskTable = function(tasks) {
 		if(tasks[i].status == "close")
 			buttonStatus = "open";
 		$('<tr id=task-id' + tasks[i].tid +'>'
-				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)">'
+				+ '<td><img src="image/default-symbol.png" id=task-symbol' + tasks[i].tid + '></td>'
+				+ '<td><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeyup="changeTaskBody(this)"></td>'
 				//+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
 				//+ '<td><input class=task-priority id=task-priority' + tasks[i].tid + ' value=' + tasks[i].priority +' type="number" onchange="changeTaskPriority(this)"></td>' //oniput
 				+ '<td class=task-priority id=task-priority' + tasks[i].tid + '></td>' 
@@ -180,8 +181,9 @@ var createTaskTable = function(tasks) {
 				changeTaskPriority(this, score)
 			}
 		});
-		if(tasks[i].status == "open")
-			changeColor(tasks[i]);
+		if(tasks[i].status == "open") {
+			changeSymbol(tasks[i]);
+		}
 	}
 } 
 

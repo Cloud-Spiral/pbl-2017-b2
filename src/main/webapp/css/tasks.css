@@ -20,14 +20,8 @@ table.task-table td {
 	padding: 10px;
 	vertical-align: top;
 	border-bottom: 1px solid #ccc;
-}
-table#close-tasks td {
-	width: 320px;
-	padding: 10px;
-	vertical-align: top;
-	border-bottom: 1px solid #ccc;
 	background: #FFFFFF;
-} 
+}
 
 thead, tbody {
     display: block;
