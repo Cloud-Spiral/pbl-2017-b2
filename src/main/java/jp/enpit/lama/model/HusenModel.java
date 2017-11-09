@@ -82,6 +82,11 @@ public class HusenModel extends BaseModel{
         return list;
     }
     
+    public void updateText(int hid,String text){
+    	husens().updateOne(eq("hid", hid),new Document("$set",new Document("text",text)));
+    	System.out.println("updateText "+hid);
+    }
+    
     public void updatePosition(int hid,String xPosition,String yPosition){
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("xPosition",xPosition)));
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("yPosition",yPosition)));

@@ -111,6 +111,11 @@ public class HusensRest {
             	return Response.status(201)
                         .build();
         	}
+        	if(text != null){
+        		model.updateText(hid,text);
+        		return Response.status(201)
+                        .build();
+        	}
         	
         	return Response.status(400).build();
         }

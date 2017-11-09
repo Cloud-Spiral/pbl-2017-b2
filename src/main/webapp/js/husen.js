@@ -8,7 +8,6 @@ var husenCount = 1;
 var endpoint = "http://localhost:8080/lama/api"
 	
 window.onload = loadHusens();
-
 function loadHusens(){
 	$.ajax({
 		type: 'GET',
@@ -31,6 +30,22 @@ function loadHusens(){
 	});
 }
 
+function updateText(name,count){
+	$.ajax({
+		type : 'PUT',
+		url : endpoint+'/husens',
+		data: {
+			hid: count,
+			text: document.getElementsByName(name)[0].value
+		},
+		success : function(good) {
+			console.log('text-a');
+		},
+		error: function(good) {
+			console.log('text-b');
+		}
+	});
+}
 function goodButtonCounter(name,count){
 	$.ajax({
 		type : 'PUT',
@@ -153,34 +168,32 @@ function draggable(count, handle, container) {
 		offsetY = event.screenY - rect.top;
 		cont = container;
 		isMouseDown = true;
-		isMouseMove = false;
 	}
 
 	document.onmouseup = function() {
-		isMouseDown = false;
-		if(isMouseMove){
+		if (isMouseDown) {
 			$.ajax({
 				type : 'PUT',
-				url : endpoint+'/husens',
-				data: {
-					hid: parseInt(cont.id.substring(9)),
-					xPosition: cont.style.left,
-					yPosition: cont.style.top
+				url : endpoint + '/husens',
+				data : {
+					hid : parseInt(cont.id.substring(9)),
+					xPosition : cont.style.left,
+					yPosition : cont.style.top
 				},
 				success : function(data) {
 					console.log('move-a');
-					//ws.send("post-task:"+tid);
+					// ws.send("post-task:"+tid);
 				},
-				error: function(data) {
+				error : function(data) {
 					console.log('move-b');
-					//ws.send("post-task:"+tid);
+					// ws.send("post-task:"+tid);
 				}
 			});
 		}
+		isMouseDown = false;
 	}
 	document.onmousemove = function(event) {
 		if (isMouseDown == true) {
-			isMouseMove = true;
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
 		}
@@ -275,6 +288,7 @@ function Card() {
 			x.container.id = "container"+String(uniHusenCount);
 			x.handle.id = "handle"+String(uniHusenCount);
 			x.txtarea.name = "txt"+String(uniHusenCount);
+			x.txtarea.onblur = function(){updateText(this.name,uniHusenCount)}
 			x.buttonGood.name = "button" + String(uniHusenCount*4-3);
 			x.buttonBad.name = "button" + String(uniHusenCount*4-2);
 			x.buttonColor.name = "button" + String(uniHusenCount*4-1);
@@ -283,7 +297,7 @@ function Card() {
 			x.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
 			x.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
 			x.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
-			console.log(uniHusenCount);
+			//console.log(uniHusenCount);
 			draggable(uniHusenCount,x.handle, x.container);
 		},
 		error: function(json){
@@ -319,7 +333,8 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 			"display:block;resize:vertical;" +
 			"border:0px;" +
 			"font-size:20px;font-family:Arial";
-
+	this.txtarea.onblur = function(){updateText(this.name,uniHusenCount)}
+	
 	var height = this.txtarea.style.height;
 
 	this.buttonContainer = document.createElement('div');
@@ -362,6 +377,6 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.container.appendChild(this.buttonContainer);
 	
 	document.body.appendChild(this.container);
-	console.log(uniHusenCount);
+	//console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
 }
