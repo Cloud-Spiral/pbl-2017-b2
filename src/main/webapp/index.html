@@ -15,7 +15,7 @@
 <body>
 
 <!--
-<nav id="interface">
+<nav id="interface" >
     <ul id="swbutton">
         <li id="minus">-</li>
         <li id="plus">+</li>
@@ -34,25 +34,24 @@
     
 </nav>
 
-<canvas id="my_canvas" width="800" height="600"></canvas>
+<canvas id="my_canvas"  height="600"></canvas>
+
 -->
+
 	<div id="userslist" style="width: 20%; float: left;">
 		
 		<ul>
 			<font size="5"> ユーザ一覧 </font>
 			<div id="board"></div>
-			
-		<form>
-		
-		<br>
-		<div id="lotterybox">
-			<input type=text size="10" value="てすと"></input>
-		</div>
-		<input type=button value="抽選開始" onClick="startLottery()">
-		</form>
-
+			<select id="lotterybox"> </select>
+			<input type=button value="抽選開始" onClick="startLottery()">
 		</ul>
 	</div>
+
+
+
+
+
 	<script src="js/jquery-3.2.1.js"></script>
 	<script src="js/whiteboard.js"></script>
 
