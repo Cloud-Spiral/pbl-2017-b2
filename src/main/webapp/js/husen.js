@@ -160,7 +160,7 @@ function Card() {
 		url : endpoint + '/husens',
 		data : {
 			cid : uniHusenCount,
-			text : String(this.txtarea.value),
+			text : 'test',//String(this.txtarea.value)
 			xPosition : String(this.container.style.left),
 			yPosition : String(this.container.style.top),
 			height : String(this.txtarea.style.height),
@@ -169,10 +169,12 @@ function Card() {
 			color : 0,
 			canEdit : 0
 		},
-		success: function(){
+		success: function(json){
+			console.log(json);
 			console.log('a');
 		},
-		error: function(){
+		error: function(json){
+			console.log(json);
 			console.log('b');
 		}
 	});

@@ -31,9 +31,10 @@ public class LikesRest {
         try(LikeModel model = createModel()){
             Like like = new Like();
             model.register(like);
-            return Response.status(201)
-                    .entity(like)
-                    .build();
+        	System.out.println("yurin2");
+        	Response q = Response.status(201).entity(like).build();
+        	System.out.println(q);
+            return q;
         }
     }
 

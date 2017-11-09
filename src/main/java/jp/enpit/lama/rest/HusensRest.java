@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jp.enpit.lama.entities.ErrorMessage;
 import jp.enpit.lama.entities.Husen;
 import jp.enpit.lama.model.HusenModel;
 @Path("/husens")
@@ -21,9 +20,12 @@ public class HusensRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHusens(){
         try(HusenModel model = createModel()){
-            return Response.status(200)
+        	System.out.println("yurin0");
+        	Response q = Response.status(200)
                     .entity(model.list())
                     .build();
+        	System.out.println(q);
+            return q;
         }
     }
 	
@@ -40,7 +42,6 @@ public class HusensRest {
     		@FormParam("color") int color,
     		@FormParam("canEdit") int canEdit
     		){
-
         try(HusenModel model = createModel()){
         	Husen husen = new Husen(cid,
     				text,
@@ -52,9 +53,11 @@ public class HusensRest {
     				color,
     				canEdit);
             model.register(husen);
-            return Response.status(201)
-                    .entity(husen)
-                    .build();
+        	System.out.println("yurin555");
+        	System.out.println(husen.toString());
+        	Response q = Response.status(201).entity(husen).build();
+        	System.out.println(q);
+            return q;
         }
     }
     

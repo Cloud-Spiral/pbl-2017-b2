@@ -24,6 +24,10 @@ public class Husen {
     @XmlElement(name="canEdit")
     private int canEdit;
 
+    public Husen(){
+    	
+    }
+    
     public Husen(int cid){
     	this.cid = cid;
     }
@@ -80,19 +84,54 @@ public class Husen {
 	public void setCid(Integer cid){
 		this.cid = cid;
 	}
-	
-	@Override
-	public String toString(){
-		String str="{";
-		str = str + "cid = "+ cid+
-        " : text = \""+ text+
-        "\" : xPosition = \""+ xPosition+
-        "\" : yPosition = \""+ yPosition+
-        "\" : height = \""+ height+
-        "\" : good = "+ good+
-        " : bad = "+ bad+
-        " : color = "+ color+
-        " : canEdit = "+ canEdit +"}";
-		return str;
+
+	public void setCid(int cid) {
+		this.cid = cid;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setxPosition(String xPosition) {
+		this.xPosition = xPosition;
+	}
+
+	public void setyPosition(String yPosition) {
+		this.yPosition = yPosition;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public void setGood(int good) {
+		this.good = good;
+	}
+
+	public void setBad(int bad) {
+		this.bad = bad;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public void setCanEdit(int canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+//	public String toString(){
+//		String str="{";
+//		str = str + "cid = "+ cid+
+//        " : text = \""+ text+
+//        "\" : xPosition = \""+ xPosition+
+//        "\" : yPosition = \""+ yPosition+
+//        "\" : height = \""+ height+
+//        "\" : good = "+ good+
+//        " : bad = "+ bad+
+//        " : color = "+ color+
+//        " : canEdit = "+ canEdit +"}";
+//		return str;
+//	}
 }
