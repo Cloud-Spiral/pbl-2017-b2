@@ -7,6 +7,8 @@ import static com.mongodb.client.model.Sorts.descending;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.FormParam;
+
 import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
@@ -51,6 +53,7 @@ public class HusenModel extends BaseModel{
     }
 
     public void deleteComment(Integer hid){
+    	System.out.println("delete "+hid);
         husens().deleteOne(eq("hid", hid));
     }
 
@@ -58,6 +61,7 @@ public class HusenModel extends BaseModel{
         husen.setHid(latestId() + 1);
         husens().insertOne(toDocument(husen));
         latesthids().insertOne(new Document("hid", husen.getHid()));
+        System.out.println("insert "+husen.getHid());
         return husen;
     }
     
@@ -66,21 +70,43 @@ public class HusenModel extends BaseModel{
     }
     
     public FindIterable<Document> list(){
-
-        System.out.println("a");
-        return husens().find();
-               // .sort(ascending("hid"));
+        return husens().find()
+              .sort(ascending("hid"));
     }
     
     private List<Husen> toList(FindIterable<Document> iterable){
-        
-
-        System.out.println("b");
         List<Husen> list = new ArrayList<>();
         for(Document document: iterable){
             list.add(toHusen(document));
         }
         return list;
+    }
+    
+    public void updateColor(int hid,int color){
+    	husens().updateOne(eq("hid", hid),new Document("$set",new Document("color",color)));
+    	System.out.println("updatecolor "+hid);
+    }
+    
+    public int updateGood(int hid){
+    	husens().updateOne(eq("hid", hid),new Document("$inc",new Document("good",1)));
+    	System.out.println("updatecolor "+hid);
+    	for(Husen x: findHusens().husens()){
+    		if(x.getHid() == hid){
+    			return x.getGood();
+    		}
+    	}
+    	return 0;
+    }
+    
+    public int updateBad(int hid){
+    	husens().updateOne(eq("hid", hid),new Document("$inc",new Document("bad",1)));
+    	System.out.println("updatecolor "+hid);
+    	for(Husen x: findHusens().husens()){
+    		if(x.getHid() == hid){
+    			return x.getBad();
+    		}
+    	}
+    	return 0;
     }
     
     private Document toDocument(Husen husen){
@@ -108,5 +134,17 @@ public class HusenModel extends BaseModel{
                 document.getInteger("bad"),
                 document.getInteger("color"),
                 document.getInteger("canEditPerson"));
+    }
+    
+    public void changeStatus(@FormParam("hid") Integer hid,
+    		@FormParam("text") String text,
+    		@FormParam("xPosition") String xPosition,
+    		@FormParam("yPosition") String yPosition,
+    		@FormParam("height") String height,
+    		@FormParam("good") int good,
+    		@FormParam("bad") int bad,
+    		@FormParam("color") int color,
+    		@FormParam("canEditPerson") int canEdit){
+    	
     }
 }
