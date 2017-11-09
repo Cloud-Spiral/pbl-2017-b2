@@ -20,7 +20,6 @@ public class HusensRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHusens(){
         try(HusenModel model = createModel()){
-        	System.out.println("yurin0");
         	Response q = Response.status(200)
                     .entity(model.list())
                     .build();
@@ -32,7 +31,6 @@ public class HusensRest {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response postHusen(
-    		@FormParam("cid") int cid,
     		@FormParam("text") String text,
     		@FormParam("xPosition") String xPosition,
     		@FormParam("yPosition") String yPosition,
@@ -40,10 +38,10 @@ public class HusensRest {
     		@FormParam("good") int good,
     		@FormParam("bad") int bad,
     		@FormParam("color") int color,
-    		@FormParam("canEdit") int canEdit
+    		@FormParam("canEditPerson") int canEdit
     		){
         try(HusenModel model = createModel()){
-        	Husen husen = new Husen(cid,
+        	Husen husen = new Husen(
     				text,
     				xPosition,
     				yPosition,
@@ -53,10 +51,9 @@ public class HusensRest {
     				color,
     				canEdit);
             model.register(husen);
-        	System.out.println("yurin555");
-        	System.out.println(husen.toString());
+        	//System.out.println(husen.toString());
         	Response q = Response.status(201).entity(husen).build();
-        	System.out.println(q);
+        	//System.out.println(q);
             return q;
         }
     }

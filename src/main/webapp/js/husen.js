@@ -5,6 +5,7 @@ var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
+var endpoint = "http://localhost:8080/lama/api"
 
 function buttonCounter(name,txt){
 	document.getElementsByName(name)[0].value = txt;
@@ -143,7 +144,6 @@ function Card() {
 	this.buttonRemove.style = "width:25%;height:20px;vertical-align:top";
 	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
 
-	//zyunban you kousatu
 	this.container.appendChild(this.handle);
 	this.container.appendChild(this.txtarea);
 	this.buttonContainer.appendChild(this.buttonRemove);
@@ -160,22 +160,22 @@ function Card() {
 		url : endpoint + '/husens',
 		data : {
 			cid : uniHusenCount,
-			text : 'test',//String(this.txtarea.value)
+			text : String(this.txtarea.value),
 			xPosition : String(this.container.style.left),
 			yPosition : String(this.container.style.top),
 			height : String(this.txtarea.style.height),
 			good : 0,
 			bad : 0,
 			color : 0,
-			canEdit : 0
+			canEdit : true
 		},
 		success: function(json){
-			console.log(json);
-			console.log('a');
+//			console.log(json);
+//			console.log('a');
 		},
 		error: function(json){
-			console.log(json);
-			console.log('b');
+//			console.log(json);
+//			console.log('b');
 		}
 	});
 	return this.container;

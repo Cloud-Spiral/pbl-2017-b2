@@ -1,12 +1,10 @@
 package jp.enpit.lama.entities;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 public class Husen {
-    @XmlElement(name="cid")
-    private int cid;
+    @XmlElement(name="hid")
+    private int hid;
     @XmlElement(name="text")
     private String text;
     @XmlElement(name="xPosition")
@@ -21,20 +19,13 @@ public class Husen {
     private int bad;
     @XmlElement(name="color")
     private int color;
-    @XmlElement(name="canEdit")
-    private int canEdit;
+    @XmlElement(name="canEditPerson")
+    private int canEditPerson;
 
-    public Husen(){
-    	
-    }
+    public Husen() {}
     
-    public Husen(int cid){
-    	this.cid = cid;
-    }
-    
-    public Husen(int cid,String text,String xPosition,String yPosition,String height,
-    		int good, int bad, int color, int canEdit){
-        this.cid = cid;
+    public Husen(String text, String xPosition, String yPosition, String height,
+            int good, int bad, int color,int canEditPerson){
         this.text = text;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -42,7 +33,13 @@ public class Husen {
         this.good = good;
         this.bad = bad;
         this.color = color;
-        this.canEdit = canEdit;
+        this.canEditPerson = canEditPerson;
+    }
+    
+    public Husen(int hid, String text, String xPosition, String yPosition, String height,
+    		int good, int bad, int color, int canEditPerson){
+        this(text, xPosition, yPosition, height, good, bad, color, canEditPerson);
+        setHid(hid);
     }
 
     public String getText() {
@@ -73,20 +70,35 @@ public class Husen {
 		return color;
 	}
 
-	public int getCanEdit() {
-		return canEdit;
+	public int getCanEditPerson() {
+		return canEditPerson;
 	}
 
-	public int getCid(){
-        return cid;
+	public int getHid(){
+        return hid;
     }
 	
-	public void setCid(Integer cid){
-		this.cid = cid;
+	public void setHid(Integer hid){
+		this.hid = hid;
 	}
 
-	public void setCid(int cid) {
-		this.cid = cid;
+	public void setHid(int hid) {
+		this.hid = hid;
+	}
+	
+	@Override
+	public String toString(){
+		String str="{";
+		str = str + "hid = "+ hid+
+        " : text = \""+ text+
+        "\" : xPosition = \""+ xPosition+
+        "\" : yPosition = \""+ yPosition+
+        "\" : height = \""+ height+
+        "\" : good = "+ good+
+        " : bad = "+ bad+
+        " : color = "+ color+
+        " : canEdit = "+ canEditPerson +"}";
+		return str;
 	}
 
 	public void setText(String text) {
@@ -117,21 +129,7 @@ public class Husen {
 		this.color = color;
 	}
 
-	public void setCanEdit(int canEdit) {
-		this.canEdit = canEdit;
+	public void setCanEditPerson(int canEdit) {
+		this.canEditPerson = canEdit;
 	}
-	
-//	public String toString(){
-//		String str="{";
-//		str = str + "cid = "+ cid+
-//        " : text = \""+ text+
-//        "\" : xPosition = \""+ xPosition+
-//        "\" : yPosition = \""+ yPosition+
-//        "\" : height = \""+ height+
-//        "\" : good = "+ good+
-//        " : bad = "+ bad+
-//        " : color = "+ color+
-//        " : canEdit = "+ canEdit +"}";
-//		return str;
-//	}
 }
