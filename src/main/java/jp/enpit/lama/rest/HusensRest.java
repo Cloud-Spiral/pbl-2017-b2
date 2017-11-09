@@ -19,11 +19,13 @@ public class HusensRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHusens(){
+    	 System.out.println("d");
         try(HusenModel model = createModel()){
+        	 System.out.println("c");
         	Response q = Response.status(200)
-                    .entity(model.list())
+                    .entity(model.findHusens())
                     .build();
-        	System.out.println(q);
+        	//System.out.println(q);
             return q;
         }
     }

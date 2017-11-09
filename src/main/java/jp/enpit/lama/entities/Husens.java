@@ -36,12 +36,4 @@ public class Husens {
     public Husen[] toArray(){
         return list.toArray(new Husen[size()]);
     }
-    
-    public String toString(){
-    	String str="";
-    	for(Husen x:list){
-    		str = str + x.toString();
-    	}
-    	return str;
-    }
 }

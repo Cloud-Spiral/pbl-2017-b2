@@ -159,7 +159,6 @@ function Card() {
 		type : 'POST',
 		url : endpoint + '/husens',
 		data : {
-			cid : uniHusenCount,
 			text : String(this.txtarea.value),
 			xPosition : String(this.container.style.left),
 			yPosition : String(this.container.style.top),
@@ -170,12 +169,12 @@ function Card() {
 			canEdit : true
 		},
 		success: function(json){
-//			console.log(json);
-//			console.log('a');
+			console.log(json);
+			console.log('a');
 		},
 		error: function(json){
-//			console.log(json);
-//			console.log('b');
+			console.log(json);
+			console.log('b');
 		}
 	});
 	return this.container;

@@ -66,11 +66,16 @@ public class HusenModel extends BaseModel{
     }
     
     public FindIterable<Document> list(){
-        return husens().find()
-                .sort(ascending("hid"));
+
+        System.out.println("a");
+        return husens().find();
+               // .sort(ascending("hid"));
     }
     
     private List<Husen> toList(FindIterable<Document> iterable){
+        
+
+        System.out.println("b");
         List<Husen> list = new ArrayList<>();
         for(Document document: iterable){
             list.add(toHusen(document));
