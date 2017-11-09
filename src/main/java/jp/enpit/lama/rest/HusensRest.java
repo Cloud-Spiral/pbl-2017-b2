@@ -106,6 +106,11 @@ public class HusensRest {
         				.entity(String.valueOf(badCount))
                         .build();
         	}
+        	if(xPosition != null && yPosition != null){
+        		model.updatePosition(hid,xPosition,yPosition);
+            	return Response.status(201)
+                        .build();
+        	}
         	
         	return Response.status(400).build();
         }

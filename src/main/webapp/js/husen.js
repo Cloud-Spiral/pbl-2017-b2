@@ -143,7 +143,7 @@ function getBackColor(count){
 	return "#AEFFAE";
 }
 
-function draggable(handle, container) {
+function draggable(count, handle, container) {
 	container.style.position = "absolute";
 
 	handle.onmousedown = function(event) {
@@ -153,13 +153,34 @@ function draggable(handle, container) {
 		offsetY = event.screenY - rect.top;
 		cont = container;
 		isMouseDown = true;
+		isMouseMove = false;
 	}
 
 	document.onmouseup = function() {
 		isMouseDown = false;
+		if(isMouseMove){
+			$.ajax({
+				type : 'PUT',
+				url : endpoint+'/husens',
+				data: {
+					hid: parseInt(cont.id.substring(9)),
+					xPosition: cont.style.left,
+					yPosition: cont.style.top
+				},
+				success : function(data) {
+					console.log('move-a');
+					//ws.send("post-task:"+tid);
+				},
+				error: function(data) {
+					console.log('move-b');
+					//ws.send("post-task:"+tid);
+				}
+			});
+		}
 	}
 	document.onmousemove = function(event) {
 		if (isMouseDown == true) {
+			isMouseMove = true;
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
 		}
@@ -234,7 +255,6 @@ function Card() {
 	this.container.appendChild(this.buttonContainer);
 	
 	document.body.appendChild(this.container);
-	draggable(this.handle, this.container);
 	var x = this;
 	$.ajax({
 		type : 'POST',
@@ -263,6 +283,8 @@ function Card() {
 			x.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
 			x.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
 			x.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
+			console.log(uniHusenCount);
+			draggable(uniHusenCount,x.handle, x.container);
 		},
 		error: function(json){
 			//console.log(json);
@@ -340,5 +362,6 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.container.appendChild(this.buttonContainer);
 	
 	document.body.appendChild(this.container);
-	draggable(this.handle, this.container);
+	console.log(uniHusenCount);
+	draggable(uniHusenCount, this.handle, this.container);
 }
