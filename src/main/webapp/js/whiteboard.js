@@ -8,10 +8,10 @@ var updateList = function(){
 		type: 'GET',
 		url: '/lama/api/users',
 		success: function(json){
-			$('#board').empty();			
+			$('#userlist').empty();			
 			for(var i=0; i<json.users.length;i++){
 				var str = '<li>' + (i+1) + ' ' + json.users[i].name+  '</li>' ;
-				$('#board').append(str);
+				$('#userlist').append(str);
 			}
 		}
 	});
@@ -29,7 +29,7 @@ var updateList = function(){
 	
 }
 /**
- * 参加しているユーザの中から抽選で一人を決定し、そのnameを返す
+ * 参加しているユーザの中から抽選で一人を決定する
  * coded by Matsuzaki
  */
 var startLottery = function() {
@@ -66,7 +66,10 @@ var registerWinner = function() {
 				// 本番環境へ
 				// window.location.href =
 				// "https://team2017-2.spiral.cloud/lama/";
-				window.location.href = "../lama/";
+			
+				//抽選ボタンを押したときの点滅を防ぐためにコメントアウトしてます
+				//全体を更新する処理もしてるっぽい？
+				//window.location.href = "../lama/";
 		}
 	});
 }
