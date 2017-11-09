@@ -7,7 +7,38 @@ var cont;
 var husenCount = 1;
 var endpoint = "http://localhost:8080/lama/api"
 	
-window.onload = loadHusens();
+window.onload = function(){
+	loadHusens();
+	wsConnection();
+}
+
+//websocketオブジェクト
+var ws;
+
+function wsConnection() {
+	ws = new WebSocket('ws://' + window.location.host + '/lama/hws');
+	
+	ws.onmessage = function(message) {
+		var arrayStr = message.data.split(' ');
+		if(arrayStr[0] === 'color'){
+			colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
+		}else if(arrayStr[0] === 'delete'){
+			deleter(parseInt(arrayStr[1]));
+		}else if(arrayStr[0] === 'good'){
+			document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
+		}else if(arrayStr[0] === 'bad'){
+			document.getElementsByName(arrayStr[1])[0].value = "Bad:"+arrayStr[2];
+		}else if(arrayStr[0] === 'text'){
+			document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
+		}else if(arrayStr[0] === 'position'){
+			document.getElementById(arrayStr[1]).style.left = arrayStr[2];
+			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
+		}else if(arrayStr[0] === 'new'){
+			createCard(parseInt(arrayStr[1]));
+		}
+	};
+}
+
 function loadHusens(){
 	$.ajax({
 		type: 'GET',
@@ -23,8 +54,7 @@ function loadHusens(){
 						json.husens[i].bad,
 						json.husens[i].color,
 						json.husens[i].canEditPerson
-						);
-				//console.log(json.husens[i].hid);
+				);
 			}
 		}
 	});
@@ -38,11 +68,12 @@ function updateText(name,count){
 			hid: count,
 			text: document.getElementsByName(name)[0].value
 		},
-		success : function(good) {
-			console.log('text-a');
+		success : function() {
+			//console.log('text-a');
+			ws.send("text "+name+" "+document.getElementsByName(name)[0].value);
 		},
-		error: function(good) {
-			console.log('text-b');
+		error: function() {
+			//console.log('text-b');
 		}
 	});
 }
@@ -55,11 +86,11 @@ function goodButtonCounter(name,count){
 			good: true
 		},
 		success : function(good) {
-			console.log('good-a');
-			document.getElementsByName(name)[0].value = "Good:"+good;
+			//console.log('good-a');
+			ws.send("good "+name+" "+good);
 		},
 		error: function(good) {
-			console.log('good-b');
+			//console.log('good-b');
 		}
 	});
 }
@@ -73,17 +104,15 @@ function badButtonCounter(name,count){
 			bad: true
 		},
 		success : function(bad) {
-			console.log('bad-a');
-			document.getElementsByName(name)[0].value = "Bad:"+bad;
+			//console.log('bad-a');
+			ws.send("bad "+name+" "+bad);
 		},
 		error: function(bad) {
-			console.log('bad-b');
+			//console.log('bad-b');
 		}
 	});
 }
-
-
-function colorCounter(count,color){
+function colorSetter(count,color){
 	var handle = "handle" + String(count);
 	var container = "container" + String(count);
 	var name = "txt" + String(count);
@@ -91,6 +120,9 @@ function colorCounter(count,color){
 	document.getElementById(container).style.backgroundColor = getBackColor(color);
 	document.getElementById(container).style.border = getBackColor(color);
 	document.getElementsByName(name)[0].style.backgroundColor = getBackColor(color);
+}
+
+function colorCounter(count,color){
 	$.ajax({
 		type : 'PUT',
 		url : endpoint+'/husens',
@@ -99,29 +131,30 @@ function colorCounter(count,color){
 			color: color
 		},
 		success : function(data) {
-			console.log('put-a');
-			//ws.send("post-task:"+tid);
+			//console.log('put-a');
+			ws.send("color "+count+" "+color);
 		},
 		error: function(data) {
-			console.log('put-b');
-			//ws.send("post-task:"+tid);
+			//console.log('put-b');
 		}
 	});
 }
 
-function deleteHusen(count){
+function deleter(count){
 	var container = "container" + String(count);
 	document.getElementById(container).remove();
+}
+
+function deleteHusen(count){
 	$.ajax({
 		type : 'DELETE',
 		url : endpoint+'/husens/'+count,
 		success : function(data) {
-			console.log('delete-a');
-			//ws.send("post-task:"+tid);
+			//console.log('delete-a');
+			ws.send("delete "+count);
 		},
 		error: function(data) {
-			console.log('delete-b');
-			//ws.send("post-task:"+tid);
+			//console.log('delete-b');
 		}
 	});
 }
@@ -181,11 +214,11 @@ function draggable(count, handle, container) {
 					yPosition : cont.style.top
 				},
 				success : function(data) {
-					console.log('move-a');
-					// ws.send("post-task:"+tid);
+					//console.log('move-a');
+					ws.send("position "+cont.id+" "+cont.style.left+" "+cont.style.top);
 				},
 				error : function(data) {
-					console.log('move-b');
+					//console.log('move-b');
 					// ws.send("post-task:"+tid);
 				}
 			});
@@ -201,110 +234,32 @@ function draggable(count, handle, container) {
 }
 
 function Card() {
-	var uniHusenCount = husenCount++;
-	var goodCount=0;
-	var badCount=0;
-	var colorCount=0;
-	this.container = document.createElement('div');
-	this.container.id = "container"+String(uniHusenCount);
-	this.container.style="width:300px;background-color:"+ getBackColor(colorCount) +";" +
-			"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
-					"left:100px;top:130px";
-	
-	this.handle = document.createElement('div');
-	this.handle.id = "handle"+String(uniHusenCount);
-	this.handle.style.width = "100%";
-	this.handle.style.height = "25px";
-	this.handle.style.margin = "0px";
-	this.handle.style.backgroundColor = getHandleColor(colorCount);
-
-	this.txtarea = document.createElement('textarea');
-	this.txtarea.name = "txt"+String(uniHusenCount);
-	this.txtarea.style = "width:98%;height:200px;" +
-			"background-color:"+getBackColor(colorCount)+";" +
-			"display:block;resize:vertical;" +
-			"border:0px;" +
-			"font-size:20px;font-family:Arial";
-
-	var height = this.txtarea.style.height;
-
-	this.buttonContainer = document.createElement('div');
-	this.buttonContainer.style = "width:100%;height:20px;display:block";
-	
-	this.buttonGood = document.createElement('input');
-	this.buttonGood.type = "button";
-	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
-	this.buttonGood.value = "Good:"+String(goodCount);
-	this.buttonGood.style = "width:25%;height:20px;vertical-align:top";
-	
-
-	this.buttonBad = document.createElement('input');
-	this.buttonBad.type = "button";
-	this.buttonBad.name = "button" + String(uniHusenCount*4-2);
-	this.buttonBad.value = "Bad:"+String(badCount);
-	this.buttonBad.style = "width:25%;height:20px;vertical-align:top";
-
-	
-	this.buttonColor = document.createElement('input');
-	this.buttonColor.type = "button";
-	this.buttonColor.name = "button" + String(uniHusenCount*4-1);
-	this.buttonColor.value = "Color";
-	this.buttonColor.style = "width:25%;height:20px;vertical-align:top";
-	
-	
-	this.buttonRemove = document.createElement('input');
-	this.buttonRemove.type = "button";
-	this.buttonRemove.name = "button" + String(uniHusenCount*4);
-	this.buttonRemove.value = "Delete";
-	this.buttonRemove.style = "width:25%;height:20px;vertical-align:top";
-
-
-	this.container.appendChild(this.handle);
-	this.container.appendChild(this.txtarea);
-	this.buttonContainer.appendChild(this.buttonRemove);
-	this.buttonContainer.appendChild(this.buttonColor);
-	this.buttonContainer.appendChild(this.buttonGood);
-	this.buttonContainer.appendChild(this.buttonBad);
-	this.container.appendChild(this.buttonContainer);
-	
-	document.body.appendChild(this.container);
 	var x = this;
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/husens',
 		data : {
-			text : String(this.txtarea.value),
-			xPosition : String(this.container.style.left),
-			yPosition : String(this.container.style.top),
-			height : String(this.txtarea.style.height),
+			text : "",
+			xPosition : "100px",
+			yPosition : "130px",
+			height : "250px",
 			good : 0,
 			bad : 0,
 			color : 0,
-			canEdit : true
+			canEdit : 0
 		},
 		success: function(json){
 			//console.log(json);
-			uniHusenCount = json.hid;
-			x.container.id = "container"+String(uniHusenCount);
-			x.handle.id = "handle"+String(uniHusenCount);
-			x.txtarea.name = "txt"+String(uniHusenCount);
-			x.txtarea.onblur = function(){updateText(this.name,uniHusenCount)}
-			x.buttonGood.name = "button" + String(uniHusenCount*4-3);
-			x.buttonBad.name = "button" + String(uniHusenCount*4-2);
-			x.buttonColor.name = "button" + String(uniHusenCount*4-1);
-			x.buttonRemove.name = "button" + String(uniHusenCount*4);	
-			x.buttonColor.onclick = function(){colorCounter(uniHusenCount,++colorCount)};
-			x.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
-			x.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
-			x.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
-			//console.log(uniHusenCount);
-			draggable(uniHusenCount,x.handle, x.container);
+			ws.send("new "+String(json.hid));
 		},
 		error: function(json){
 			//console.log(json);
 		}
 	});
 	return this.container;
+}
+function createCard(hid){
+	makeCard(hid,"","100px","130px","250px",0,0,0,0);
 }
 
 function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPerson){
@@ -330,10 +285,12 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.txtarea.name = "txt"+String(uniHusenCount);
 	this.txtarea.style = "width:98%;height:"+height+";" +
 			"background-color:"+getBackColor(colorCount)+";" +
-			"display:block;resize:vertical;" +
+			"display:block;resize:none;" +
 			"border:0px;" +
 			"font-size:20px;font-family:Arial";
-	this.txtarea.onblur = function(){updateText(this.name,uniHusenCount)}
+	this.txtarea.onblur = function(){
+		updateText(this.name,uniHusenCount);
+	}
 	
 	var height = this.txtarea.style.height;
 

@@ -53,7 +53,7 @@ public class HusenModel extends BaseModel{
     }
 
     public void deleteComment(Integer hid){
-    	System.out.println("delete "+hid);
+    	//System.out.println("delete "+hid);
         husens().deleteOne(eq("hid", hid));
     }
 
@@ -61,7 +61,7 @@ public class HusenModel extends BaseModel{
         husen.setHid(latestId() + 1);
         husens().insertOne(toDocument(husen));
         latesthids().insertOne(new Document("hid", husen.getHid()));
-        System.out.println("insert "+husen.getHid());
+       // System.out.println("insert "+husen.getHid());
         return husen;
     }
     
@@ -84,23 +84,23 @@ public class HusenModel extends BaseModel{
     
     public void updateText(int hid,String text){
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("text",text)));
-    	System.out.println("updateText "+hid);
+    	//System.out.println("updateText "+hid);
     }
     
     public void updatePosition(int hid,String xPosition,String yPosition){
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("xPosition",xPosition)));
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("yPosition",yPosition)));
-    	System.out.println("updatePosition "+hid);
+    	//System.out.println("updatePosition "+hid);
     }
     
     public void updateColor(int hid,int color){
     	husens().updateOne(eq("hid", hid),new Document("$set",new Document("color",color)));
-    	System.out.println("updatecolor "+hid);
+    	//System.out.println("updatecolor "+hid);
     }
     
     public int updateGood(int hid){
     	husens().updateOne(eq("hid", hid),new Document("$inc",new Document("good",1)));
-    	System.out.println("updatecolor "+hid);
+    	//System.out.println("updatecolor "+hid);
     	for(Husen x: findHusens().husens()){
     		if(x.getHid() == hid){
     			return x.getGood();
@@ -111,7 +111,7 @@ public class HusenModel extends BaseModel{
     
     public int updateBad(int hid){
     	husens().updateOne(eq("hid", hid),new Document("$inc",new Document("bad",1)));
-    	System.out.println("updatecolor "+hid);
+    	//System.out.println("updatecolor "+hid);
     	for(Husen x: findHusens().husens()){
     		if(x.getHid() == hid){
     			return x.getBad();
