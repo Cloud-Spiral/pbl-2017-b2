@@ -46,6 +46,24 @@ public class HusenModel extends BaseModel{
                 .getInteger("hid", 0);
     }
 
+    public void orderPosition(int number,String left,String top,String width,String height){
+    	int leftInt = Integer.parseInt(left.substring(0,left.indexOf("px")));
+    	int topInt = Integer.parseInt(top.substring(0,top.indexOf("px")));
+    	int widthInt = Integer.parseInt(width.substring(0,width.indexOf("px")));
+    	int heightInt = Integer.parseInt(height.substring(0,height.indexOf("px")));
+    	int count = 0;
+    	for(Husen x :toList(list())){
+    		String nextLeft = String.valueOf(leftInt+count%number*widthInt)+"px";
+    		String nextTop = String.valueOf(topInt+count/number*heightInt)+"px";
+//    		System.out.println(count +" " +x.getxPosition()+" "+x.getyPosition()+" to "
+//    				+" "+nextLeft+" "+nextTop+"\n");
+    		count++;
+    	    husens().updateOne(eq("hid", x.getHid()),new Document("$set",new Document("xPosition",nextLeft)));
+    	    husens().updateOne(eq("hid", x.getHid()),new Document("$set",new Document("yPosition",nextTop)));
+
+    	}
+    }
+    
     public Husen findById(Integer id){
         Document document = husens().find(eq("hid", id))
                 .limit(1).first();

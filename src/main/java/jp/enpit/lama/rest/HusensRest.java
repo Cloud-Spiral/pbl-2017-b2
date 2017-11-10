@@ -71,6 +71,22 @@ public class HusensRest {
     }
     
     @PUT
+    @Path("/order")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response postReloader(@FormParam("number") Integer number
+    		,@FormParam("left") String left
+    		,@FormParam("top") String top
+    		,@FormParam("width") String width
+    		,@FormParam("height") String height){
+        try(HusenModel model = createModel()){
+        	System.out.println(number+" "+left+" "+top+" "+width+" "+height);
+        	model.orderPosition(number,left,top,width,height);
+        	Response q = Response.status(201).build();
+            return q;
+        }
+    }
+    
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response change(@FormParam("hid") int hid,
     	    		@FormParam("text") String text,

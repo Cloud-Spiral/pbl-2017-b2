@@ -6,6 +6,7 @@ var offsetX, offsetY;
 var cont;
 var husenCount = 1;
 var endpoint = "http://localhost:8080/facitter/api";
+var isAllMax = true;
 
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
@@ -17,6 +18,8 @@ window.onload = function(){
 }*/
 
 $("#postit").mousedown(function (e){new Card();});
+$("#allResize").mousedown(function (e){allResizeHusen();});
+$("#FGO").mousedown(function (e){husenGrandOrder();});
 //websocketオブジェクト
 var hws;
 
@@ -40,11 +43,14 @@ function hwsConnection() {
 		}else if(arrayStr[0] === 'text'){
 			document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
 		}else if(arrayStr[0] === 'position'){
-			document.getElementById(arrayStr[1]).style.left = arrayStr[2];
-			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
+			setPosition(arrayStr[1],arrayStr[2],arrayStr[3]);
+//			document.getElementById(arrayStr[1]).style.left = arrayStr[2];
+//			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
 		}else if(arrayStr[0] === 'new'){
 			createCard(parseInt(arrayStr[1]));
 			setTimeout(fadeInContainer, 200, parseInt(arrayStr[1]));
+		}else if(arrayStr[0] === 'order'){
+			reloadAllHusenPosition();
 		}
 	};
 }
@@ -130,6 +136,11 @@ function goodButtonCounter(name,count){
 			//console.log('good-b');
 		}
 	});
+}
+
+function setPosition(id,left,top){
+	document.getElementById(id).style.left = left;
+	document.getElementById(id).style.top = top;
 }
 
 function badButtonCounter(name,count){
@@ -286,29 +297,91 @@ function draggable(count, handle, container) {
 	}
 }
 
+
+
+function husenGrandOrder(){
+	$.ajax({
+		type : 'PUT',
+		url : endpoint+'/husens/order',
+		data:{
+			number: 4,
+			left: "70px",
+			top: "20px",
+			width: "245px",
+			height: "200px" 
+		},
+		success : function(data) {
+			//console.log('order-a');
+			hws.send("order");
+		},
+		error: function(data) {
+			console.log('order-b');
+		}
+	});
+}
+
+function reloadAllHusenPosition(){
+	$.ajax({
+		type: 'GET',
+		url: endpoint + '/husens',
+		success: function(json) {
+			for(i=0;i<json.husens.length;i++){
+				var id = "container"+json.husens[i].hid;
+				var newx = json.husens[i].xPosition;//String --px
+				var newy = json.husens[i].yPosition;//String --px
+				setPosition(id,newx,newy);
+			}
+		}
+	});
+}
+
+function allResizeHusen(){
+	var contList = document.getElementsByClassName('husenContainer');
+	if(isAllMax){
+		//minimize
+		for(var i = 0; i < contList.length; i++){
+			minimizeHusen(contList[i]);
+		}
+	}else{
+		//maximize
+		for(var i = 0; i < contList.length; i++){
+			maximizeHusen(contList[i]);
+		}
+	}
+	isAllMax = !isAllMax;
+}
+
 function resizeContainer(cont){
 	var contArray = cont.children;
 	if(cont.classList.contains("mini")){
-		cont.classList.remove("mini");
-		cont.style.width="240px";
-		for(var i = 0; i < contArray.length; i++){
-			contArray[i].style.width = "240px";
-			if(String(contArray[i].name).substring(0,3) === "txt"){
-				document.getElementsByName(contArray[i].name)[0].style.height="150px";
-			}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
-				document.getElementById(contArray[i].id).style.height="20px";
-			}
-		}
+		maximizeHusen(cont);
 	}else{
-		cont.classList.add("mini");
-		cont.style.width="120px";
-		for(var i = 0; i < contArray.length; i++){
-			contArray[i].style.width = "120px";
-			if(String(contArray[i].name).substring(0,3) === "txt"){
-				document.getElementsByName(contArray[i].name)[0].style.height="25px";
-			}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
-				document.getElementById(contArray[i].id).style.height="0px";
-			}
+		minimizeHusen(cont);
+	}
+}
+
+function minimizeHusen(cont){
+	var contArray = cont.children;
+	cont.classList.add("mini");
+	cont.style.width="120px";
+	for(var i = 0; i < contArray.length; i++){
+		if(String(contArray[i].name).substring(0,3) === "txt"){
+			document.getElementsByName(contArray[i].name)[0].style.height="25px";
+		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
+			document.getElementById(contArray[i].id).style.height="0px";
+		}
+	}
+}
+
+function maximizeHusen(cont){
+	var contArray = cont.children;
+	cont.classList.remove("mini");
+	cont.style.width="240px";
+	for(var i = 0; i < contArray.length; i++){
+		if(String(contArray[i].name).substring(0,3) === "txt"){
+			document.getElementsByName(contArray[i].name)[0].style.height="150px";
+		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
+			document.getElementById(contArray[i].id).style.height="20px";
 		}
 	}
 }
@@ -348,7 +421,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	var badCount=bad;
 	var colorCount=color;
 	this.container = document.createElement('div');
-	this.container.className = 'husen';
+	this.container.className = 'husen husenContainer';
 	this.container.id = "container"+String(uniHusenCount);
 	this.container.style="width:240px;background-color:"+ getBackColor(colorCount) +";" +
 	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
