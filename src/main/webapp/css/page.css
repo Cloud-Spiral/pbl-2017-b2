@@ -1,0 +1,33 @@
+/* 参考 https://webkikaku.co.jp/blog/htmlcss/footer-bottom/ */
+
+body{
+	height: 100%;
+}
+
+div#container{
+	width: 100%;
+	position: relative;
+	height: auto !important;
+	height: 100%;
+	min-height: 100%;
+}
+
+div#contents {
+/* 	padding-bottom: 140px; */
+	margin-right: -510px;
+	width: 100%;
+	float: left;
+}
+
+div#side {
+	width: 510px;
+	float: right;
+}
+
+div#footer{
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	height: 140px;
+	background-color: #99cc00;
+}
