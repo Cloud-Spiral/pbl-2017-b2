@@ -1,7 +1,7 @@
-var endpoint = 'http://localhost:8080/lama/api';
+//var endpoint = 'http://localhost:8080/facitter/api';
 
 //本番環境用
-//var endpoint = 'https://team2017-2.spiral.cloud/lama/api';
+var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 document.write("<script type='text/javascript' src='js/Moment.js'></script>");
 
 //タスクを投稿
@@ -30,7 +30,7 @@ var postTask = function() {
 var insertTask = function(tid) {	
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/tasks/status/'+tid,
+		url: endpoint + '/tasks/status/'+tid,
 		success: function(json)　{
 			for(var i = 0; i < json.tasks.length; i++) {
 				if(json.tasks[i].tid == tid) {
@@ -88,7 +88,7 @@ var deleteTask = function(tid) {
 var updateTaskBody = function(tid) {
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/tasks/'+tid,
+		url: endpoint + '/tasks/'+tid,
 		success: function(task)　{
 			document.getElementById("task-body"+tid).value = task.body;
 		}
@@ -201,7 +201,7 @@ var update = function() {
 	$("table.task-table tbody").html("");
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/tasks',
+		url: endpoint + '/tasks',
 		success: function(json)　{
 			var tasks = json.tasks;
 			if(tasks.length == 0)
