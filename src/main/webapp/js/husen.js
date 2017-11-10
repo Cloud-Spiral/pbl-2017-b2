@@ -243,8 +243,8 @@ function Card() {
 		data : {
 			text : "",
 			xPosition : "100px",
-			yPosition : "130px",
-			height : "250px",
+			yPosition : "80px",
+			height : "150px",
 			good : 0,
 			bad : 0,
 			color : 0,
@@ -261,7 +261,7 @@ function Card() {
 	return this.container;
 }
 function createCard(hid){
-	makeCard(hid,"","100px","130px","250px",0,0,0,0);
+	makeCard(hid,"","100px","80px","150px",0,0,0,0);
 }
 
 function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPerson){
@@ -271,7 +271,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	var colorCount=color;
 	this.container = document.createElement('div');
 	this.container.id = "container"+String(uniHusenCount);
-	this.container.style="width:300px;background-color:"+ getBackColor(colorCount) +";" +
+	this.container.style="width:240px;background-color:"+ getBackColor(colorCount) +";" +
 			"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
 					"left:"+xPosition+";top:"+yPosition;
 	
