@@ -6,9 +6,9 @@ var ws;
 window.onload = function() {
 
 	// WebSocketオブジェクト作成
-	ws = new WebSocket('ws://' + window.location.host + '/lama/ws');
+	ws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
-	//ws = new WebSocket('wss://' + window.location.host + '/lama/ws');
+	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 	
 	
 	update();
