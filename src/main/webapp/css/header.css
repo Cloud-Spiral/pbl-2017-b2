@@ -1,0 +1,14 @@
+#menu li a {
+	display: block;
+	float: left;
+	width: 240px; height: 35px;
+	color: #ffffff;
+	background-color:#c0c0c0;
+	padding: 15px 0px 0px 0px;
+	text-align: center;
+	text-decoration: none; 
+}
+#menu li a:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
