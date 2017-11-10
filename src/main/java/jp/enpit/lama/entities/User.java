@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlElement;
 
 public class User {
     @XmlElement(name="name")
-        private String name;
-    
+    private String name;
+    @XmlElement(name="password")
     private String password;
 
     public User(){

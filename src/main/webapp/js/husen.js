@@ -20,6 +20,9 @@ var ws;
 function wsConnection() {
 	ws = new WebSocket('ws://' + window.location.host + '/facitter/hws');
 	
+	//　本番環境用
+	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
 	ws.onmessage = function(message) {
 		var arrayStr = message.data.split(' ');
 		if(arrayStr[0] === 'color'){
