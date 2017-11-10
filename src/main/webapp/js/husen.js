@@ -80,7 +80,9 @@ function fadeInContainer(hid){
 	$("#container" + String(hid)).addClass("fadeIn");
 	$("#handle" + String(hid)).addClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
-	txtarea.className = "husen fadeIn";
+	txtarea.classList.add("fadeIn");
+	$("#buttonContainer" + String(hid)).addClass("fadeIn");
+	//txtarea.className = "husen fadeIn";
 	//$("input[name='txt" + String(hid)+"']").addClass("fadeIn");//なぜできない
 }
 
@@ -88,7 +90,9 @@ function fadeOutContainer(hid){
 	$("#container" + String(hid)).removeClass("fadeIn");
 	$("#handle" + String(hid)).removeClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
-	txtarea.className = "husen";
+	txtarea.classList.remove("fadeIn");
+	$("#buttonContainer" + String(hid)).removeClass("fadeIn");
+	//	txtarea.className = "husen";
 //	var txtName='input[name="txt' + String(hid)+'"]';
 //	$(txtName).removeClass("fadeIn");
 }
@@ -225,6 +229,7 @@ function getBackColor(count){
 	return "#AEFFAE";
 }
 
+var clickCount = 0;
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
 
@@ -236,6 +241,18 @@ function draggable(count, handle, container) {
 		cont = container;
 		isMouseDown = true;
 		$('.husen').css('transition','all 0ms 0s ease');
+		if( !clickCount ) {
+			++clickCount ;
+			setTimeout( function() {
+				clickCount = 0 ;
+			}, 350 ) ;
+		// ダブルクリックの場合
+		} else {
+			$('.husen').css('transition','all 300ms 0s ease');
+			console.log(cont + " doubleClick");
+			resizeContainer(cont);
+			clickCount = 0 ;
+		}
 	}
 
 	document.onmouseup = function() {
@@ -265,6 +282,33 @@ function draggable(count, handle, container) {
 		if (isMouseDown == true) {
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
+		}
+	}
+}
+
+function resizeContainer(cont){
+	var contArray = cont.children;
+	if(cont.classList.contains("mini")){
+		cont.classList.remove("mini");
+		cont.style.width="240px";
+		for(var i = 0; i < contArray.length; i++){
+			contArray[i].style.width = "240px";
+			if(String(contArray[i].name).substring(0,3) === "txt"){
+				document.getElementsByName(contArray[i].name)[0].style.height="150px";
+			}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
+				document.getElementById(contArray[i].id).style.height="20px";
+			}
+		}
+	}else{
+		cont.classList.add("mini");
+		cont.style.width="120px";
+		for(var i = 0; i < contArray.length; i++){
+			contArray[i].style.width = "120px";
+			if(String(contArray[i].name).substring(0,3) === "txt"){
+				document.getElementsByName(contArray[i].name)[0].style.height="25px";
+			}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
+				document.getElementById(contArray[i].id).style.height="0px";
+			}
 		}
 	}
 }
@@ -334,34 +378,36 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	var height = this.txtarea.style.height;
 
 	this.buttonContainer = document.createElement('div');
+	this.buttonContainer.className = 'husen';
 	this.buttonContainer.style = "width:100%;height:20px;display:block";
+	this.buttonContainer.id = "buttonContainer"+String(uniHusenCount);
 
 	this.buttonGood = document.createElement('input');
 	this.buttonGood.type = "button";
 	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
 	this.buttonGood.value = "Good:"+String(goodCount);
-	this.buttonGood.style = "width:25%;height:20px;vertical-align:top";
+	this.buttonGood.style = "width:25%;height:100%;vertical-align:top";
 	this.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
 
 	this.buttonBad = document.createElement('input');
 	this.buttonBad.type = "button";
 	this.buttonBad.name = "button" + String(uniHusenCount*4-2);
 	this.buttonBad.value = "Bad:"+String(badCount);
-	this.buttonBad.style = "width:25%;height:20px;vertical-align:top";
+	this.buttonBad.style = "width:25%;height:100%;vertical-align:top";
 	this.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
 
 	this.buttonColor = document.createElement('input');
 	this.buttonColor.type = "button";
 	this.buttonColor.name = "button" + String(uniHusenCount*4-1);
 	this.buttonColor.value = "Color";
-	this.buttonColor.style = "width:25%;height:20px;vertical-align:top";
+	this.buttonColor.style = "width:25%;height:100%;vertical-align:top";
 	this.buttonColor.onclick = function(){colorCounter(uniHusenCount,++colorCount)};
 
 	this.buttonRemove = document.createElement('input');
 	this.buttonRemove.type = "button";
 	this.buttonRemove.name = "button" + String(uniHusenCount*4);
 	this.buttonRemove.value = "Delete";
-	this.buttonRemove.style = "width:25%;height:20px;vertical-align:top";
+	this.buttonRemove.style = "width:25%;height:100%;vertical-align:top";
 	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
 
 	this.container.appendChild(this.handle);
