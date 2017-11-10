@@ -286,12 +286,14 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
+	this.handle.className = 'husen';
 	this.handle.style.width = "100%";
 	this.handle.style.height = "25px";
 	this.handle.style.margin = "0px";
 	this.handle.style.backgroundColor = getHandleColor(colorCount);
 
 	this.txtarea = document.createElement('textarea');
+	this.txtarea.className = 'husen';
 	this.txtarea.value = text;
 	this.txtarea.name = "txt"+String(uniHusenCount);
 	this.txtarea.style = "width:98%;height:"+height+";" +
