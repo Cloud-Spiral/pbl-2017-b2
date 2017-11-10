@@ -209,6 +209,7 @@ function draggable(count, handle, container) {
 		offsetY = event.screenY - rect.top;
 		cont = container;
 		isMouseDown = true;
+		$('.husen').css('transition','all 0ms 0s ease');
 	}
 
 	document.onmouseup = function() {
@@ -230,6 +231,7 @@ function draggable(count, handle, container) {
 					// hws.send("post-task:"+tid);
 				}
 			});
+			$('.husen').css('transition','all 300ms 0s ease');
 		}
 		isMouseDown = false;
 	}
@@ -276,6 +278,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	var badCount=bad;
 	var colorCount=color;
 	this.container = document.createElement('div');
+	this.container.className = 'husen';
 	this.container.id = "container"+String(uniHusenCount);
 	this.container.style="width:240px;background-color:"+ getBackColor(colorCount) +";" +
 	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
