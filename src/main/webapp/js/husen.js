@@ -138,6 +138,10 @@ function goodButtonCounter(name,count){
 	});
 }
 
+function setPositionFunc(array){
+	setPosition(array[0],array[1],array[2]);
+}
+
 function setPosition(id,left,top){
 	document.getElementById(id).style.left = left;
 	document.getElementById(id).style.top = top;
@@ -297,8 +301,6 @@ function draggable(count, handle, container) {
 	}
 }
 
-
-
 function husenGrandOrder(){
 	$.ajax({
 		type : 'PUT',
@@ -329,6 +331,7 @@ function reloadAllHusenPosition(){
 				var id = "container"+json.husens[i].hid;
 				var newx = json.husens[i].xPosition;//String --px
 				var newy = json.husens[i].yPosition;//String --px
+				//setTimeout(setPositionFunc, 1200,[id,newx,newy]);
 				setPosition(id,newx,newy);
 			}
 		}
