@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Facitter</title>
+<title>facitter</title>
 <meta charset="utf-8">
 
 <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
@@ -36,24 +37,22 @@
 				<ul id="clear">
 					<li>CLEAR</li>
 				</ul>
-				<ul id="postit">
-					<li>Post-it</li>
-				</ul>
 
 			</nav>
 			<!-- <canvas id="my_canvas" width="800" height="600"></canvas> -->
 			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
 		</div>
 		<div id="side">
-			<input id="message" type="text" placeholder="タスク内容">
-			<span id="priority"></span>
-			<input id="submit-task" type="button" value="追加">
+			<input id="message" type="text" placeholder="タスク内容"> <span
+				id="priority"></span> <input id="submit-task" type="button"
+				value="追加">
 			<ul class="tab">
 				<li class="select"><span class=yubi>open</span></li>
 				<li><span class="yubi">close</span></li>
 			</ul>
 			<ul class="task-content">
-				<li><!-- open -->
+				<li>
+					<!-- open -->
 					<div class="y_data_area">
 						<table class="task-table" id="open-tasks">
 							<thead>
@@ -72,7 +71,8 @@
 				</li>
 
 
-				<li class="hide"><!-- close -->
+				<li class="hide">
+					<!-- close -->
 					<table class="task-table" id="close-tasks">
 						<thead>
 							<tr>
@@ -97,6 +97,5 @@
 <script src="js/whiteboard.js"></script>
 <script src="js/task.js"></script>
 <script src="js/jquery.raty.js"></script>
-<script src="js/husen.js"></script>
 
 </html>
