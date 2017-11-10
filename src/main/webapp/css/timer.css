@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+.timer{
+	border:1px solid #000;
+	float:left;
+}
+
 #min, #sec{
 	text-align:right;
 }
@@ -7,5 +12,5 @@
 
 #start, #stop, #reset{
 	text-align:center;
-	font-size:14px;
+	font-size:12px;
 }

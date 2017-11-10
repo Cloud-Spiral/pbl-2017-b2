@@ -9,24 +9,22 @@ window.onload = function() {
 	ws = new WebSocket('ws://' +  window.location.host + '/facitter/ws');
 	//　本番環境用
 	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
-	
-	update();
 
 	// サーバからのメッセージ受信時の処理
 	ws.onmessage = function(message) {
 		//message = JSON.parse(message.data)
-		message = message.data.split(" ")
-		console.log(message)
+		var str = message.data.split(":")
+		console.log(str)
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
-		if(message[0] == "start") {
-			cntStart(message[1],message[2]);
+		if(str[0] == "start") {
+			cntStart(parseInt(str[1]),parseInt(str[2]));
 		}
-		else if(message[0] == "stop") {
+		else if(str[0] == "stop") {
 			cntStop();
 		}
-		else if(message[0] == "reset")
+		else if(str[0] == "reset")
 			reSet();
 	};
 	
@@ -44,8 +42,8 @@ $('#start').click(function() {
 	var min = $('#min').val();
 	var sec = $('#sec').val();
 	
-	var str = "start" + " " + sec + " " + min;
-
+	var str = "start" + ":" + min + ":" + sec;
+	console.log(min + "   " + sec);
 	// ws経由で送信
 	ws.send(str);
 });
@@ -68,7 +66,11 @@ $('#reset').click(function() {
 	//カウントダウン関数を1000ミリ秒毎に呼び出す関数
 	function cntStart(min,sec) {
 		document.timer.elements[2].disabled=true;
-		timer1=setInterval("countDown(" + min + "," + sec + ")",1000);
+		if (min=="") min=0;
+		if (sec=="") sec=0;
+		tmWrite(min*60+sec);
+		
+		timer1=setInterval("countDown()",1000);
 	}
 	
 	//タイマー停止関数
@@ -78,19 +80,19 @@ $('#reset').click(function() {
 	}
 	
 	//カウントダウン関数
-	function countDown(min,sec) {
-		var min=min;
-		var sec=sec;
-		
+	function countDown() {
+		var min=document.timer.elements[0].value;
+		var sec=document.timer.elements[1].value;
+		  
 		if( (min=="") && (sec=="") ) {
 			alert("時刻を設定してください！");
 			reSet();
 		} else {
 			if (min=="") min=0;
-			min=parseInt(min);
+			min = parseInt(min);
 			
 			if (sec=="") sec=0;
-			sec=parseInt(sec);
+			sec = parseInt(sec);
 			
 			tmWrite(min*60+sec-1);
 		}
