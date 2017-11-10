@@ -38,5 +38,4 @@ public class MongoClientPool {
 	public MongoDatabase database() {
 		return database;
 	}
-	
 }
