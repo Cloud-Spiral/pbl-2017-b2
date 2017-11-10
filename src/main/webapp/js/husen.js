@@ -31,7 +31,8 @@ function hwsConnection() {
 		if(arrayStr[0] === 'color'){
 			colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
 		}else if(arrayStr[0] === 'delete'){
-			deleter(parseInt(arrayStr[1]));
+			fadeOutContainer(parseInt(arrayStr[1]));
+			setTimeout(deleter, 300, parseInt(arrayStr[1]));
 		}else if(arrayStr[0] === 'good'){
 			document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
 		}else if(arrayStr[0] === 'bad'){
@@ -43,6 +44,7 @@ function hwsConnection() {
 			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
 		}else if(arrayStr[0] === 'new'){
 			createCard(parseInt(arrayStr[1]));
+			setTimeout(fadeInContainer, 200, parseInt(arrayStr[1]));
 		}
 	};
 }
@@ -64,8 +66,31 @@ function loadHusens(){
 						json.husens[i].canEditPerson
 				);
 			}
+			setTimeout(allFadein, 200, json);
 		}
 	});
+}
+
+function allFadein(json){
+	for(i=0;i<json.husens.length;i++){
+		fadeInContainer(json.husens[i].hid);
+	}
+}
+function fadeInContainer(hid){
+	$("#container" + String(hid)).addClass("fadeIn");
+	$("#handle" + String(hid)).addClass("fadeIn");
+	var txtarea = document.getElementsByName("txt"+String(hid))[0];
+	txtarea.className = "husen fadeIn";
+	//$("input[name='txt" + String(hid)+"']").addClass("fadeIn");//なぜできない
+}
+
+function fadeOutContainer(hid){
+	$("#container" + String(hid)).removeClass("fadeIn");
+	$("#handle" + String(hid)).removeClass("fadeIn");
+	var txtarea = document.getElementsByName("txt"+String(hid))[0];
+	txtarea.className = "husen";
+//	var txtName='input[name="txt' + String(hid)+'"]';
+//	$(txtName).removeClass("fadeIn");
 }
 
 function updateText(name,count){
@@ -148,9 +173,10 @@ function colorCounter(count,color){
 	});
 }
 
-function deleter(count){
-	var container = "container" + String(count);
-	document.getElementById(container).remove();
+function deleter(hid){
+	//var containerId = "#container" + String(hid);
+	var container = document.getElementById("container"+String(hid));
+	container.remove();
 }
 
 function deleteHusen(count){
@@ -244,7 +270,7 @@ function draggable(count, handle, container) {
 }
 
 function Card() {
-	var x = this;
+	//var x = this;
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/husens',
@@ -266,7 +292,7 @@ function Card() {
 			//console.log(json);
 		}
 	});
-	return this.container;
+	//return this.container;
 }
 function createCard(hid){
 	makeCard(hid,"","100px","80px","150px",0,0,0,0);
