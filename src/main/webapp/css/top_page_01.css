@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Ovo);
+@import url(https://fonts.googleapis.com/css?family=Muli);
+.snip1333 {
+  font-family: 'Muli', Arial, sans-serif;
+  position: relative;
+  float: left;
+  margin: 10px 1%;
+  padding: 0 20px 0 0;
+  min-width: 230px;
+  max-width: 315px;
+  width: 100%;
+  box-shadow: none !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 16px;
+}
+.snip1333 * {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.snip1333 img {
+  max-width: 100%;
+  vertical-align: top;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+.snip1333 .border {
+  position: absolute;
+  opacity: 0.45;
+  z-index: 1;
+}
+.snip1333 .border:before,
+.snip1333 .border:after,
+.snip1333 .border div:before,
+.snip1333 .border div:after {
+  background-color: #f5b043;
+  position: absolute;
+  content: "";
+  display: block;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.snip1333 .border:before,
+.snip1333 .border:after {
+  width: 0;
+  height: 1px;
+}
+.snip1333 .border div:before,
+.snip1333 .border div:after {
+  width: 1px;
+  height: 0;
+}
+.snip1333 .border.one {
+  left: -6px;
+  top: -6px;
+  right: 6px;
+  bottom: 6px;
+}
+.snip1333 .border.one:before,
+.snip1333 .border.one div:before {
+  left: 0;
+  top: 0;
+}
+.snip1333 .border.one:after,
+.snip1333 .border.one div:after {
+  bottom: 0;
+  right: 0;
+}
+.snip1333 .border.two {
+  left: 6px;
+  top: 6px;
+  right: -6px;
+  bottom: -6px;
+}
+.snip1333 .border.two:before,
+.snip1333 .border.two div:before {
+  right: 0;
+  top: 0;
+}
+.snip1333 .border.two:after,
+.snip1333 .border.two div:after {
+  bottom: 0;
+  left: 0;
+}
+.snip1333 figcaption {
+  right: 0px;
+  bottom: 20px;
+  position: absolute;
+  padding: 25px;
+  margin: 6px;
+  background-color: #000000;
+  max-width: 70%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+.snip1333 h3,
+.snip1333 p {
+  margin: 0;
+}
+.snip1333 h3 {
+  font-family: 'Ovo', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+.snip1333 p {
+  line-height: 1.6em;
+  letter-spacing: 1px;
+  font-size: 0.9em;
+}
+.snip1333 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+.snip1333:hover .border:before,
+.snip1333.hover .border:before,
+.snip1333:hover .border:after,
+.snip1333.hover .border:after {
+  width: 100%;
+}
+.snip1333:hover .border div:before,
+.snip1333.hover .border div:before,
+.snip1333:hover .border div:after,
+.snip1333.hover .border div:after {
+  height: 100%;
+}
+/* Demo purposes only */
+body {
+  background-color: #212121;
+}
