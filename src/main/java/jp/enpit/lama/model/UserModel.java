@@ -20,7 +20,7 @@ import jp.enpit.lama.entities.Users;
 
 public class UserModel extends BaseModel {
     private MongoCollection<Document> users(){
-        return super.collection("Users");
+        return super.collection("users");
     }
     
     // Userが登録されているか確認する

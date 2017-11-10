@@ -27,7 +27,7 @@ public class UsersRest {
             .build();
     }
     
-    /*@GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers() {
 		try (UserModel model = createModel()) {
@@ -35,7 +35,7 @@ public class UsersRest {
 					.entity(model.findUsers())
 					.build();
 		}
-    }*/
+    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,7 +55,7 @@ public class UsersRest {
     				.build();
     	}
     }
-
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response postUser(@FormParam("name") String name, @FormParam("password") String password){

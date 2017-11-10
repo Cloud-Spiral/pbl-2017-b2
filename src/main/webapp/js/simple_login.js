@@ -1,3 +1,5 @@
+//一定時間ごとにユーザ一覧の更新
+
 var endpoint = 'http://localhost:8080/facitter/api';
 // 本番環境用
 // var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
