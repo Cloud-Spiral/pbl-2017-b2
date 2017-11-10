@@ -12,8 +12,10 @@ window.onload = function(){
 	wsConnection();
 }
 
+$("#postit").mousedown(function (e){new Card();});
 //websocketオブジェクト
 var ws;
+
 
 function wsConnection() {
 	ws = new WebSocket('ws://' + window.location.host + '/lama/hws');
