@@ -7,7 +7,7 @@
   margin: 10px 1%;
   padding: 0 20px 0 0;
   min-width: 230px;
-  max-width: 315px;
+  max-width: 515px;
   width: 100%;
   box-shadow: none !important;
   -webkit-transform: translateZ(0);
@@ -85,13 +85,13 @@
   left: 0;
 }
 .snip1333 figcaption {
-  right: 0px;
+  right: 50px;
   bottom: 20px;
   position: absolute;
-  padding: 25px;
+  padding: 50px;
   margin: 6px;
   background-color: #000000;
-  max-width: 70%;
+  max-width: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 .snip1333 h3,
