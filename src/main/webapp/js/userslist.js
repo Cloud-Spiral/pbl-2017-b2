@@ -1,3 +1,7 @@
+var endpoint = 'http://localhost:8080/facitter/api';
+
+//本番環境用
+//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
 /**
  * ユーザリスト（当選者リスト）を更新する
@@ -6,7 +10,7 @@
 var updateList = function(){
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/users',
+		url: endpoint + '/users',
 		success: function(json){
 			$('#userlist').empty();			
 			for(var i=0; i<json.users.length;i++){
@@ -17,7 +21,7 @@ var updateList = function(){
 	});
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/winners',
+		url: endpoint + '/winners',
 		success: function(json){
 			$('#lotterybox').empty();			
 			for(var i=json.winners.length-1; i>-1;i--){
@@ -35,7 +39,7 @@ var updateList = function(){
 var startLottery = function() {
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/users',
+		url: endpoint + '/users',
 		dataType: 'json',
 		success: function(json){			
 			var min = 1;
@@ -57,7 +61,7 @@ var registerWinner = function() {
 	
 	$.ajax({
 		type : 'POST',
-		url : '/lama/api/winners',
+		url : endpoint + '/winners',
 		data : {
 			name : winnerName
 		},

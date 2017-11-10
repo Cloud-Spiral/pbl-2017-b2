@@ -56,7 +56,6 @@ public class UsersRest {
     	}
     }
     
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response postUser(@FormParam("name") String name, @FormParam("password") String password){

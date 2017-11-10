@@ -6,8 +6,8 @@
 }
 
 #my_canvas{
-    position:absolute;
-    left:60px;
+    position:relative;
+    /* left:60px; */
 	border:1px solid #000;
 }
 nav#interface{
@@ -71,7 +71,7 @@ ul#undoredo li{
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 }
-ul#publish li{
+ul#clear li{
 	width:59px;
 	height:29px;
 	background:#efefef;
@@ -85,8 +85,31 @@ ul#publish li{
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 }
-
-
-
-
-
+ul#straight li{
+	width:59px;
+	height:29px;
+	background:#efefef;
+	border-right:1px solid #E1E1E1;
+	border-bottom:1px solid #E1E1E1;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+ul#freehand li{
+	width:59px;
+	height:29px;
+	background:#efefef;
+	border-right:1px solid #E1E1E1;
+	border-bottom:1px solid #E1E1E1;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}

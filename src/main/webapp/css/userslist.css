@@ -1,10 +1,10 @@
-ul {
+.userlist ul {
   border: solid 2px skyblue;/*線の設定*/
   padding: 0.5em 1em 0.5em 2.3em;
   position: relative;
 }
 
-ul li {
+.userlist ul li {
   line-height: 1.5;
   padding: 0.5em 0;
   list-style-type: none!important;

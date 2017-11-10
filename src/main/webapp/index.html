@@ -1,61 +1,112 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-	<head>
- 		<title>while board</title>
- 
- 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-		<meta http-equiv="Content-Script-Type" content="text/javascript">
- 
- 	<link rel="stylesheet" type="text/css" href="css/whiteboard.css">
- 	<link rel="stylesheet" type="text/css" href="css/userslist.css">
- 	</head>
- 
- 
- 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facitter</title>
+<meta charset="utf-8">
+
+	<link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="css/whiteboard.css">
+		<link rel="stylesheet" href="css/tasks.css" />
+		<link rel="stylesheet" href="css/page.css" />
+		<link rel="stylesheet" type="text/css" href="css/userslist.css">
+</head>
+
 <body>
+	<div id="container">
+		<div id="contents">
+			<nav id="interface">
+			<ul id="swbutton">
+				<li id="minus">-</li>
+				<li id="plus">+</li>
+			</ul>
+			<ul id="freehand">
+				<li>FREEHAND</li>
+			</ul>
+			<ul id="straight">
+				<li>STRAIGHT</li>
+			</ul>
+			<ul id="colorbutton">
+				<li id="black"></li>
+				<li id="red"></li>
+				<li id="blue"></li>
+				<li id="yellow"></li>
+			</ul>
+			<ul id="undoredo">
+				<li id="undo">&lt;</li>
+				<li id="redo">&gt;</li>
+			</ul>
+			<ul id="clear">
+				<li>CLEAR</li>
+			</ul>
 
-<!--
-<nav id="interface" >
-    <ul id="swbutton">
-        <li id="minus">-</li>
-        <li id="plus">+</li>
-    </ul>
-    <ul id="colorbutton">
-        <li id="black"></li>
-        <li id="red"></li>
-        <li id="blue"></li>
-        <li id="yellow"></li>
-    </ul>
-    <ul id="undoredo">
-        <li id="undo">&lt;</li>
-        <li id="redo">&gt;</li>
-    </ul>
+			</nav>
+			<!-- <canvas id="my_canvas" width="800" height="600"></canvas> -->
+			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
+		</div>
+		<div id="side">
+			<input id="message" type="text" placeholder="タスク内容"> <span
+				id="priority"></span> <input id="submit-task" type="button"
+				value="追加">
+					<ul class="tab">
+						<li class="select"><span class=yubi>open</span></li>
+						<li><span class="yubi">close</span></li>
+					</ul>
+					<ul class="task-content">
+						<li>
+							<!-- open -->
+							<div class="y_data_area">
+								<table class="task-table" id="open-tasks">
+									<thead>
+										<tr>
+											<th class="symbol-cell"></th>
+											<th class="body-cell">タスク内容</th>
+											<!-- <th>日付</th> -->
+											<th class="priority-cell">優先度</th>
+											<th class="status-cell"></th>
+										</tr>
+									</thead>
+									<tbody id="open-tbody">
+									</tbody>
+								</table>
+							</div>
+						</li>
 
-    
-</nav>
 
-<canvas id="my_canvas"  height="600"></canvas>
+						<li class="hide">
+							<!-- close -->
+							<table class="task-table" id="close-tasks">
+								<thead>
+									<tr>
+										<th class="symbol-cell"></th>
+										<th class="body-cell">タスク内容</th>
+										<!-- <th>日付</th> -->
+										<th class="priority-cell">優先度</th>
+										<th class="status-cell"></th>
+									</tr>
+								</thead>
+								<tbody id="close-tbody">
+								</tbody>
+							</table>
+						</li>
+					</ul>
 
--->
-
-	<div id="userslist" style="width: 20%; float: left;">
-		
-		<ul>
-			<font size="5"> ユーザ一覧 </font>
-			<div id="userlist"> </div>
-			<select id="lotterybox"> </select>
-			<input type=button value="抽選開始" onClick="startLottery()">
-		</ul>
+					<div class="userslist">
+						<ul class="userlist">
+							<font size="5"> ユーザ一覧 </font>
+							<div id="userlist"></div>
+							<select id="lotterybox">
+							</select>
+							<input type=button value="抽選開始" onClick="startLottery()">
+						</ul>
+					</div>
+		</div>
+		<!-- <div id="footer">footer</div> -->
 	</div>
-
-
-
-
-
-	<script src="js/jquery-3.2.1.js"></script>
-	<script src="js/whiteboard.js"></script>
-	<script src="js/userslist.js"></script>
-
 </body>
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/websocket.js"></script>
+<script src="js/whiteboard.js"></script>
+<script src="js/task.js"></script>
+<script src="js/jquery.raty.js"></script>
+<script src="js/userslist.js"></script>
 </html>
