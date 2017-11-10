@@ -1,5 +1,30 @@
-$(document).ready(function(){
 
+
+function wsConnection() {
+	ws = new WebSocket('ws://' + window.location.host + '/lama/hws');
+	
+	ws.onmessage = function(message) {
+		var arrayStr = message.data.split(' ');
+		if(arrayStr[0] === 'color'){
+			colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
+		}else if(arrayStr[0] === 'delete'){
+			deleter(parseInt(arrayStr[1]));
+		}else if(arrayStr[0] === 'good'){
+			document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
+		}else if(arrayStr[0] === 'bad'){
+			document.getElementsByName(arrayStr[1])[0].value = "Bad:"+arrayStr[2];
+		}else if(arrayStr[0] === 'text'){
+			document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
+		}else if(arrayStr[0] === 'position'){
+			document.getElementById(arrayStr[1]).style.left = arrayStr[2];
+			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
+		}else if(arrayStr[0] === 'new'){
+			createCard(parseInt(arrayStr[1]));
+		}
+	};
+}
+
+$(document).ready(function(){
 
 	var oldx, oldy;
 	var canvas, con, canvas_top = 20;
@@ -15,6 +40,8 @@ $(document).ready(function(){
 	var lineRecords = new Array();
 	var freeHand = true
 	var stx, sty;
+	var lineJson = [];
+	var historyJson = [];
 	
 	//最初に実行される
 	//init();
@@ -113,7 +140,7 @@ $(document).ready(function(){
 			xy.color = color;
 			xy.size = con.lineWidth;
 			xy.line = freeHand;
-			lineRecords.push(xy);
+			lineRecords.push(xy);			
 		}else{
 			if (event.type == "mouseup"){
 				if(!freeHand){
@@ -124,11 +151,21 @@ $(document).ready(function(){
 					con.moveTo(stx,sty);
 					con.lineTo(oldx,oldy);
 					con.stroke();
+
+					console.log("JSON lineRecords: "+JSON.stringify(lineRecords));
 				}
 				//履歴を記録
 				recordArray[record_index] = lineRecords;
+				
+				//historyJson.push(lineJson);
+				console.log("JSON recordA: "+JSON.stringify(recordArray));
+				//console.log("his: "+historyJson);
+				
+				
 				//座標初期化
 				lineRecords = new Array();
+				//lineJson = [];
+				
 				//履歴を更新された場合最新の
 				record_index++;
 				if(record_index < recordArray.length){
