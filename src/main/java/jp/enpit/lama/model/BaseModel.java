@@ -10,7 +10,7 @@ public abstract class BaseModel implements AutoCloseable {
     }
 
     protected MongoCollection<Document> collection(String collectionName){
-        return MongoClientPool.getInstance().database().getCollection(collectionName);
+    	return MongoClientPool.getInstance().database().getCollection(collectionName);
     }
 
     public void close(){
