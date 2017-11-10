@@ -28,7 +28,7 @@ public class LamaHusenWs {
 	public void onOpen(Session session) {
 		// チャット接続者一覧に自分を追加
 		sessions.add(session);
-		System.out.println("open:" + session.toString());
+		//System.out.println("open:" + session.toString());
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class LamaHusenWs {
 	 */
 	@OnMessage
 	public void onMessage(String msg) {
-		System.out.println("send:" + msg);
+		//System.out.println("send:" + msg);
 		// チャット接続者一覧の全てにメッセージを送る
 		for (Session session : sessions) {
 			try {
