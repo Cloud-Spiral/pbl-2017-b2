@@ -1,14 +1,18 @@
 
 // websocketオブジェクト
-var ws;
+var tws;
 
-// ws接続押下時の処理
+// tws接続押下時の処理
 window.onload = function() {
 
 	// WebSocketオブジェクト作成
-	ws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
-	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
+	//ふせん
+	loadHusens();
+	hwsConnection();
 	
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
@@ -18,10 +22,10 @@ window.onload = function() {
 	update();
 
 	// サーバからのメッセージ受信時の処理
-	ws.onmessage = function(message) {
+	tws.onmessage = function(message) {
 		//message = JSON.parse(message.data)
 		message = message.data.split(":")
-		console.log(message)
+		//console.log(message)
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
@@ -35,20 +39,10 @@ window.onload = function() {
 			updateTaskBody(message[1]);
 	};
 	
-	ws.onclose = function(closeEvent) {
+	tws.onclose = function(closeEvent) {
 	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
 
-
 }
 
-// send押下時の処理
-$('#send').click(function() {
-    // TODO
-	// テキストデータをinputフィールドから読み込む
-	var body = $('#body').val();
-	
-	// ws経由で送信
-	ws.send(body);
-});
 

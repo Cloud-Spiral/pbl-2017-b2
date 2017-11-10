@@ -1,29 +1,32 @@
 /**
- * husen you no JavaScript
+ * husen you no JavaScript //
  */
 var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
-var endpoint = "http://localhost:8080/facitter/api"
-	
+var endpoint = "http://localhost:8080/facitter/api";
+
+//本番環境用
+//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
+
+/*
 window.onload = function(){
 	loadHusens();
-	wsConnection();
-}
+	hwsConnection();
+}*/
 
 $("#postit").mousedown(function (e){new Card();});
 //websocketオブジェクト
-var ws;
+var hws;
 
+function hwsConnection() {
+	hws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 
-function wsConnection() {
-	ws = new WebSocket('ws://' + window.location.host + '/facitter/hws');
-	
 	//　本番環境用
-	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
-	
-	ws.onmessage = function(message) {
+	//hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+
+	hws.onmessage = function(message) {
 		var arrayStr = message.data.split(' ');
 		if(arrayStr[0] === 'color'){
 			colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
@@ -75,7 +78,7 @@ function updateText(name,count){
 		},
 		success : function() {
 			//console.log('text-a');
-			ws.send("text "+name+" "+document.getElementsByName(name)[0].value);
+			hws.send("text "+name+" "+document.getElementsByName(name)[0].value);
 		},
 		error: function() {
 			//console.log('text-b');
@@ -92,7 +95,7 @@ function goodButtonCounter(name,count){
 		},
 		success : function(good) {
 			//console.log('good-a');
-			ws.send("good "+name+" "+good);
+			hws.send("good "+name+" "+good);
 		},
 		error: function(good) {
 			//console.log('good-b');
@@ -110,7 +113,7 @@ function badButtonCounter(name,count){
 		},
 		success : function(bad) {
 			//console.log('bad-a');
-			ws.send("bad "+name+" "+bad);
+			hws.send("bad "+name+" "+bad);
 		},
 		error: function(bad) {
 			//console.log('bad-b');
@@ -137,7 +140,7 @@ function colorCounter(count,color){
 		},
 		success : function(data) {
 			//console.log('put-a');
-			ws.send("color "+count+" "+color);
+			hws.send("color "+count+" "+color);
 		},
 		error: function(data) {
 			//console.log('put-b');
@@ -156,7 +159,7 @@ function deleteHusen(count){
 		url : endpoint+'/husens/'+count,
 		success : function(data) {
 			//console.log('delete-a');
-			ws.send("delete "+count);
+			hws.send("delete "+count);
 		},
 		error: function(data) {
 			//console.log('delete-b');
@@ -220,11 +223,11 @@ function draggable(count, handle, container) {
 				},
 				success : function(data) {
 					//console.log('move-a');
-					ws.send("position "+cont.id+" "+cont.style.left+" "+cont.style.top);
+					hws.send("position "+cont.id+" "+cont.style.left+" "+cont.style.top);
 				},
 				error : function(data) {
 					//console.log('move-b');
-					// ws.send("post-task:"+tid);
+					// hws.send("post-task:"+tid);
 				}
 			});
 		}
@@ -255,7 +258,7 @@ function Card() {
 		},
 		success: function(json){
 			//console.log(json);
-			ws.send("new "+String(json.hid));
+			hws.send("new "+String(json.hid));
 		},
 		error: function(json){
 			//console.log(json);
@@ -275,9 +278,9 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.container = document.createElement('div');
 	this.container.id = "container"+String(uniHusenCount);
 	this.container.style="width:240px;background-color:"+ getBackColor(colorCount) +";" +
-			"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
-					"left:"+xPosition+";top:"+yPosition;
-	
+	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
+	"left:"+xPosition+";top:"+yPosition;
+
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
 	this.handle.style.width = "100%";
@@ -289,19 +292,19 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.txtarea.value = text;
 	this.txtarea.name = "txt"+String(uniHusenCount);
 	this.txtarea.style = "width:98%;height:"+height+";" +
-			"background-color:"+getBackColor(colorCount)+";" +
-			"display:block;resize:none;" +
-			"border:0px;" +
-			"font-size:20px;font-family:Arial";
+	"background-color:"+getBackColor(colorCount)+";" +
+	"display:block;resize:none;" +
+	"border:0px;" +
+	"font-size:20px;font-family:Arial";
 	this.txtarea.onblur = function(){
 		updateText(this.name,uniHusenCount);
 	}
-	
+
 	var height = this.txtarea.style.height;
 
 	this.buttonContainer = document.createElement('div');
 	this.buttonContainer.style = "width:100%;height:20px;display:block";
-	
+
 	this.buttonGood = document.createElement('input');
 	this.buttonGood.type = "button";
 	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
@@ -315,14 +318,14 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.buttonBad.value = "Bad:"+String(badCount);
 	this.buttonBad.style = "width:25%;height:20px;vertical-align:top";
 	this.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
-	
+
 	this.buttonColor = document.createElement('input');
 	this.buttonColor.type = "button";
 	this.buttonColor.name = "button" + String(uniHusenCount*4-1);
 	this.buttonColor.value = "Color";
 	this.buttonColor.style = "width:25%;height:20px;vertical-align:top";
 	this.buttonColor.onclick = function(){colorCounter(uniHusenCount,++colorCount)};
-	
+
 	this.buttonRemove = document.createElement('input');
 	this.buttonRemove.type = "button";
 	this.buttonRemove.name = "button" + String(uniHusenCount*4);
@@ -337,7 +340,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.buttonContainer.appendChild(this.buttonGood);
 	this.buttonContainer.appendChild(this.buttonBad);
 	this.container.appendChild(this.buttonContainer);
-	
+
 	document.body.appendChild(this.container);
 	//console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
