@@ -5,7 +5,7 @@ var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
-var endpoint = "http://localhost:8080/lama/api"
+var endpoint = "http://localhost:8080/facitter/api"
 	
 window.onload = function(){
 	loadHusens();
@@ -18,7 +18,7 @@ var ws;
 
 
 function wsConnection() {
-	ws = new WebSocket('ws://' + window.location.host + '/lama/hws');
+	ws = new WebSocket('ws://' + window.location.host + '/facitter/hws');
 	
 	ws.onmessage = function(message) {
 		var arrayStr = message.data.split(' ');
@@ -44,7 +44,7 @@ function wsConnection() {
 function loadHusens(){
 	$.ajax({
 		type: 'GET',
-		url: '/lama/api/husens',
+		url: endpoint + '/husens',
 		success: function(json) {
 			for(i=0;i<json.husens.length;i++){
 				new makeCard(json.husens[i].hid,
