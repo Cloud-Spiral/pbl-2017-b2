@@ -79,7 +79,7 @@ public class HusensRest {
     		,@FormParam("width") String width
     		,@FormParam("height") String height){
         try(HusenModel model = createModel()){
-        	System.out.println(number+" "+left+" "+top+" "+width+" "+height);
+        	//System.out.println(number+" "+left+" "+top+" "+width+" "+height);
         	model.orderPosition(number,left,top,width,height);
         	Response q = Response.status(201).build();
             return q;

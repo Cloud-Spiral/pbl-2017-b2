@@ -4,16 +4,20 @@ var tws;
 
 // tws接続押下時の処理
 window.onload = function() {
+	//ふせん
+	loadHusens();
+	hwsConnection();
+	twsConnection();
+}
+/* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
+ */
 
+
+function twsConnection(){
 	// WebSocketオブジェクト作成
 	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
 	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
-	
-	//ふせん
-	loadHusens();
-	hwsConnection();
-	
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,
@@ -40,9 +44,13 @@ window.onload = function() {
 	};
 	
 	tws.onclose = function(closeEvent) {
-	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	    console.log('tws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
-
 }
 
+function onUnload(){
+	  tws.close();
+	  hws.close();
+}
 
+window.addEventListener("unload",onUnload,false);

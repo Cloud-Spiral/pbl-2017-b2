@@ -12,6 +12,7 @@ var isAllMax = true;
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
 /*
+ * websocket.jsに移動
 window.onload = function(){
 	loadHusens();
 	hwsConnection();
@@ -24,35 +25,39 @@ $("#FGO").mousedown(function (e){husenGrandOrder();});
 var hws;
 
 function hwsConnection() {
+	if(hws != null){
+		return;
+	}
 	hws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
-
 	//　本番環境用
 	//hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
-
-	hws.onmessage = function(message) {
-		var arrayStr = message.data.split(' ');
-		if(arrayStr[0] === 'color'){
-			colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
-		}else if(arrayStr[0] === 'delete'){
-			fadeOutContainer(parseInt(arrayStr[1]));
-			setTimeout(deleter, 300, parseInt(arrayStr[1]));
-		}else if(arrayStr[0] === 'good'){
-			document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
-		}else if(arrayStr[0] === 'bad'){
-			document.getElementsByName(arrayStr[1])[0].value = "Bad:"+arrayStr[2];
-		}else if(arrayStr[0] === 'text'){
-			document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
-		}else if(arrayStr[0] === 'position'){
-			setPosition(arrayStr[1],arrayStr[2],arrayStr[3]);
-//			document.getElementById(arrayStr[1]).style.left = arrayStr[2];
-//			document.getElementById(arrayStr[1]).style.top = arrayStr[3];
-		}else if(arrayStr[0] === 'new'){
-			createCard(parseInt(arrayStr[1]));
-			setTimeout(fadeInContainer, 200, parseInt(arrayStr[1]));
-		}else if(arrayStr[0] === 'order'){
-			reloadAllHusenPosition();
-		}
+	hws.onmessage = hwsOnMessage;
+	hws.onclose = function(closeEvent) {
+	    console.log('hws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
+}
+
+function hwsOnMessage(message){
+	var arrayStr = message.data.split(' ');
+	if(arrayStr[0] === 'color'){
+		colorSetter(parseInt(arrayStr[1]),parseInt(arrayStr[2]));
+	}else if(arrayStr[0] === 'delete'){
+		fadeOutContainer(parseInt(arrayStr[1]));
+		setTimeout(deleter, 300, parseInt(arrayStr[1]));
+	}else if(arrayStr[0] === 'good'){
+		document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
+	}else if(arrayStr[0] === 'bad'){
+		document.getElementsByName(arrayStr[1])[0].value = "Bad:"+arrayStr[2];
+	}else if(arrayStr[0] === 'text'){
+		document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
+	}else if(arrayStr[0] === 'position'){
+		setPosition(arrayStr[1],arrayStr[2],arrayStr[3]);
+	}else if(arrayStr[0] === 'new'){
+		createCard(parseInt(arrayStr[1]));
+		setTimeout(fadeInContainer, 200, parseInt(arrayStr[1]));
+	}else if(arrayStr[0] === 'order'){
+		reloadAllHusenPosition();
+	}
 }
 
 function loadHusens(){
@@ -317,7 +322,7 @@ function husenGrandOrder(){
 			hws.send("order");
 		},
 		error: function(data) {
-			console.log('order-b');
+			//console.log('order-b');
 		}
 	});
 }
