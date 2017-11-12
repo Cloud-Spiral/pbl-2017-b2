@@ -5,11 +5,11 @@ var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
-var endpoint = "http://localhost:8080/facitter/api";
+//var endpoint = "http://localhost:8080/facitter/api";
 var isAllMax = true;
 
 //本番環境用
-//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
+var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
 /*
  * websocket.jsに移動
@@ -28,9 +28,9 @@ function hwsConnection() {
 	if(hws != null){
 		return;
 	}
-	hws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+	//hws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
-	//hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 	hws.onmessage = hwsOnMessage;
 	hws.onclose = function(closeEvent) {
 	    console.log('hws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
