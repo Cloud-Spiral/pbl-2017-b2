@@ -1,3 +1,5 @@
+//一定時間ごとにユーザ一覧の更新
+
 var endpoint = 'http://localhost:8080/facitter/api';
 // 本番環境用
 // var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
@@ -44,7 +46,7 @@ var register = function() {
 				// 本番環境へ
 				// window.location.href =
 				// "https://team2017-2.spiral.cloud/lama/";
-				window.location.href = "../facitter/";
+				window.location.href = "../facitter/facitter.html";
 		}
 	});
 	
@@ -123,7 +125,7 @@ var login = function() {
 	console.log(pass);
 	
 	if(password == pass) {
-		window.location.href = "../facitter/";
+		window.location.href = "../facitter/facitter.html";
 	}
 	else window.location.reload();
 }

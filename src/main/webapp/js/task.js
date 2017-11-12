@@ -1,13 +1,12 @@
-//var endpoint = 'http://localhost:8080/facitter/api';
+var endpoint = 'http://localhost:8080/facitter/api';
 
 //本番環境用
-var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
+//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 document.write("<script type='text/javascript' src='js/Moment.js'></script>");
 
 //タスクを投稿
 var postTask = function() {
 	var message = $('#message').val();
-	//var priority = $('#priority-hidden').val();
 	var priority = $('#priority').raty('score');
 	$.ajax({
 		type : 'POST',
@@ -18,8 +17,8 @@ var postTask = function() {
 		},
 		success : function(data) {
 			//var message = {tid: data.tid, type: "post-task"};
-			//ws.send(JSON.stringify(message));
-			ws.send("post-task:"+data.tid);
+			//tws.send(JSON.stringify(message));
+			tws.send("post-task:"+data.tid);
 			
 		}
 	});
@@ -99,14 +98,14 @@ var updateTaskBody = function(tid) {
 var changeTaskStatus = function(button) {
 	var tid = button.id.replace("task-status","");
 	//var message = {tid: tid, type: "delete-task"};
-	//ws.send(JSON.stringify(message));
-	ws.send("delete-task:"+tid);
+	//tws.send(JSON.stringify(message));
+	tws.send("delete-task:"+tid);
 	$.ajax({
 		type : 'PUT',
 		url : endpoint + '/tasks/status',
 		data: {tid: tid},
 		success : function(data) {
-			ws.send("post-task:"+tid);
+			tws.send("post-task:"+tid);
 		}
 	});
 }
@@ -137,7 +136,7 @@ var changeTaskBody = function(task) {
 				priority: priority
 			},
 			success : function(data) {
-				ws.send("change-task-body:"+tid)
+				tws.send("change-task-body:"+tid)
 			}
 		});
 	//}
@@ -148,7 +147,7 @@ var changeTaskPriority = function(task, priority) {
 	var tid = task.id.replace("task-priority","");
 	var body = $('#task-body'+tid).val();
 	//var priority = $('#task-priority'+tid).raty('score');
-	ws.send("delete-task:"+tid);
+	tws.send("delete-task:"+tid);
 	$.ajax({
 		type : 'PUT',
 		url : endpoint + '/tasks',
@@ -158,7 +157,7 @@ var changeTaskPriority = function(task, priority) {
 			priority: priority
 		},
 		success : function(data) {
-			ws.send("post-task:"+tid);
+			tws.send("post-task:"+tid);
 		}
 	});
 }
