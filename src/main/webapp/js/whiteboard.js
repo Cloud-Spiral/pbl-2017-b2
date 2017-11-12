@@ -12,6 +12,7 @@ function whiteWsConnection() {
 	whiteWs.onopen = loadWhite;
 
 	whiteWs.onmessage = function(evt) {
+		return;
 		//console.log("ws get: "+evt.data);
 
 		message = JSON.parse(evt.data);
@@ -51,6 +52,7 @@ var colors = ["black", "red", "blue", "white"];
 var color = colors[0];
 var color_index = 0;
 var colorString;
+var eraser = false;
 var drawing;
 var sWidth = 5;
 var swUpButton, swDownButton;
@@ -77,6 +79,7 @@ con.lineWidth = sWidth;
 var colors = ["black", "red", "blue", "white"];
 con.lineCap = "round";
 colorString = document.getElementById("size");
+var oldGCO = con.globalCompositeOperation;
 
 //キャンパスの描画領域の横幅を取得
 var width = canvas.width;
@@ -164,6 +167,7 @@ function drawLine(event,isStart){
 		xy.color = color;
 		xy.size = con.lineWidth;
 		xy.line = freeHand;
+		xy.eraser = eraser;
 		lineRecords.push(xy);
 	}else{
 		if (event.type == "mouseup"){
@@ -225,8 +229,30 @@ function swDown(e){
 //カラーを変更
 function colorChange(e, target){
 	var my_color = $(target).css("background-color");
-	con.strokeStyle = color = my_color;
+	console.log('いろ'+my_color);
+
+	if(my_color === 'rgba(0, 0, 0, 0)'){
+		//消しゴムモードにする
+		eraser = true;
+	} else {
+		eraser = false;
+		con.strokeStyle = color = my_color;
+	}
+	switchEraser(eraser);
 }
+
+//消しゴムモードを変更
+function switchEraser(eraser){
+
+	if(eraser){
+		// 消す準備
+		con.globalCompositeOperation = 'destination-out';
+	} else {
+		// 消し終わったら戻す
+		con.globalCompositeOperation = oldGCO;
+	}
+}
+
 //画面を全削除
 function clear(e){
 	console.log("clear");
@@ -274,57 +300,8 @@ function undo(e){
 	console.log("undo");
 	if(record_index > 0){
 		record_index--;
-		//キャンバスを初期化
-		con.clearRect(0,0,width,height);
-		if(record_index == 0){
-			//recordArray = [];
-		}else{
+		load();
 
-			//線一本ずつ再現する
-			for(var i=0; i < record_index; i++){
-				var record = recordArray[i];
-
-				//フラグ取り出す
-				var xy = record[0];
-				line = xy.line;
-				var clear = xy.clear;
-				console.log("clear: "+clear);
-				if(!clear){
-					if(line){
-						for(var v=0; v<record.length; v++){
-							if(typeof record[v] == "object"){
-								var xy = record[v];
-								//太さを描いたときの状態に戻す
-								con.lineWidth = xy.size;
-								//描画処理
-								draw(v,xy.x,xy.y,xy.color);
-								//現在の設定に戻す
-								con.lineWidth = sWidth;
-								con.strokeStyle = color;
-							}
-						}
-					} else {
-						console.log("直線の履歴やで");
-						var start = record[0];
-						var end = record[record.length-1];
-						con.beginPath();
-						//描いたときの状態に戻す
-						con.lineWidth = start.size;
-						con.strokeStyle = start.color;
-
-						con.moveTo(start.x,start.y);
-						con.lineTo(end.x,end.y);
-						con.stroke();
-
-						//現在の設定に戻す
-						con.lineWidth = sWidth;
-						con.strokeStyle = color;
-					}
-				} else {
-					con.clearRect(0,0,width,height);
-				}
-			}
-		}
 		historyJson = JSON.stringify(recordArray);
 		message = JSON.stringify({
 			type: 'update',
@@ -342,53 +319,7 @@ function redo(e){
 	console.log("redo");
 	if(record_index < recordArray.length){
 		record_index++;
-		//キャンバスを初期化
-		con.clearRect(0,0,width,height);
-		//線一本ずつ再現する
-		for(var i=0; i < record_index; i++){
-			var record = recordArray[i];
-
-			//フラグ取り出す
-			var xy = record[0];
-			line = xy.line;
-			var clear = xy.clear;
-			console.log("clear: "+clear);
-			if(!clear){
-				if(line){
-					for(var v=0; v<record.length; v++){
-						if(typeof record[v] == "object"){
-							var xy = record[v];
-							//太さを描いたときの状態に戻す
-							con.lineWidth = xy.size;
-							//描画処理
-							draw(v,xy.x,xy.y,xy.color);
-							//現在の設定に戻す
-							con.lineWidth = sWidth;
-							con.strokeStyle = color;
-						}
-					}
-				} else {
-					console.log("直線の履歴やで");
-					var start = record[0];
-					var end = record[record.length-1];
-					con.beginPath();
-					//描いたときの状態に戻す
-					con.lineWidth = start.size;
-					con.strokeStyle = start.color;
-
-					con.moveTo(start.x,start.y);
-					con.lineTo(end.x,end.y);
-					con.stroke();
-
-					//現在の設定に戻す
-					con.lineWidth = sWidth;
-					con.strokeStyle = color;
-				}
-			} else {
-				con.clearRect(0,0,width,height);
-			}
-		}
-
+		load();
 		historyJson = JSON.stringify(recordArray);
 		message = JSON.stringify({
 			type: 'update',
@@ -397,10 +328,7 @@ function redo(e){
 
 		});
 		console.log("ws send: redo");
-
 		whiteWs.send(message);
-
-
 	}
 }
 
@@ -414,23 +342,22 @@ function load(e){
 	for(var i=0; i < record_index; i++){
 		var record = recordArray[i];
 
-		//フラグ取り出す
+		//描いていたときの状況を再現する
 		var xy = record[0];
 		line = xy.line;
 		var clear = xy.clear;
 		console.log("clear: "+clear);
+		//太さを描いたときの状態に戻す
+		con.lineWidth = xy.size;
+		con.strokeStyle = xy.color;
+
 		if(!clear){
 			if(line){
 				for(var v=0; v<record.length; v++){
 					if(typeof record[v] == "object"){
 						var xy = record[v];
-						//太さを描いたときの状態に戻す
-						con.lineWidth = xy.size;
 						//描画処理
 						draw(v,xy.x,xy.y,xy.color);
-						//現在の設定に戻す
-						con.lineWidth = sWidth;
-						con.strokeStyle = color;
 					}
 				}
 			} else {
@@ -438,21 +365,16 @@ function load(e){
 				var start = record[0];
 				var end = record[record.length-1];
 				con.beginPath();
-				//描いたときの状態に戻す
-				con.lineWidth = start.size;
-				con.strokeStyle = start.color;
-
 				con.moveTo(start.x,start.y);
 				con.lineTo(end.x,end.y);
 				con.stroke();
-
-				//現在の設定に戻す
-				con.lineWidth = sWidth;
-				con.strokeStyle = color;
 			}
 		} else {
 			con.clearRect(0,0,width,height);
 		}
+		//現在の設定に戻す
+		con.lineWidth = sWidth;
+		con.strokeStyle = color;
 	}
 }
 
