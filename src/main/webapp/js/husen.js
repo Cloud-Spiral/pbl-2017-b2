@@ -252,6 +252,16 @@ function getBackColor(count){
 var clickCount = 0;
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
+	var containerId = container.id;
+	container.onmousedown = function(event){
+		console.log(container.nextElementSibling.id);
+		while(container.nextElementSibling != null ||
+				container.nextElementSibling.classList.contains("husenContainer")){
+			if (container.nextElementSibling != null) {
+				$('#' + containerId).before($('#' + container.nextElementSibling.id));
+			}
+		}
+	}
 
 	handle.onmousedown = function(event) {
 		event.preventDefault();
