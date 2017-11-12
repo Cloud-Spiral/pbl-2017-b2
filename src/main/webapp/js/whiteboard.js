@@ -47,9 +47,10 @@ function loadWhite(){
 
 var oldx, oldy;
 var canvas, con, canvas_top = 20;
-var colors = ["black"];
+var colors = ["black", "red", "blue", "white"];
 var color = colors[0];
 var color_index = 0;
+var colorString;
 var drawing;
 var sWidth = 5;
 var swUpButton, swDownButton;
@@ -73,8 +74,9 @@ var message;
 canvas = document.getElementById("my_canvas");
 con = canvas.getContext("2d");
 con.lineWidth = sWidth;
-var colors = ["black", "red", "blue", "yellow"];
+var colors = ["black", "red", "blue", "white"];
 con.lineCap = "round";
+colorString = document.getElementById("size");
 
 //キャンパスの描画領域の横幅を取得
 var width = canvas.width;
@@ -87,7 +89,7 @@ swDownButton = $("#minus");
 swUpButton.mousedown(function (e){swUp(e);});
 swDownButton.mousedown(function (e){swDown(e);});
 
-$("#red,#black,#blue,#yellow").mousedown(function (e){colorChange(e,$(this));});
+$("#red,#black,#blue,#white").mousedown(function (e){colorChange(e,$(this));});
 $("#clear li").mousedown(function (e){clear(e);});
 $("#straight li").mousedown(function (e){straight(e);});
 $("#freehand li").mousedown(function (e){freehand(e);});
@@ -209,6 +211,7 @@ function swUp(e){
 	sWidth++;
 	sWidth++;
 	con.lineWidth = sWidth;
+	colorString.innerHTML = '<li>'+sWidth+'</li>';
 }
 //線を細く
 function swDown(e){
@@ -216,6 +219,7 @@ function swDown(e){
 	if(sWidth > 0)sWidth--;
 	if(sWidth > 0)sWidth--;
 	con.lineWidth = sWidth;
+	colorString.innerHTML = '<li>'+sWidth+'</li>';
 }
 
 //カラーを変更
