@@ -10,8 +10,9 @@ window.onload = function() {
 	twsConnection();
 	
 	//ホワイトボード
-	loadWhite();
 	whiteWsConnection();
+	
+	//loadWhite();
 
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
@@ -58,6 +59,7 @@ function twsConnection(){
 function onUnload(){
 	  tws.close();
 	  hws.close();
+	  whiteWs.close();
 }
 
 window.addEventListener("unload",onUnload,false);

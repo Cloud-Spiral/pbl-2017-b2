@@ -1,4 +1,4 @@
-var whiteWs ;
+var whiteWs;
 
 
 //$(document).ready(function(){
@@ -6,21 +6,42 @@ var whiteWs ;
 function whiteWsConnection() {
 	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
 	console.log("ws つなげる");
+	whiteWs.onopen = loadWhite;
 	//　本番環境用
 	//whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
 
-	whiteWs.onmessage = function(message) {
-		console.log("ws get");
+	whiteWs.onmessage = function(evt) {
+		console.log("ws get: "+evt.data);
 
+		message = JSON.parse(evt.data);
+		if(message.type === 'load'){
+			console.log('loadきたから履歴情報送ったげるで');
+			message = JSON.stringify({
+				type: 'update',
+				history: historyJson,
+				index: record_index
+			});
+			whiteWs.send(message);
+			
+		} else if(message.type === 'update') {
+			console.log('updateきたからcanvasに反映すんで');
+			record_index = message.index;
+			recordArray = JSON.parse(message.history);
+			load();
+		}
+		
+		
+		
 	};
 }
 
 function loadWhite(){
 	//今までのホワイトボードの履歴を取得して反映する
-	console.log("load white");
-	
-	
-	
+	message = JSON.stringify({
+		type: 'load'
+	});
+	console.log("load要求送るで");
+	whiteWs.send(message);
 }
 
 var oldx, oldy;
@@ -40,6 +61,7 @@ var stx, sty;
 
 var historyJson;
 var parsedJson = [];
+var message;
 
 
 //最初に実行される
@@ -159,9 +181,15 @@ function drawLine(event,isStart){
 
 			//parsedJson = JSON.parse(historyJson);
 			//console.log(parsedJson);
-
+			
+			message = JSON.stringify({
+				type: 'update',
+				history: historyJson,
+				index: record_index + 1,
+				
+			});
 			console.log("ws send");
-			whiteWs.send(historyJson);
+			whiteWs.send(message);
 
 			//座標初期化
 			lineRecords = new Array();
@@ -205,6 +233,18 @@ function clear(e){
 	lineRecords.push(xy);
 	//履歴を記録
 	recordArray[record_index] = lineRecords;
+	
+	historyJson = JSON.stringify(recordArray);
+	message = JSON.stringify({
+		type: 'update',
+		history: historyJson,
+		index: record_index + 1,
+		
+	});
+	console.log("ws send: clear");
+	whiteWs.send(message);
+
+	
 	//座標初期化
 	lineRecords = new Array();
 	//履歴を更新された場合最新の
@@ -279,6 +319,18 @@ function undo(e){
 					con.clearRect(0,0,width,height);
 				}
 			}
+			
+			historyJson = JSON.stringify(recordArray);
+			message = JSON.stringify({
+				type: 'update',
+				history: historyJson,
+				index: record_index,
+				
+			});
+			console.log("ws send: undo");
+			whiteWs.send(message);
+
+			
 		}
 	}
 }
@@ -334,8 +386,80 @@ function redo(e){
 				con.clearRect(0,0,width,height);
 			}
 		}
+		
+		historyJson = JSON.stringify(recordArray);
+		message = JSON.stringify({
+			type: 'update',
+			history: historyJson,
+			index: record_index,
+			
+		});
+		console.log("ws send: redo");
+		whiteWs.send(message);
+
+		
 	}
 }
+
+//ロード
+function load(e){
+	console.log("load");
+	if(record_index > 0){
+//		record_index--;
+		//キャンバスを初期化
+		con.clearRect(0,0,width,height);
+		if(record_index == 0){
+			//recordArray = [];
+		}else{
+
+			//線一本ずつ再現する
+			for(var i=0; i < record_index; i++){
+				var record = recordArray[i];
+
+				//フラグ取り出す
+				var xy = record[0];
+				line = xy.line;
+				var clear = xy.clear;
+				console.log("clear: "+clear);
+				if(!clear){
+					if(line){
+						for(var v=0; v<record.length; v++){
+							if(typeof record[v] == "object"){
+								var xy = record[v];
+								//太さを描いたときの状態に戻す
+								con.lineWidth = xy.size;
+								//描画処理
+								draw(v,xy.x,xy.y,xy.color);
+								//現在の設定に戻す
+								con.lineWidth = sWidth;
+								con.strokeStyle = color;
+							}
+						}
+					} else {
+						console.log("直線の履歴やで");
+						var start = record[0];
+						var end = record[record.length-1];
+						con.beginPath();
+						//描いたときの状態に戻す
+						con.lineWidth = start.size;
+						con.strokeStyle = start.color;
+
+						con.moveTo(start.x,start.y);
+						con.lineTo(end.x,end.y);
+						con.stroke();
+
+						//現在の設定に戻す
+						con.lineWidth = sWidth;
+						con.strokeStyle = color;
+					}
+				} else {
+					con.clearRect(0,0,width,height);
+				}
+			}
+		}
+	}
+}
+
 
 
 function draw(num,x,y,color){

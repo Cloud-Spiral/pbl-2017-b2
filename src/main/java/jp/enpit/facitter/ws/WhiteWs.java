@@ -1,4 +1,4 @@
-package jp.enpit.lama.ws;
+package jp.enpit.facitter.ws;
 
 
 import java.io.IOException;
