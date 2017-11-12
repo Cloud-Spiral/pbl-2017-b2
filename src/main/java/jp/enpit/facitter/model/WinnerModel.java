@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
@@ -13,8 +13,8 @@ import org.bson.Document;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
-import jp.enpit.lama.entities.Winner;
-import jp.enpit.lama.entities.Winners;
+import jp.enpit.facitter.entities.Winner;
+import jp.enpit.facitter.entities.Winners;
 
 public class WinnerModel extends BaseModel{
 	  private MongoCollection<Document> winners(){

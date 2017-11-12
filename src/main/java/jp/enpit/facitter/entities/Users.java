@@ -1,4 +1,4 @@
-package jp.enpit.lama.entities;
+package jp.enpit.facitter.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,18 +9,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Tasks {
-    @XmlElement(name="tasks")
-    private List<Task> list = new ArrayList<>();
-    
-    public Tasks(){
+public class Users {
+    @XmlElement(name="users")
+    private List<User> list = new ArrayList<>();
+
+    public Users(){
+    }
+    public Users(List<User> userList) {
+        list.addAll(userList);
     }
 
-    public Tasks(List<Task> tasksList){
-        list.addAll(tasksList);
-    }
-
-    public List<Task> tasks(){
+    public List<User> users(){
         return Collections.unmodifiableList(list);
     }
 
@@ -28,12 +27,12 @@ public class Tasks {
         return list.size();
     }
 
-    public Iterator<Task> iterator(){
+    public Iterator<User> iterator(){
         return list.iterator();
     }
 
-    public Task[] toArray(){
-        return list.toArray(new Task[size()]);
+    public User[] toArray(){
+        return list.toArray(new User[size()]);
     }
-    
+
 }
