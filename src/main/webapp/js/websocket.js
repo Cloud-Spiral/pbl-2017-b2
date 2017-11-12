@@ -8,6 +8,11 @@ window.onload = function() {
 	loadHusens();
 	hwsConnection();
 	twsConnection();
+	
+	//ホワイトボード
+	loadWhite();
+	whiteWsConnection();
+
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */
@@ -18,6 +23,8 @@ function twsConnection(){
 	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
 	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
+		
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,
