@@ -1,4 +1,4 @@
-package jp.enpit.lama.rest;
+package jp.enpit.facitter.rest;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -11,8 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jp.enpit.lama.entities.Husen;
-import jp.enpit.lama.model.HusenModel;
+import jp.enpit.facitter.entities.Husen;
+import jp.enpit.facitter.model.HusenModel;
 @Path("/husens")
 public class HusensRest {
 	

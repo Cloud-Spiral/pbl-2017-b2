@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Sorts.ascending;
@@ -14,8 +14,8 @@ import org.bson.Document;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
-import jp.enpit.lama.entities.Husen;
-import jp.enpit.lama.entities.Husens;
+import jp.enpit.facitter.entities.Husen;
+import jp.enpit.facitter.entities.Husens;
 
 public class HusenModel extends BaseModel{
 	private String collectionName = "husens";

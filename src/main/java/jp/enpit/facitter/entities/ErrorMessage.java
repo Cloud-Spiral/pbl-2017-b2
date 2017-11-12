@@ -1,4 +1,4 @@
-package jp.enpit.lama.entities;
+package jp.enpit.facitter.entities;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

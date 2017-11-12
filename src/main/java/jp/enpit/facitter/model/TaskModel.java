@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
@@ -15,8 +15,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
-import jp.enpit.lama.entities.Task;
-import jp.enpit.lama.entities.Tasks;
+import jp.enpit.facitter.entities.Task;
+import jp.enpit.facitter.entities.Tasks;
 
 public class TaskModel extends BaseModel{
     private MongoCollection<Document> tasks(){

@@ -1,4 +1,4 @@
-package jp.enpit.lama.rest;
+package jp.enpit.facitter.rest;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -10,9 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jp.enpit.lama.entities.ErrorMessage;
-import jp.enpit.lama.entities.Task;
-import jp.enpit.lama.model.TaskModel;
+import jp.enpit.facitter.entities.ErrorMessage;
+import jp.enpit.facitter.entities.Task;
+import jp.enpit.facitter.model.TaskModel;
 
 @Path("tasks")
 public class TasksRest {
