@@ -6,7 +6,7 @@ var offsetX, offsetY;
 var cont;
 var husenCount = 1;
 var endpoint = "http://localhost:8080/facitter/api";
-var isAllMax = true;
+var isAllMax = 0;
 
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
@@ -56,7 +56,9 @@ function hwsOnMessage(message){
 		createCard(parseInt(arrayStr[1]));
 		setTimeout(fadeInContainer, 200, parseInt(arrayStr[1]));
 	}else if(arrayStr[0] === 'order'){
+		$('.husen').css('transition','all 500ms 0s ease');
 		reloadAllHusenPosition();
+		setTimeout(function(){$('.husen').css('transition','all 300ms 0s ease');}, 200);
 	}
 }
 
@@ -98,7 +100,10 @@ function fadeInContainer(hid){
 }
 
 function fadeOutContainer(hid){
-	$("#container" + String(hid)).removeClass("fadeIn");
+	//$("#container" + String(hid)).removeClass("fadeIn");
+	var container = document.getElementById("container"+String(hid));
+	//console.log(container);
+	container.style.opacity = 0;
 	$("#handle" + String(hid)).removeClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.remove("fadeIn");
@@ -254,8 +259,8 @@ function draggable(count, handle, container) {
 	container.style.position = "absolute";
 	var containerId = container.id;
 	container.onmousedown = function(event){
-		console.log(container.nextElementSibling.id);
-		while(container.nextElementSibling != null ||
+		//console.log(container.nextElementSibling.id);
+		while(container.nextElementSibling != null &&
 				container.nextElementSibling.classList.contains("husenContainer")){
 			if (container.nextElementSibling != null) {
 				$('#' + containerId).before($('#' + container.nextElementSibling.id));
@@ -279,7 +284,7 @@ function draggable(count, handle, container) {
 		// ダブルクリックの場合
 		} else {
 			$('.husen').css('transition','all 300ms 0s ease');
-			console.log(cont + " doubleClick");
+			//console.log(cont + " doubleClick");
 			resizeContainer(cont);
 			clickCount = 0 ;
 		}
@@ -355,10 +360,15 @@ function reloadAllHusenPosition(){
 
 function allResizeHusen(){
 	var contList = document.getElementsByClassName('husenContainer');
-	if(isAllMax){
+	if(isAllMax === 0){
 		//minimize
 		for(var i = 0; i < contList.length; i++){
 			minimizeHusen(contList[i]);
+		}
+	}else if(isAllMax === 1){
+		//transparentize
+		for (var i = 0; i < contList.length; i++) {
+			invisualizeHusen(contList[i]);
 		}
 	}else{
 		//maximize
@@ -366,12 +376,15 @@ function allResizeHusen(){
 			maximizeHusen(contList[i]);
 		}
 	}
-	isAllMax = !isAllMax;
+	isAllMax++;
+	isAllMax = isAllMax%3;
 }
 
 function resizeContainer(cont){
 	var contArray = cont.children;
 	if(cont.classList.contains("mini")){
+		invisualizeHusen(cont);
+	}else if(cont.classList.contains("invisible")){
 		maximizeHusen(cont);
 	}else{
 		minimizeHusen(cont);
@@ -381,7 +394,24 @@ function resizeContainer(cont){
 function minimizeHusen(cont){
 	var contArray = cont.children;
 	cont.classList.add("mini");
+	cont.classList.remove("invisible");
 	cont.style.width="120px";
+	cont.style.opacity="1";
+	for(var i = 0; i < contArray.length; i++){
+		if(String(contArray[i].name).substring(0,3) === "txt"){
+			document.getElementsByName(contArray[i].name)[0].style.height="25px";
+		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
+			document.getElementById(contArray[i].id).style.height="0px";
+		}
+	}
+}
+
+function invisualizeHusen(cont){
+	var contArray = cont.children;
+	cont.classList.remove("mini");
+	cont.classList.add("invisible");
+	cont.style.width="120px";
+	cont.style.opacity="0.15";
 	for(var i = 0; i < contArray.length; i++){
 		if(String(contArray[i].name).substring(0,3) === "txt"){
 			document.getElementsByName(contArray[i].name)[0].style.height="25px";
@@ -393,8 +423,10 @@ function minimizeHusen(cont){
 
 function maximizeHusen(cont){
 	var contArray = cont.children;
+	cont.classList.remove("invisible");
 	cont.classList.remove("mini");
 	cont.style.width="240px";
+	cont.style.opacity="1";
 	for(var i = 0; i < contArray.length; i++){
 		if(String(contArray[i].name).substring(0,3) === "txt"){
 			document.getElementsByName(contArray[i].name)[0].style.height="150px";
