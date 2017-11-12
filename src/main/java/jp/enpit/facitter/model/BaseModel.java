@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import org.bson.Document;
 

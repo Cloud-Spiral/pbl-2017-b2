@@ -1,4 +1,4 @@
-package jp.enpit.lama.entities;
+package jp.enpit.facitter.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;

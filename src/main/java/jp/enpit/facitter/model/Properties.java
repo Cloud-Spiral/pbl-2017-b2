@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class Properties {
     }
 
     private Properties(){
-        properties.put(Key.DATEBASE_NAME, "lama");
+        properties.put(Key.DATEBASE_NAME, "Team2db");
         properties.put(Key.HOST_NAME, "localhost");
         properties.put(Key.PORT_NUMBER, "27017");
     }

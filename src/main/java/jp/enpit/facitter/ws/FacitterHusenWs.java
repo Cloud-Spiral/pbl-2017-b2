@@ -1,4 +1,4 @@
-package jp.enpit.lama.ws;
+package jp.enpit.facitter.ws;
 
 import java.io.IOException;
 import java.util.Set;
@@ -13,7 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 
 
 @ServerEndpoint(value = "/hws")
-public class LamaHusenWs {
+public class FacitterHusenWs {
 
 	/**
 	 * チャット接続者一覧を保持するスレッドセーフなSetオブジェクト<br>

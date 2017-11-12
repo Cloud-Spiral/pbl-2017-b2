@@ -1,4 +1,4 @@
-package jp.enpit.lama.model;
+package jp.enpit.facitter.model;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
@@ -15,8 +15,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
-import jp.enpit.lama.entities.User;
-import jp.enpit.lama.entities.Users;
+import jp.enpit.facitter.entities.User;
+import jp.enpit.facitter.entities.Users;
 
 public class UserModel extends BaseModel {
     private MongoCollection<Document> users(){
