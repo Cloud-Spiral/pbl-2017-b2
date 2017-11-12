@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -52,7 +53,7 @@ public class LamaWs {
      */
     @OnMessage
     public void onMessage(String message) {
-        System.out.println("send:" + message);
+        //System.out.println("send:" + message);
         //return task;
         // チャット接続者一覧の全てにメッセージを送る
         for (Session session : sessions) {
@@ -63,4 +64,7 @@ public class LamaWs {
             }
         }
     }
+    
+    @OnError
+    public void onError(Session session, Throwable thr) {}
 }
