@@ -68,7 +68,8 @@ public class UserModel extends BaseModel {
     private Document toDocument(User user){
         return new Document()
             .append("name", user.getName())
-            .append("password", user.getPassword());
+            .append("password", user.getPassword())
+            .append("status", user.getStatus());
     }
     
     // Userへの変換
