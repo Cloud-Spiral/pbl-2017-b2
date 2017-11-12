@@ -1,6 +1,6 @@
-var endpoint = 'http://localhost:8080/lama/api';
+var endpoint = 'http://localhost:8080/facitter/api';
 // 本番環境用
-// var endpoint = 'https://team2017-2.spiral.cloud/lama/api';
+// var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 // document.write("<script type='text/javascript'
 // src='js/Moment.js'></script>");
 
@@ -44,7 +44,7 @@ var register = function() {
 				// 本番環境へ
 				// window.location.href =
 				// "https://team2017-2.spiral.cloud/lama/";
-				window.location.href = "../lama/";
+				window.location.href = "../facitter/";
 		}
 	});
 	
@@ -123,7 +123,7 @@ var login = function() {
 	console.log(pass);
 	
 	if(password == pass) {
-		window.location.href = "../lama/";
+		window.location.href = "../facitter/";
 	}
 	else window.location.reload();
 }
