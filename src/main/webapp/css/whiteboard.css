@@ -8,7 +8,7 @@
 #my_canvas{
     position:relative;
     /* left:60px; */
-	border:1px solid #000;
+	border:2px solid #bebebe;
 }
 nav#interface{
 	width:60px;
@@ -19,26 +19,28 @@ ul{
 	overflow:hidden;
 }
 ul#swbutton li{
-	width:29px;
+	width:27px;
+	height:27px;
 	float:left;
 	padding:8px 0;
 	text-align:center;
-	background:#efefef;
+	background:#ffffff;
 	display:table-cell;
 	font-size:12px;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	border-right:3px solid #bebebe; 
+	border-top:4px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	cursor:pointer;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 }
 ul#colorbutton li{
-	width:29px;
-	height:29px;
+	width:27px;
+	height:27px;
 	float:left;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	border-right:3px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	cursor:pointer;
 }
 ul#colorbutton li#black{
@@ -51,20 +53,20 @@ ul#colorbutton li#blue{
 	background:#0000FF;
 }
 ul#colorbutton li#yellow{
-	background:#FFEE00;
+	background:#ffffff;
 }
 ul#colorbutton li#green{
 	background:#00ff00;
 }
 ul#undoredo li{
-	width:29px;
-	height:29px;
+	width:27px;
+	height:27px;
 	line-height:29px;
 	float:left;
 	text-align:center;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:3px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	cursor:pointer;
 	font-size:10px;
 	-moz-user-select: none;
@@ -72,11 +74,11 @@ ul#undoredo li{
 	-khtml-user-select: none;
 }
 ul#clear li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -86,11 +88,11 @@ ul#clear li{
 	-khtml-user-select: none;
 }
 ul#straight li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -100,11 +102,11 @@ ul#straight li{
 	-khtml-user-select: none;
 }
 ul#freehand li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #bebebe;
+	border-bottom:4px solid #bebebe;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
