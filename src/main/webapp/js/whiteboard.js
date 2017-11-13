@@ -12,8 +12,8 @@ function whiteWsConnection() {
 	whiteWs.onopen = loadWhite;
 
 	whiteWs.onmessage = function(evt) {
-		return;
-		//console.log("ws get: "+evt.data);
+		//return;
+		console.log("ws get: "+evt.data);
 
 		message = JSON.parse(evt.data);
 		if(message.type === 'load'){
@@ -29,11 +29,9 @@ function whiteWsConnection() {
 			//console.log('updateきたからcanvasに反映すんで');
 			record_index = message.index;
 			recordArray = JSON.parse(message.history);
+			
 			load();
 		}
-
-
-
 	};
 }
 
@@ -45,6 +43,11 @@ function loadWhite(){
 	console.log("load要求送るで");
 	whiteWs.send(message);
 }
+
+//whiteWs.onclose = function(){
+//	console.log("closeしたよ");
+//};
+
 
 var oldx, oldy;
 var canvas, con, canvas_top = 20;
@@ -112,8 +115,6 @@ function stop(event) {
 	if (event.type == "mouseup"){
 		if(!freeHand){
 			console.log("直線かくで");
-			//console.log("stx, y: "+stx+sty);
-			//console.log("oldx, y: "+oldx+oldy);
 			con.beginPath();
 			con.moveTo(stx,sty);
 			con.lineTo(oldx,oldy);
@@ -173,8 +174,6 @@ function drawLine(event,isStart){
 		if (event.type == "mouseup"){
 			if(!freeHand){
 				console.log("直線かくで");
-				//console.log("stx, y: "+stx+sty);
-				//console.log("oldx, y: "+oldx+oldy);
 				con.beginPath();
 				con.moveTo(stx,sty);
 				con.lineTo(oldx,oldy);
@@ -183,11 +182,7 @@ function drawLine(event,isStart){
 			//履歴を記録
 			recordArray[record_index] = lineRecords;
 			historyJson = JSON.stringify(recordArray);
-			console.log("historyJson: "+ historyJson);
-			//historyJson.push(lineJson);
-
-			//parsedJson = JSON.parse(historyJson);
-			//console.log(parsedJson);
+			//console.log("historyJson: "+ historyJson);
 
 			message = JSON.stringify({
 				type: 'update',
@@ -231,10 +226,8 @@ function colorChange(e, target){
 	var my_color = $(target).css("background-color");
 	console.log('いろ'+my_color);
 
-	if(my_color === 'rgba(0, 0, 0, 0)'){
-		//消しゴムモードにする
-		eraser = true;
-	} else {
+	if(my_color === 'rgba(0, 0, 0, 0)')　eraser = true;
+	else {
 		eraser = false;
 		con.strokeStyle = color = my_color;
 	}
@@ -243,7 +236,6 @@ function colorChange(e, target){
 
 //消しゴムモードを変更
 function switchEraser(eraser){
-
 	if(eraser){
 		// 消す準備
 		con.globalCompositeOperation = 'destination-out';
@@ -350,6 +342,7 @@ function load(e){
 		//太さを描いたときの状態に戻す
 		con.lineWidth = xy.size;
 		con.strokeStyle = xy.color;
+		switchEraser(xy.eraser);
 
 		if(!clear){
 			if(line){
@@ -375,6 +368,7 @@ function load(e){
 		//現在の設定に戻す
 		con.lineWidth = sWidth;
 		con.strokeStyle = color;
+		switchEraser(eraser);
 	}
 }
 
