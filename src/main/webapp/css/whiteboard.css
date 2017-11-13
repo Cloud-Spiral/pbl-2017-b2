@@ -6,8 +6,8 @@
 }
 
 #my_canvas{
-    position:absolute;
-    left:60px;
+    position:relative;
+    /* left:60px; */
 	border:1px solid #000;
 }
 nav#interface{
