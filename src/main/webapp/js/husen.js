@@ -21,6 +21,9 @@ window.onload = function(){
 $("#postit").mousedown(function (e){new Card();});
 $("#allResize").mousedown(function (e){allResizeHusen();});
 $("#FGO").mousedown(function (e){husenGrandOrder();});
+
+
+
 //websocketオブジェクト
 var hws;
 

@@ -8,7 +8,7 @@
 #my_canvas{
     position:relative;
     /* left:60px; */
-	border:2px solid #bebebe;
+	border:3px solid #bebebe;
 }
 nav#interface{
 	width:60px;
@@ -19,7 +19,7 @@ ul{
 	overflow:hidden;
 }
 ul#swbutton li{
-	width:27px;
+	width:26px;
 	height:27px;
 	float:left;
 	padding:8px 0;
@@ -27,7 +27,7 @@ ul#swbutton li{
 	background:#ffffff;
 	display:table-cell;
 	font-size:12px;
-	border-right:3px solid #bebebe; 
+	border-right:4px solid #bebebe; 
 	border-top:4px solid #bebebe;
 	border-bottom:4px solid #bebebe;
 	cursor:pointer;
@@ -36,10 +36,10 @@ ul#swbutton li{
 	-khtml-user-select: none;
 }
 ul#colorbutton li{
-	width:27px;
+	width:26px;
 	height:27px;
 	float:left;
-	border-right:3px solid #bebebe;
+	border-right:4px solid #bebebe;
 	border-bottom:4px solid #bebebe;
 	cursor:pointer;
 }
@@ -59,13 +59,13 @@ ul#colorbutton li#green{
 	background:#00ff00;
 }
 ul#undoredo li{
-	width:27px;
+	width:26px;
 	height:27px;
 	line-height:29px;
 	float:left;
 	text-align:center;
 	background:#ffffff;
-	border-right:3px solid #bebebe;
+	border-right:4px solid #bebebe;
 	border-bottom:4px solid #bebebe;
 	cursor:pointer;
 	font-size:10px;
