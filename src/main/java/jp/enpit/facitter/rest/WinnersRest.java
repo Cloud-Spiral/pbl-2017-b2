@@ -1,4 +1,4 @@
-package jp.enpit.lama.rest;
+package jp.enpit.facitter.rest;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -9,11 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jp.enpit.lama.entities.ErrorMessage;
-import jp.enpit.lama.entities.User;
-import jp.enpit.lama.entities.Winner;
-import jp.enpit.lama.model.UserModel;
-import jp.enpit.lama.model.WinnerModel;
+import jp.enpit.facitter.entities.ErrorMessage;
+import jp.enpit.facitter.entities.User;
+import jp.enpit.facitter.entities.Winner;
+import jp.enpit.facitter.model.UserModel;
+import jp.enpit.facitter.model.WinnerModel;
 
 @Path("/winners")
 public class WinnersRest {
