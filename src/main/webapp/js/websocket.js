@@ -1,13 +1,19 @@
 
 // websocketオブジェクト
 var tws;
-
+var userName;
 // tws接続押下時の処理
 window.onload = function() {
 	//ふせん
 	loadHusens();
 	hwsConnection();
 	twsConnection();
+	
+	userName = getCookie('userName');
+	if(userName == null){
+		userName = 'Guest';
+	}
+	console.log(userName);
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */
