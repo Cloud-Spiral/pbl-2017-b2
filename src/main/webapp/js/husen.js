@@ -28,9 +28,9 @@ function hwsConnection() {
 	if(hws != null){
 		return;
 	}
-	hws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+	hws = new WebSocket('ws://' + window.location.host + '/facitter/hws');
 	//　本番環境用
-	//hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	//hws = new WebSocket('wss://' + window.location.host + '/facitter/hws');
 	hws.onmessage = hwsOnMessage;
 	hws.onclose = function(closeEvent) {
 	    console.log('hws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
