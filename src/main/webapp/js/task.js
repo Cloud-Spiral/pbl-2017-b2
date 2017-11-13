@@ -19,7 +19,11 @@ var postTask = function() {
 			//var message = {tid: data.tid, type: "post-task"};
 			//tws.send(JSON.stringify(message));
 			tws.send("post-task:"+data.tid);
-			
+			document.getElementById("message").value = "";
+			$('#priority').raty({
+				number: 5,
+				score: 1
+			});
 		}
 	});
 }
@@ -46,7 +50,7 @@ var insertTask = function(tid) {
 			td2 = tr.insertCell(-1),
 			td3 = tr.insertCell(-1),
 			td4 = tr.insertCell(-1);
-			
+
 			var symbol = '<img src=image/default-symbol.png id=task-symbol' + task.tid + '>',
 			body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
@@ -56,12 +60,12 @@ var insertTask = function(tid) {
 			td2.innerHTML = body;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
-			
+
 			$("#task-symbol"+task.tid).parent().addClass('symbol-cell');
 			$("#task-body"+task.tid).parent().addClass('body-cell');
 			$("#task-priority"+task.tid).parent().addClass('priority-cell');
 			$("#task-status"+task.tid).parent().addClass('status-cell');
-			
+
 			$("#task-priority"+task.tid).raty({
 				number:5,
 				score: task.priority,
@@ -123,22 +127,22 @@ var changeSymbol = function(task) {
 var changeTaskBody = function(task) {
 	var key = window.event.keyCode;
 	//if(key == 13) {
-		var tid = task.id.replace("task-body","");
-		var body = $('#task-body'+tid).val();
-		var priority = $('#task-priority'+tid).raty('score');
-		if(body == "") return;
-		$.ajax({
-			type : 'PUT',
-			url : endpoint + '/tasks',
-			data: {
-				tid: tid,
-				body: body,
-				priority: priority
-			},
-			success : function(data) {
-				tws.send("change-task-body:"+tid)
-			}
-		});
+	var tid = task.id.replace("task-body","");
+	var body = $('#task-body'+tid).val();
+	var priority = $('#task-priority'+tid).raty('score');
+	if(body == "") return;
+	$.ajax({
+		type : 'PUT',
+		url : endpoint + '/tasks',
+		data: {
+			tid: tid,
+			body: body,
+			priority: priority
+		},
+		success : function(data) {
+			tws.send("change-task-body:"+tid)
+		}
+	});
 	//}
 }
 
@@ -231,7 +235,7 @@ var tabChange = function() {
 
 
 //var l = window.setInterval(update, 10000);
-//
+
 $('#submit-task').click(postTask);
 $('.tab li').click(tabChange);
 
