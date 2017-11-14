@@ -6,7 +6,7 @@ var yws;
 
 function ywsConnection(){
 	// WebSocketオブジェクト作成
-	yws = new WebSocket('ws://' +  window.location.host + '/facitter/yws');
+	yws = new WebSocket('ws://' +  window.location.host + '/facitter/ws');
 	//　本番環境用
 	//yws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 
@@ -64,6 +64,8 @@ $('#reset').click(function() {
 	//カウントダウン関数を1000ミリ秒毎に呼び出す関数
 	function cntStart(min,sec) {
 		document.timer.elements[2].disabled=true;
+		$("#min").prop('disabled', true);
+		$("#sec").prop('disabled', true);
 		if (min=="") min=0;
 		if (sec=="") sec=0;
 		tmWrite(min*60+sec);
@@ -74,6 +76,8 @@ $('#reset').click(function() {
 	//タイマー停止関数
 	function cntStop() {
 		document.timer.elements[2].disabled=false;
+		$("#min").prop('disabled', false);
+		$("#sec").prop('disabled', false);
 		clearInterval(timer1);
 	}
 	
@@ -116,5 +120,7 @@ $('#reset').click(function() {
 		document.timer.elements[0].value="0";
 		document.timer.elements[1].value="0";
 		document.timer.elements[2].disabled=false;
+		$("#min").prop('disabled', false);
+		$("#sec").prop('disabled', false);
 		clearInterval(timer1);
 	}  

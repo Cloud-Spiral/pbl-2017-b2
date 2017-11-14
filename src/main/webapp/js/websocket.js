@@ -8,7 +8,7 @@ window.onload = function() {
 	loadHusens();
 	hwsConnection();
 	twsConnection();
-	ｙwsConnection();
+	ywsConnection();
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */
