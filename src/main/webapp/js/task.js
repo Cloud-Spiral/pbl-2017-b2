@@ -41,7 +41,7 @@ var insertTask = function(tid) {
 			for(var i = 0; i < json.tasks.length; i++) {
 				if(json.tasks[i].tid == tid) {
 					var task = json.tasks[i];
-					var taskNumber = i; 
+					var taskNumber = i*2; //入力フォームの部分を計算する 
 				}
 			}
 			var buttonStatus = "close";
@@ -57,7 +57,7 @@ var insertTask = function(tid) {
 			var symbol = '<img src=image/default-symbol.png id=task-symbol' + task.tid + '>',
 			//body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onkeyup="changeTaskBody(this)">',
 			body = '<input id=task-body' + task.tid + ' value=' + task.body +' type="text" onclick="showEditTaskBodyForm(this)" readonly="readonly">';
-			
+
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
 			priority = '<class=task-priority id=task-priority' + task.tid + '>', //oninpupt
 			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
@@ -65,12 +65,12 @@ var insertTask = function(tid) {
 			td2.innerHTML = body;
 			td3.innerHTML = priority;
 			td4.innerHTML = status;
-			
+
 			$("#task-symbol"+task.tid).parent().addClass('symbol-cell');
 			$("#task-body"+task.tid).parent().addClass('body-cell');
 			$("#task-priority"+task.tid).parent().addClass('priority-cell');
 			$("#task-status"+task.tid).parent().addClass('status-cell');
-			
+
 			$("#task-symbol"+task.tid).parent().parent().attr('id','task-id'+task.tid);
 
 			$("#task-priority"+task.tid).raty({
@@ -83,7 +83,7 @@ var insertTask = function(tid) {
 			if(task.status == "open") {
 				changeSymbol(task);
 			}
-			
+
 			//入力用
 			$("#task-id"+task.tid).after(
 					'<tr id=edit-task-body' + task.tid +' style=display:none>'
@@ -96,7 +96,6 @@ var insertTask = function(tid) {
 					+ '<td class=priority-cell><div id=cell' + task.tid + '></div></td>' 
 					+ '<td class=status-cell><div id=cell' + task.tid + '></div></td>'
 					+ '</tr>');
-			
 		}
 	});
 }
@@ -106,7 +105,7 @@ var deleteTask = function(tid) {
 	var target = document.getElementById("task-status"+tid);
 	tr = target.parentNode.parentNode;
 	tr.parentNode.deleteRow(tr.sectionRowIndex);
-	
+
 	tr = document.getElementById("edit-task-body"+tid);
 	tr.parentNode.deleteRow(tr.sectionRowIndex);
 }
@@ -149,7 +148,7 @@ var changeSymbol = function(task) {
 
 //入力フォームを出す
 var showEditTaskBodyForm = function(task) {
-	
+
 	var tid = task.id.replace("task-body","");
 
 	if($("#edit-task-body"+tid).css("display") != "none") {
@@ -157,12 +156,12 @@ var showEditTaskBodyForm = function(task) {
 	}
 	$('#cell'+tid).toggle('blind', '', 300);
 	$('#edit-task-body'+tid).toggle('blind', '', 300);
-	
+
 	var body = document.getElementById('task-body-edit'+tid);
 	body.value = $('#task-body-edit'+tid).val();
 	body.focus();
 	body.setSelectionRange(body.value.length, body.value.length);
-	
+
 }
 
 
@@ -230,7 +229,7 @@ var createTaskTable = function(tasks) {
 				+ '<td class=status-cell><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
-		
+
 		$('<tr id=edit-task-body' + tasks[i].tid +' style=display:none>'
 				+ '<td class=symbol-cell><div id=cell' + tasks[i].tid + '></div></td>'
 				+ '<td class=body-cell>'
@@ -242,7 +241,7 @@ var createTaskTable = function(tasks) {
 				+ '<td class=status-cell><div id=cell' + tasks[i].tid + '></div></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
-		
+
 		$("#task-priority"+tasks[i].tid).raty({
 			number:5,
 			score: tasks[i].priority,
