@@ -1,33 +1,57 @@
 /* 参考 https://webkikaku.co.jp/blog/htmlcss/footer-bottom/ */
-
+html{
+	height: 100%;
+}
 body{
+	overflow-x: hidden;
 	height: 100%;
 }
 
 div#container{
+	height: 100%;
 	width: 100%;
 	position: relative;
-	height: auto !important;
+/* 	height: auto !important; */
 	height: 100%;
 	min-height: 100%;
 }
 
 div#contents {
+	position: relative;
 /* 	padding-bottom: 140px; */
-	margin-right: -510px;
+/* 	margin-right: -510px; */
+	height: 100%;
 	width: 100%;
-	float: left;
+/* 	float: left; */
 }
 
 div#side {
+	position: absolute;
+	top: 0px;
+	right: 0px;
 	width: 510px;
-	float: right;
+	height: 100%;
+	background-color: #EEFEFF;
+	border:solid #bebebe;
+	border-width:3px 0px 0px 3px;
+	z-index: 30;
+	transition: all 500ms 0s ease;
 }
 
-div#footer{
-	position: fixed;
+div#userslist{
+	position: absolute;
 	width: 100%;
-	bottom: 0;
-	height: 140px;
-	background-color: #99cc00;
+	background-color: #ffeefb;
+}
+
+div#timer {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0%);
+	-moz-transform: translate(-50%, 0%);
+	-ms-transform: translate(-50%, 0%);
+	-o-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
+	background-color: #ffffe6;
 }

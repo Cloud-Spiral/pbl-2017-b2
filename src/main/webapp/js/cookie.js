@@ -1,6 +1,16 @@
 /**
  * 
  */
+var bar = true;
+$("#rightbar").mousedown(function (e){
+	if(bar){
+		document.getElementById("side").style.right="-510px";
+	}
+	else{
+		document.getElementById("side").style.right="0px";
+	}
+	bar = !bar;
+});
 
 function getCookie( name )
 {

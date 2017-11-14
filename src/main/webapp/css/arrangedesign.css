@@ -1,0 +1,10 @@
+.header_logo{
+	border:solid #bebebe;
+	border-width:0px 0px 3px 0px;
+}
+
+ul#rightbar{
+	position: absolute;
+	top : 0px;
+	right: 0px;
+}
