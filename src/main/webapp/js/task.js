@@ -60,7 +60,7 @@ var insertTask = function(tid) {
 
 			//date = moment(task.date).format('YYYY年MM月DD日 HH時mm分'),
 			priority = '<class=task-priority id=task-priority' + task.tid + '>', //oninpupt
-			status = '<input id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
+			status = '<input class=status-btn id=task-status' + task.tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)">'
 			td1.innerHTML = symbol;
 			td2.innerHTML = body;
 			td3.innerHTML = priority;
@@ -90,7 +90,7 @@ var insertTask = function(tid) {
 					+ '<td class=symbol-cell><div id=cell' + task.tid + '></div></td>'
 					+ '<td class=body-cell>'
 					+ '<div id=cell' + task.tid + '>'
-					+ '<input id=task-body-edit' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">'
+					+ '<input class=task-body-edit id=task-body-edit' + task.tid + ' value=' + task.body +' type="text" onkeypress="changeTaskBody(this)">'
 					+ '</div>'
 					+ '</td>'
 					+ '<td class=priority-cell><div id=cell' + task.tid + '></div></td>' 
@@ -226,7 +226,7 @@ var createTaskTable = function(tasks) {
 				+ '<td class=body-cell><input id=task-body' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onclick="showEditTaskBodyForm(this)" readonly="readonly"></td>'
 				//+ '<td>' + moment(tasks[i].date).format('YYYY年MM月DD日 HH時mm分') + '</td>'
 				+ '<td class=priority-cell class=task-priority id=task-priority' + tasks[i].tid + '></td>' 
-				+ '<td class=status-cell><input id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
+				+ '<td class=status-cell><input class=status-btn id=task-status' + tasks[i].tid + ' type="button" value="' + buttonStatus + '" onclick="changeTaskStatus(this)"></td>'
 				+ '</tr>')
 				.appendTo('table#' + tasks[i].status + '-tasks tbody');
 
@@ -234,7 +234,7 @@ var createTaskTable = function(tasks) {
 				+ '<td class=symbol-cell><div id=cell' + tasks[i].tid + '></div></td>'
 				+ '<td class=body-cell>'
 				+ '<div id=cell' + tasks[i].tid + '>'
-				+ '<input id=task-body-edit' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeypress="changeTaskBody(this)">'
+				+ '<input class=task-body-edit id=task-body-edit' + tasks[i].tid + ' value=' + tasks[i].body +' type="text" onkeypress="changeTaskBody(this)">'
 				+ '</div>'
 				+ '</td>'
 				+ '<td class=priority-cell><div id=cell' + tasks[i].tid + '></div></td>' 

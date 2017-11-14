@@ -52,15 +52,15 @@
 			<canvas id="my_canvas" width="700%" height="700%"></canvas>
 		</div>
 		<div id="side">
-			<input id="message" type="text" placeholder="タスク内容"> <span
-				id="priority"></span> <input id="submit-task" type="button"
+			<input class="post-task-form" id="message" type="text" placeholder="タスク内容"> <span
+				id="priority"></span> <input class="post-task-btn" id="submit-task" type="button"
 				value="追加">
 			<ul class="tab">
 				<li class="select"><span class=yubi>open</span></li>
 				<li><span class="yubi">close</span></li>
 			</ul>
 			<ul class="task-content">
-				<li>open
+				<li>
 					<div class="y_data_area">
 						<table class="task-table" id="open-tasks">
 							<thead>
@@ -79,7 +79,7 @@
 				</li>
 
 
-				<li class="hide">close
+				<li class="hide">
 					<table class="task-table" id="close-tasks">
 						<thead>
 							<tr>
