@@ -41,6 +41,7 @@ tbody {
 }
 .body-cell input{
 	width: 95%;
+	border: none;
 }
 
 .priority-cell{
@@ -65,3 +66,7 @@ ul{ list-style:none;}
 .tab li.select{background:#eee;}
 .task-content li{background:#eee; padding:10px;}
 .hide {display:none;}
+
+.edit-cell{
+	position: fixed;
+}
