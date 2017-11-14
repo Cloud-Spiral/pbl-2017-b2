@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/tasks.css" />
 <link rel="stylesheet" href="css/page.css" />
 <link rel="stylesheet" href="css/husen.css" />
+<link rel="stylesheet" href="css/timer.css" />
 </head>
 
 <body>
@@ -48,7 +49,7 @@
 					<li>FGO</li>
 				</ul>
 			</nav>
-			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
+			<canvas id="my_canvas" width="700%" height="700%"></canvas>
 		</div>
 		<div id="side">
 			<input id="message" type="text" placeholder="タスク内容"> <span
@@ -103,6 +104,15 @@
 					<input type=button value="抽選開始" onClick="startLottery()">
 				</ul>
 			</div>
+			<div class="timer">
+				<form name="timer">
+					<input id="min" type="text" value="0" size="5" pattern="\d*">分
+					<input id="sec" type="text" value="0" size="5" pattern="\d*">秒<br>
+					<input id="start" type="button" value="スタート">
+					<input id="stop" type="button" value="ストップ">
+					<input id="reset" type="button" value="リセット">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
@@ -113,4 +123,5 @@
 <script src="js/task.js"></script>
 <script src="js/userslist.js"></script>
 <script src="js/husen.js"></script>
+<script src="js/wsTimer.js"></script>
 </html>
