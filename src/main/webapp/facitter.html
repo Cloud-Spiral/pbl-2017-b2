@@ -129,11 +129,21 @@
 				</ul>
 			</nav>
 			
-			<canvas id="my_canvas"  width="1180" height="800"></canvas>			
+			<canvas id="my_canvas"  width="1200" height="800"></canvas>			
 		</div>
 		
 
 		<div id="side">
+			<div>
+				<ul class="userslist">
+					<font size="6" color=#d900a9> Participant List </font>
+					<div id="userlist"></div>
+					<select id="lotterybox">
+					</select>
+					<input type=button value="抽選開始" onClick="startLottery()">
+				</ul>
+			</div>
+		
 			<input id="message" type="text" placeholder="タスク内容"> <span
 				id="priority"></span> <input id="submit-task" type="button"
 				value="追加">
@@ -177,15 +187,7 @@
 					</table>
 				</li>
 			</ul>
-			<div class="userslist">
-				<ul class="userlist">
-					<font size="5"> User's List </font>
-					<div id="userlist"></div>
-					<select id="lotterybox">
-					</select>
-					<input type=button value="抽選開始" onClick="startLottery()">
-				</ul>
-			</div>
+
 		</div>
 	</div>
 </body>

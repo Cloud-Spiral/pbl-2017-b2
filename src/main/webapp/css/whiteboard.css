@@ -8,7 +8,10 @@
 #my_canvas{
     position:relative;
     /* left:60px; */ 
-	border:3px solid #ffb900;
+	border-top:3px solid #d900a9;
+	border-bottom:3px solid #5c239b;
+	border-left:3px solid #108904;
+	border-right:3px solid #0078d7;
 	z-index:0;
 }
 nav#interface{

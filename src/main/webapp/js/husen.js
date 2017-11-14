@@ -322,13 +322,13 @@ function draggable(count, handle, container) {
 			var rect = cont.getBoundingClientRect();
 			var x = event.screenX - offsetX - canvasX;//husenの位置x
 			var y = event.screenY - offsetY -  canvasY;//husenの位置y
-			//console.log("x:" + x);
-			//console.log("y:" + y);
+			console.log("x:" + x);
+			console.log("y:" + y);
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
 			if(x < 0) cont.style.left = canvasX+1 + "px";
 			if(y < 0) cont.style.top = canvasY+1 + "px";
-			if(x > 945) cont.style.left = 1005 + "px";
+			if(x > 965) cont.style.left = 1025 + "px";
 			if(y > 608) cont.style.top = 670 + "px";
 		}	
 	}
@@ -340,8 +340,8 @@ function husenGrandOrder(){
 		url : endpoint+'/husens/order',
 		data:{
 			number: 4,
-			left: "70px",
-			top: "20px",
+			left: "175px",
+			top: "65px",
 			width: "245px",
 			height: "200px" 
 		},
