@@ -8,12 +8,13 @@ window.onload = function() {
 	loadHusens();
 	hwsConnection();
 	twsConnection();
-	
+	ywsConnection();
+  
 	userName = getCookie('userName');
 	if(userName == null){
 		userName = 'Guest';
 	}
-	console.log(userName);
+	console.log("userName="+userName);
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>facitter</title>
+<title>Facitter</title>
 <meta charset="utf-8">
-
-<link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="image/favicon-facitter.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="css/whiteboard.css">
 <link rel="stylesheet" href="css/tasks.css" />
 <link rel="stylesheet" href="css/page.css" />
 <link rel="stylesheet" href="css/husen.css" />
+<link rel="stylesheet" href="css/timer.css" />
 </head>
 
 <body>
@@ -49,7 +49,7 @@
 					<li>FGO</li>
 				</ul>
 			</nav>
-			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
+			<canvas id="my_canvas" width="700%" height="700%"></canvas>
 		</div>
 		<div id="side">
 			<input id="message" type="text" placeholder="タスク内容"> <span
@@ -67,7 +67,7 @@
 								<tr>
 									<th class="symbol-cell"></th>
 									<th class="body-cell">タスク内容</th>
-									<th>日付</th>
+									<!-- <th>日付</th> -->
 									<th class="priority-cell">優先度</th>
 									<th class="status-cell"></th>
 								</tr>
@@ -85,7 +85,7 @@
 							<tr>
 								<th class="symbol-cell"></th>
 								<th class="body-cell">タスク内容</th>
-								<th>日付</th>
+								<!-- <th>日付</th> -->
 								<th class="priority-cell">優先度</th>
 								<th class="status-cell"></th>
 							</tr>
@@ -104,10 +104,20 @@
 					<input type=button value="抽選開始" onClick="startLottery()">
 				</ul>
 			</div>
+			<div class="timer">
+				<form name="timer">
+					<input id="min" type="text" value="0" size="5" pattern="\d*">分
+					<input id="sec" type="text" value="0" size="5" pattern="\d*">秒<br>
+					<input id="start" type="button" value="スタート">
+					<input id="stop" type="button" value="ストップ">
+					<input id="reset" type="button" value="リセット">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
 <script src="js/jquery-3.2.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script src="js/jquery.raty.js"></script>
 <script src="js/websocket.js"></script>
 <script src="js/whiteboard.js"></script>
@@ -115,4 +125,5 @@
 <script src="js/userslist.js"></script>
 <script src="js/husen.js"></script>
 <script src="js/cookie.js"></script>
+<script src="js/wsTimer.js"></script>
 </html>
