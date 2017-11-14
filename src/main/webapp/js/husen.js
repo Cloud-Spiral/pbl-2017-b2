@@ -316,7 +316,7 @@ function husenGrandOrder(){
 		data:{
 			number: 4,
 			left: "70px",
-			top: "20px",
+			top: "80px",
 			width: "245px",
 			height: "200px" 
 		},
