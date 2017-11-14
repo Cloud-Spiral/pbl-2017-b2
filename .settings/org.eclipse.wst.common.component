@@ -8,4 +8,3 @@
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
 	</wb-module>
 </project-modules>
->>>>>>> refs/remotes/origin/master
