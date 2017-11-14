@@ -1,37 +1,36 @@
 
 // websocketオブジェクト
-var wstimer;
+var yws;
 
-function wstimerConnection() {
-	if(wstimer != null){
-		return;
-	}
-	wstimer = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+// yws接続押下時の処理
+
+function ywsConnection(){
+	// WebSocketオブジェクト作成
+	yws = new WebSocket('ws://' +  window.location.host + '/facitter/yws');
 	//　本番環境用
-	//hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
-	wstimer.onmessage = wstimerOnMessage;
-	wstimer.onclose = function(closeEvent) {
-	    console.log('wstimer close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
-	};
-}
+	//yws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 
-// サーバからのメッセージ受信時の処理
-function wstimerOnMessage(message) {
-	//message = JSON.parse(message.data)
-	var str = message.data.split(":")
-	console.log(str)
-	// TODO
-	// DOM操作してHTMLに反映
-	//$('#log').append('<p>' + message.data + '</p>');	
-	if(str[0] == "start") {
-		cntStart(parseInt(str[1]),parseInt(str[2]));
-	}
-	else if(str[0] == "stop") {
-		cntStop();
-	}
-	else if(str[0] == "reset") {
-		reSet();
-	}
+	// サーバからのメッセージ受信時の処理
+	yws.onmessage = function(message) {
+		//message = JSON.parse(message.data)
+		var str = message.data.split(":")
+		console.log(str)
+		// TODO
+		// DOM操作してHTMLに反映
+		//$('#log').append('<p>' + message.data + '</p>');	
+		if(str[0] == "start") {
+			cntStart(parseInt(str[1]),parseInt(str[2]));
+		}
+		else if(str[0] == "stop") {
+			cntStop();
+		}
+		else if(str[0] == "reset")
+			reSet();
+	};
+	
+	yws.onclose = function(closeEvent) {
+	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	};
 }
 
 // start押下時の処理
@@ -43,20 +42,20 @@ $('#start').click(function() {
 	
 	var str = "start" + ":" + min + ":" + sec;
 	console.log(min + "   " + sec);
-	// ws経由で送信
-	wstimer.send(str);
+	// yws経由で送信
+	yws.send(str);
 });
 
 //stop押下時の処理
 $('#stop').click(function() {
-	// ws経由で送信
-	wstimer.send("stop");
+	// yws経由で送信
+	yws.send("stop");
 });
 
 //reset押下時の処理
 $('#reset').click(function() {
-	// ws経由で送信
-	wstimer.send("reset");
+	// yws経由で送信
+	yws.send("reset");
 });
 
 	var timer1; //タイマーを格納する変数（タイマーID）の宣言
