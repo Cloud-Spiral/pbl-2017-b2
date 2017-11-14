@@ -2,9 +2,6 @@
 // websocketオブジェクト
 var yws;
 
-var cnt=0;
-var setTime=null;
-
 // yws接続押下時の処理
 
 function ywsConnection(){
@@ -23,7 +20,6 @@ function ywsConnection(){
 		//$('#log').append('<p>' + message.data + '</p>');	
 		if(str[0] == "start") {
 			cntStart(parseInt(str[1]),parseInt(str[2]));
-			setTime = parseInt(str[1])*60 + parseInt(str[2]);
 		} else if(str[0] == "stop") {
 			cntStop();
 		} else if(str[0] == "reset") {
@@ -104,7 +100,6 @@ $('#reset').click(function() {
 			sec = parseInt(sec);
 			
 			tmWrite(min*60+sec-1);
-			cnt++;
 		}
 	}
 	
