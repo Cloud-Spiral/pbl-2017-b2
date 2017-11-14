@@ -11,63 +11,128 @@
 <link rel="stylesheet" href="css/arrangedesign.css" />
 </head>
 
-<body>
-
-	<header>
-	 	<div>
-			<div class="header_logo">
-				<a href="http://localhost:8080/facitter/"><img border="0" src="image/facitter-F.png" width="180" height="60"></a>　<!-- ローカル環境用 -->
-			</div>
+<header class="facitter_header">
+	<div>
+	 	<div class="facitter_header_logo">
+			<a href="http://localhost:8080/facitter/"><img border="0" src="image/facitter-F.png" width="150" height="50"></a>　
 		</div>
-	</header>
+	</div>
+</header>
 
-
+<body >
 	<div id="container">
 		<div id="contents">
-		
-
 			<nav id="interface">
 				<ul id="swbutton">
-					<li id="plus"> <img border="0" src="image/plus_icon.png" width="23" height="23"> </li>			
-					<li id="minus"><img border="0" src="image/minus_icon.png" width="23" height="23"></li>
+					<li id="plus"> 
+						<div>
+							<span><img border="0" src="image/plus_icon.png" width="23" height="23"></span>
+							<p class="arrow_box"> Change line size + </p>
+						</div>	
+					</li>			
+					<li id="minus"> 
+						<div>
+							<span><img border="0" src="image/minus_icon.png" width="23" height="23"></span>
+							<p class="arrow_box"> Change line size - </p>	
+						</div>
+					</li>
 				</ul>
 				<ul id="freehand">
-					<li> <img border="0" src="image/curve_icon.png" width="35" height="27"> </li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/freehand_icon.png" width="35" height="27"></span>
+							<p class="arrow_box"> Freehand line </p>
+						</div> 
+					</li>
 				</ul>
 				<ul id="straight">
-					<li> <img border="0" src="image/straight_icon.png" width="35" height="27"> </li>
+					<li> 
+						<div> 
+							<span><img border="0" src="image/straight_icon.png" width="35" height="27"></span>
+							<p class="arrow_box"> Straight line </p>
+						</div>
+					</li>
 				</ul>
 				<ul id="colorbutton">
-					<li id="black"></li>
-					<li id="red"></li>
-					<li id="blue"></li>
-					<li id="yellow"> <img border="0" src="image/eraser_icon.png" width="27" height="27"> </li>
+					<li id="black"> 
+						<div> 
+							<span><img border="0" src="image/blackpen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Black pen </p>
+						</div>		
+					</li>
+					<li id="red"> 
+						<div> 
+							<span><img border="0" src="image/redpen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Red pen </p>
+						</div>		
+					</li>	
+					<li id="blue"> 
+						<div> 
+							<span><img border="0" src="image/bluepen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Blue pen </p>
+						</div>		
+					</li>	
+					<li id="yellow"> 
+						<div> 
+							<span><img border="0" src="image/eraser_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Eraser </p>
+						</div>
+					</li>
 				</ul>
 				<ul id="undoredo">
-					<li id="undo"> <img border="0" src="image/back_icon.png" width="25" height="25"> </li>
-					<li id="redo"> <img border="0" src="image/next_icon.png" width="25" height="25"> </li>
+					<li id="undo"> 
+						<div>
+							<span><img border="0" src="image/back_icon.png" width="25" height="25"></span>
+							<p class="arrow_box"> Undo </p>
+						</div>
+					</li>
+					<li id="redo"> 
+						<div>
+							<span><img border="0" src="image/next_icon.png" width="25" height="25"></span>
+							<p class="arrow_box"> Redo </p>
+						</div>
+					 </li>
 				</ul>
 				<ul id="clear">
-					<li> <img border="0" src="image/allclear_icon.png" width="27" height="27"> </li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/allclear_icon.png" width="27" height="27"></span> 
+							<p class="arrow_box"> Clear all lines </p>
+						</div>		
+					</li>
 				</ul>
 				<ul id="postit">
-					<li> <img border="0" src="image/memo_icon.png" width="27" height="27"> </li>
+					<li>
+						<div>
+							<span><img border="0" src="image/memo_icon.png" width="27" height="27"></span>
+							<p class="arrow_box"> New note </p>
+						</div>
+					</li>
 				</ul>
-<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
+				<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
 				<ul id="allResize">
-					<li> <img border="0" src="image/fold_icon.png" width="27" height="27"> </li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/fold_icon.png" width="27" height="27"></span>
+							<p class="arrow_box"> Fold notes </p>
+						</div>
+					</li>
 				</ul>
 				<ul id="FGO">
-					<li> <img border="0" src="image/fix_icon.png" width="27" height="27"> </li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/fix_icon.png" width="27" height="27"></span>
+							 <p class="arrow_box"> Fix notes </p>
+						</div>
+	
+					</li>
 				</ul>
 			</nav>
 			
-			
-			<canvas id="my_canvas"  width="1000%" height="700%"></canvas>
-			
-			
-			
+			<canvas id="my_canvas"  width="1180" height="800"></canvas>			
 		</div>
+		
+
 		<div id="side">
 			<input id="message" type="text" placeholder="タスク内容"> <span
 				id="priority"></span> <input id="submit-task" type="button"
@@ -131,4 +196,5 @@
 <script src="js/task.js"></script>
 <script src="js/userslist.js"></script>
 <script src="js/husen.js"></script>
+<script src="js/arrangedesign.js"></script>
 </html>

@@ -2,8 +2,8 @@ ul#postit li{
 	width:56px;
 	height:29px;
 	background:#ffffff;
-	border-right:4px solid #bebebe;
-	border-bottom:4px solid #bebebe;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -16,8 +16,8 @@ ul#allResize li{
 	width:56px;
 	height:29px;
 	background:#ffffff;
-	border-right:4px solid #bebebe;
-	border-bottom:4px solid #bebebe;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -30,8 +30,8 @@ ul#FGO li{
 	width:56px;
 	height:29px;
 	background:#ffffff;
-	border-right:4px solid #bebebe;
-	border-bottom:4px solid #bebebe;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;

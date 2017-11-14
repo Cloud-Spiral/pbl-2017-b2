@@ -253,6 +253,15 @@ function getBackColor(count){
 }
 
 var clickCount = 0;
+//画面の位置用
+var targetElement = document.getElementById( "my_canvas" ) ;
+var clientRect = targetElement.getBoundingClientRect() ;
+// 画面内のキャンバスの位置
+var canvasX = clientRect.left ;
+var canvasY = clientRect.top ;
+
+
+
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
 
@@ -262,7 +271,7 @@ function draggable(count, handle, container) {
 		offsetX = event.screenX - rect.left;
 		offsetY = event.screenY - rect.top;
 		cont = container;
-		isMouseDown = true;
+		isMouseDown = true;		
 		$('.husen').css('transition','all 0ms 0s ease');
 		if( !clickCount ) {
 			++clickCount ;
@@ -301,11 +310,27 @@ function draggable(count, handle, container) {
 		}
 		isMouseDown = false;
 	}
-	document.onmousemove = function(event) {
-		if (isMouseDown == true) {
+	document.onmousemove = function(event) {		
+		/* 変更前
+		if (isMouseDown == true) {			
+				cont.style.left = event.screenX - offsetX + "px";
+				cont.style.top = event.screenY - offsetY + "px";
+		}
+		*/
+		//ホワイトボードから付箋がはみ出さないように
+		if (isMouseDown == true) {					
+			var rect = cont.getBoundingClientRect();
+			var x = event.screenX - offsetX - canvasX;//husenの位置x
+			var y = event.screenY - offsetY -  canvasY;//husenの位置y
+			//console.log("x:" + x);
+			//console.log("y:" + y);
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
-		}
+			if(x < 0) cont.style.left = canvasX+1 + "px";
+			if(y < 0) cont.style.top = canvasY+1 + "px";
+			if(x > 945) cont.style.left = 1005 + "px";
+			if(y > 608) cont.style.top = 670 + "px";
+		}	
 	}
 }
 

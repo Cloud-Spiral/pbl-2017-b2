@@ -1,0 +1,27 @@
+.facitter_header {
+	float: top;
+	height: 10%;
+	background: #ffff88;
+	border-bottom:4px solid #ffb900;
+}
+
+.facitter_header_logo img {
+	position: relative; 
+	top: 4px;
+	left: 5px;
+}
+
+.arrow_box {
+  display: none;
+  position: absolute;
+  padding: 8px;
+ /* -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;  
+  border-radius: 8px; */
+  background: #cceeff;
+  color: #0078d7;
+  border-color: #0078d7;
+  z-index: 1;
+  font-size: 18px;
+  font-family: arial, sans-serif;
+}
