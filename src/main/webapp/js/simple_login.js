@@ -125,6 +125,7 @@ var login = function() {
 	console.log(pass);
 	
 	if(password == pass) {
+		document.cookie = 'userName='+userName;
 		window.location.href = "../facitter/facitter.html";
 	}
 	else window.location.reload();
