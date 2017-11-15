@@ -2,7 +2,7 @@ var endpoint = 'http://localhost:8080/facitter/api';
 
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
-document.write("<script type='text/javascript' src='js/Moment.js'></script>");
+//document.write("<script type='text/javascript' src='js/Moment.js'></script>");
 
 //タスクを投稿
 var postTask = function() {
