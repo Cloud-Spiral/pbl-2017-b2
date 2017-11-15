@@ -6,7 +6,6 @@ var endpoint = 'http://localhost:8080/facitter/api';
 // document.write("<script type='text/javascript'
 // src='js/Moment.js'></script>");
 
-
 // Userを登録
 var register = function() {
 
@@ -43,19 +42,12 @@ var register = function() {
 			password : password
 		},
 		success : function() {
-<<<<<<< HEAD
+
 			// flag = true;
 			// 本番環境へ
 			// window.location.href =
 			// "https://team2017-2.spiral.cloud/lama/";
-			window.location.href = "../facitter/";
-=======
-				// flag = true;
-				// 本番環境へ
-				// window.location.href =
-				// "https://team2017-2.spiral.cloud/lama/";
-				window.location.href = "../facitter/facitter.html";
->>>>>>> refs/heads/master
+			window.location.href = "../facitter/facitter.html";
 		}
 	});
 
@@ -99,7 +91,7 @@ var checkContain = function() {
 		// 含まれている
 		// console.log(response);
 		// console.log("Contain00");
-		//return false;
+		// return false;
 	});
 
 	return error;
@@ -108,7 +100,7 @@ var checkContain = function() {
 // login
 var login = function() {
 	var userName = $('#userName').val();
-	//var email = $('#email').val();
+	// var email = $('#email').val();
 	var password = $('#password').val();
 	var pass;
 
@@ -123,54 +115,59 @@ var login = function() {
 		// 含まれていない
 		// console.log(response);
 		// console.log("Not contain");
-	}).done(function(response) {
-		// 含まれている
-		// console.log(response);
-		// console.log("Contain00");
-		var logout = function() {
-			var userName = $('#userName').val();
+	}).done(
+			function(response) {
+				// 含まれている
+				// console.log(response);
+				// console.log("Contain00");
+				var logout = function() {
+					var userName = $('#userName').val();
 
-			$.ajax({
-				type : 'PUT',
-				url : endpoint + '/users/login/'+userName,
-				data : $.param({name: userName}),
-				success : function() {
-					// flag = true;
-					// 本番環境へ
-					// window.location.href =
-					// "https://team2017-2.spiral.cloud/lama/";
-					//window.location.href = "#";
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert("msg: "+thrownError.message+" , status: "+xhr.status)
+					$.ajax({
+						type : 'PUT',
+						url : endpoint + '/users/login/' + userName,
+						data : $.param({
+							name : userName
+						}),
+						success : function() {
+							// flag = true;
+							// 本番環境へ
+							// window.location.href =
+							// "https://team2017-2.spiral.cloud/lama/";
+							// window.location.href = "#";
+						},
+						error : function(xhr, ajaxOptions, thrownError) {
+							alert("msg: " + thrownError.message + " , status: "
+									+ xhr.status)
+						}
+					});
 				}
+				pass = response['password'];
 			});
-		}
-		pass = response['password'];
-	});
-<<<<<<< HEAD
 
 	// console.log(password);
 	// console.log(pass);
 
 	if (password == pass) {
-		window.location.href = "../facitter/";
-	} else ;
-		//window.location.reload();
+		document.cookie = 'userName=' + userName;
+		window.location.href = "../facitter/facitter.html";
+	}
+	// else window.location.reload();
 }
 
-/*window.onbeforeunload = function() {
-	logout();
-	return "本当に離れますか？";
-};*/
+/*
+ * window.onbeforeunload = function() { logout(); return "本当に離れますか？"; };
+ */
 
 var logout = function() {
 	var userName = $('#userName').val();
 
 	$.ajax({
 		type : 'PUT',
-		url : endpoint + '/users/logout/'+userName,
-		data : $.param({name: userName}),
+		url : endpoint + '/users/logout/' + userName,
+		data : $.param({
+			name : userName
+		}),
 		success : function() {
 			// flag = true;
 			// 本番環境へ
@@ -178,19 +175,12 @@ var logout = function() {
 			// "https://team2017-2.spiral.cloud/lama/";
 			window.location.href = "#";
 		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert("msg: "+thrownError.message+" , status: "+xhr.status)
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert("msg: " + thrownError.message + " , status: " + xhr.status)
 		}
 	});
-=======
-	
-	console.log(password);
-	console.log(pass);
-	
-	if(password == pass) {
-		document.cookie = 'userName='+userName;
-		window.location.href = "../facitter/facitter.html";
-	}
-	else window.location.reload();
->>>>>>> refs/heads/master
+
+	//console.log(password);
+	//console.log(pass);
+
 }
