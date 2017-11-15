@@ -7,6 +7,7 @@ document.write("<script type='text/javascript' src='js/Moment.js'></script>");
 //タスクを投稿
 var postTask = function() {
 	var message = $('#message').val();
+	message = message.replace(/\s+/g, "");
 	var priority = $('#priority').raty('score');
 	if(message == "") {
 		return;
