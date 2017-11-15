@@ -11,8 +11,8 @@ function whiteWsConnection() {
 	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
 	//　本番環境用
 	//whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
-	
-	
+
+
 	//console.log("ws つなげる");
 	whiteWs.onopen = function(){
 		message = JSON.stringify({
@@ -91,6 +91,7 @@ var recordArray = new Array();
 var lineRecords = new Array();
 var freeHand = true
 var stx, sty;
+var viewPointer = false;
 
 var historyJson;
 var parsedJson = [];
@@ -134,6 +135,8 @@ canvas.onmousemove = function (e){drawLine(e,false);};
 canvas.onmouseup =  function (e){drawLine(e,false);};
 //window上のmouseupイベントでstop()を呼び出す
 window.addEventListener('mouseup', stop, false);
+window.onmousemove = function (e){deletePointer();};
+
 //}
 
 function stop(event) {
@@ -161,13 +164,14 @@ function stop(event) {
 
 function drawLine(event,isStart){
 	//console.log("drawLine");
+
 	if(event.type == "mousedown"){
 		drawing = true;
 	}
 	if(event.type == "mouseup")drawing = false;
 	event.preventDefault();
 	if(drawing){
-		console.log(drawing);
+		//console.log(drawing);
 		var offset = $(event.target).offset();
 		var mx = event.pageX - offset.left;
 		var my = event.pageY - offset.top;
@@ -192,10 +196,11 @@ function drawLine(event,isStart){
 			con.globalAlpha = 0.3;
 
 			con.beginPath();
-			console.log("直線の軌跡");
+			//console.log("直線の軌跡");
 			con.moveTo(mx,my);
 			con.lineTo(stx,sty);
 			con.stroke();
+
 			//戻す
 			con.globalAlpha = 1;
 
@@ -213,28 +218,28 @@ function drawLine(event,isStart){
 		xy.eraser = eraser;
 		lineRecords.push(xy);
 	}else{
-		//ペンの状態を表示
-		con.clearRect(0, 0, width, height);
-		load();
+			//ペンの状態を表示
+			con.clearRect(0, 0, width, height);
+			load();
 
-		console.log("mousemove");
-		var offset = $(event.target).offset();
-		var mx = event.pageX - offset.left;
-		var my = event.pageY - offset.top;
-		
-		//半透明
-		con.globalAlpha = 0.3;
-		
-		con.beginPath();
-		con.moveTo(mx,my);
-		con.lineTo(mx,my);
-		con.stroke();
-		oldxx = mx;
-		oldyy = my;
+			console.log("mousemove");
+			var offset = $(event.target).offset();
+			var mx = event.pageX - offset.left;
+			var my = event.pageY - offset.top;
 
-		//戻す
-		con.globalAlpha = 1;		
-		
+			//半透明
+			con.globalAlpha = 0.3;
+
+			con.beginPath();
+			con.moveTo(mx,my);
+			con.lineTo(mx,my);
+			con.stroke();
+			oldxx = mx;
+			oldyy = my;
+
+			//戻す
+			con.globalAlpha = 1;
+
 		if (event.type == "mouseup"){
 			if(!freeHand){
 				console.log("直線かくで");
@@ -266,6 +271,24 @@ function drawLine(event,isStart){
 				recordArray.splice(record_index,recordArray.length);
 			}
 		}
+	}
+}
+
+function deletePointer(){
+	//カーソルが画面外に出たときにポインタをcanvasから駆除する
+	var offset = $('#my_canvas').offset();
+	var mx = event.pageX;
+	var my = event.pageY;
+
+	console.log("left: " + offset.left + width + " top:" + offset.top + height);
+	console.log("mx :" + mx + "my :" + my);
+
+	if(mx >= offset.left && mx <= offset.left + width && my >= offset.top && my <= offset.top + height){
+		console.log("in canvas");
+	} else {
+		console.log("out of canvas");
+		con.clearRect(0, 0, width, height);
+		load();
 	}
 }
 
@@ -401,8 +424,8 @@ function load(){
 
 	//キャンバスを初期化
 	con.clearRect(0,0,width,height);
-	
-	
+
+
 	if(record_index === 0) {
 		return;
 	}
@@ -410,7 +433,7 @@ function load(){
 
 	//console.log("もらったrecordArray: "+recordArray);
 
-	
+
 	//線一本ずつ再現する
 	for(var i=0; i < record_index; i++){
 		var record = recordArray[i];
