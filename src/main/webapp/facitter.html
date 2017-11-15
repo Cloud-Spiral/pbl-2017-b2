@@ -3,7 +3,8 @@
 <head>
 <title>Facitter</title>
 <meta charset="utf-8">
-<link rel="shortcut icon" href="image/favicon-facitter.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="image/favicon-facitter.ico"
+	type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="css/whiteboard.css">
 <link rel="stylesheet" href="css/tasks.css" />
 <link rel="stylesheet" href="css/page.css" />
@@ -15,6 +16,9 @@
 	<div id="container">
 		<div id="contents">
 			<nav id="interface">
+				<ul id="size">
+					<li>5</li>
+				</ul>
 				<ul id="swbutton">
 					<li id="minus">-</li>
 					<li id="plus">+</li>
@@ -29,7 +33,7 @@
 					<li id="black"></li>
 					<li id="red"></li>
 					<li id="blue"></li>
-					<li id="yellow"></li>
+					<li id="white"></li>
 				</ul>
 				<ul id="undoredo">
 					<li id="undo">&lt;</li>
@@ -41,7 +45,7 @@
 				<ul id="postit">
 					<li>Post-it</li>
 				</ul>
-<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
+				<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
 				<ul id="allResize">
 					<li>allResize</li>
 				</ul>
@@ -108,9 +112,9 @@
 				<form name="timer">
 					<input id="min" type="text" value="0" size="5" pattern="\d*">分
 					<input id="sec" type="text" value="0" size="5" pattern="\d*">秒<br>
-					<input id="start" type="button" value="スタート">
-					<input id="stop" type="button" value="ストップ">
-					<input id="reset" type="button" value="リセット">
+					<input id="start" type="button" value="スタート"> <input
+						id="stop" type="button" value="ストップ"> <input id="reset"
+						type="button" value="リセット">
 				</form>
 			</div>
 		</div>
