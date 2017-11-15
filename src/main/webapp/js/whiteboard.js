@@ -180,10 +180,22 @@ function drawLine(event,isStart){
 				sty = my -1;
 			}
 		}
-		con.beginPath();
-		con.moveTo(oldx,oldy);
-		con.lineTo(mx,my);
-		if(freeHand) con.stroke();
+		if(freeHand){
+			con.beginPath();
+			con.moveTo(oldx,oldy);
+			con.lineTo(mx,my);
+			con.stroke();
+		} else {
+			con.clearRect(0, 0, width, height);
+			load();
+			
+			con.beginPath();
+			console.log("直線の軌跡");
+			con.moveTo(mx,my);
+			con.lineTo(stx,sty);
+			con.stroke();
+
+		}
 		oldx = mx;
 		oldy = my;
 
