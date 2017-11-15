@@ -92,7 +92,7 @@ function allFadein(json){
 function fadeInContainer(hid){
 	$("#container" + String(hid)).addClass("fadeIn");
 	$("#header" + String(hid)).addClass("fadeIn");
-	//$("#handle" + String(hid)).addClass("fadeIn");
+	$("#handle" + String(hid)).addClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.add("fadeIn");
 	$("#buttonContainer" + String(hid)).addClass("fadeIn");
@@ -106,7 +106,7 @@ function fadeOutContainer(hid){
 	//console.log(container);
 	container.style.opacity = 0;
 	$("#header" + String(hid)).removeClass("fadeIn");
-	//$("#handle" + String(hid)).removeClass("fadeIn");
+	$("#handle" + String(hid)).removeClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.remove("fadeIn");
 	$("#buttonContainer" + String(hid)).removeClass("fadeIn");
@@ -192,6 +192,8 @@ function colorSetter(count,color){
 	document.getElementsByName("button"+String(count*4-3))[0].style.borderLeftColor = getHandleColor(color);
 	document.getElementsByName("button"+String(count*4-2))[0].style.borderLeftColor = getHandleColor(color);
 	document.getElementsByName("button"+String(count*4-1))[0].style.borderLeftColor = getHandleColor(color);
+	
+	removeColorChange(document.getElementsByName("button"+count*4)[0],count,color);
 }
 
 function colorCounter(count,color){
@@ -412,6 +414,8 @@ function minimizeHusen(cont){
 			document.getElementsByName(contArray[i].name)[0].style.height="25px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
 			document.getElementById(contArray[i].id).style.height="0px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "99px";
 		}
 	}
 }
@@ -427,6 +431,8 @@ function invisualizeHusen(cont){
 			document.getElementsByName(contArray[i].name)[0].style.height="25px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
 			document.getElementById(contArray[i].id).style.height="0px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "99px";
 		}
 	}
 }
@@ -442,8 +448,33 @@ function maximizeHusen(cont){
 			document.getElementsByName(contArray[i].name)[0].style.height="150px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
 			document.getElementById(contArray[i].id).style.height="25px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "204px";
 		}
 	}
+}
+
+function removeColorChange(remove,uniHusenCount,color){
+	remove.style.color = "#FFFFFF";
+	remove.style.background = getHandleColor(color);
+	remove.style.borderLeftColor = getHandleColor(color);
+	remove.style.borderRightColor = getHandleColor(color);
+	remove.onmouseover = function(){
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.background = "#AAAAAA";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.color= "#000000";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderLeftColor = "#000000";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderRightColor = "#000000";
+	};
+	remove.onmouseout = function(){
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.color = "#FFFFFF";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.background = getHandleColor(color);
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderLeftColor = getHandleColor(color);
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderRightColor = getHandleColor(color);
+	};
+
+//	this.buttonRemove.style.color = "#FFFFFF";
+//	this.buttonRemove.style.borderLeftColor = getHandleColor(color);
+//	this.buttonRemove.style.borderRightColor = getHandleColor(color);
 }
 
 function Card() {
@@ -495,11 +526,13 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
-	this.handle.style.width = "85%";
+	this.handle.className = 'husen';
+	this.handle.style.width = "204px";
 	this.handle.style.height = "25px";
 	this.handle.style.margin = "0px";
 	this.handle.style.backgroundColor = getHandleColor(colorCount);
 	this.handle.style.display = "inline-block";
+	this.handle.style.position = "absolute";
 
 	this.txtarea = document.createElement('textarea');
 	this.txtarea.className = 'husen';
@@ -551,9 +584,11 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.buttonRemove = document.createElement('a');
 	this.buttonRemove.name = "button" + String(uniHusenCount*4);
 	this.buttonRemove.className = "square_rmbtn";
-	this.buttonRemove.innerHTML = "a";
-	this.buttonRemove.style = "width:14%;height:100%;vertical-align:top";
+	this.buttonRemove.innerHTML = "×";
+	this.buttonRemove.style = "width:12.5%;height:100%;vertical-align:top";
 	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
+	
+	removeColorChange(this.buttonRemove,uniHusenCount,color);
 	
 	this.header.appendChild(this.handle);
 	this.header.appendChild(this.buttonRemove);
