@@ -89,7 +89,7 @@ var colorString;
 var eraser = false;
 var drawing;
 var sWidth = 5;
-var eWidth = 10;
+var eWidth = 15;
 var swUpButton, swDownButton;
 var redButton;
 var record_index = 0;
@@ -228,7 +228,7 @@ function drawLine(event,isStart){
 		con.clearRect(0, 0, width, height);
 		load();
 
-		console.log("mousemove");
+		//console.log("mousemove");
 		var offset = $(event.target).offset();
 		var mx = event.pageX - offset.left;
 		var my = event.pageY - offset.top;
@@ -492,8 +492,15 @@ function load(){
 		} else {
 			con.clearRect(0,0,width,height);
 		}
+		
+		//console.log("文字サイズ: "+con.lineWidth);
+		
 		//現在の設定に戻す
-		con.lineWidth = sWidth;
+		if(eraser){
+			con.lineWidth = eWidth;
+		} else{
+			con.lineWidth = sWidth;
+		}
 		con.strokeStyle = color;
 		switchEraser(eraser);
 	}
