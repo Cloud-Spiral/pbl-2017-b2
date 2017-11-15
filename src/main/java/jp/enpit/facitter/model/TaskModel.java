@@ -63,7 +63,7 @@ public class TaskModel extends BaseModel{
                 .sort(sort)
                 ));
     }
-    
+
     //statusで検索する。
     public Tasks findStatus(Task task) {
         String status = task.status();
@@ -75,42 +75,6 @@ public class TaskModel extends BaseModel{
                 .sort(sort)
                 ));
         return tasks;
-    }
-
-    public Tasks findWithRange(int start, int length){
-        return new Tasks(toList(list()
-                .skip(start)
-                .limit(length)));
-    }
-
-    public Tasks findWithLength(int length){
-        return new Tasks(toList(list()
-                .limit(length)));
-    }
-
-    public Tasks findWithStart(int start){
-        return new Tasks(toList(list()
-                .skip(start)));
-    }
-
-    public Tasks findWithFilter(String filter){
-        return new Tasks(toList(list(filter)));
-    }
-
-    public Tasks findWithStartAndFilter(int start, String filter){
-        return new Tasks(toList(list(filter)
-                .skip(start)));
-    }
-
-    public Tasks findWithLengthAndFilter(int length, String filter){
-        return new Tasks(toList(list(filter)
-                .limit(length)));
-    }
-
-    public Tasks findWithRangeAndFilter(int start, int length, String filter){
-        return new Tasks(toList(list(filter)
-                .skip(start)
-                .limit(length)));
     }
 
     private List<Task> toList(FindIterable<Document> iterable){
@@ -126,19 +90,14 @@ public class TaskModel extends BaseModel{
                 .sort(ascending("tid"));
     }
 
-    private FindIterable<Document> list(String filter){
-        return tasks().find()
-                .filter(regex("body", Pattern.compile(filter)))
-                .sort(descending("tid"));
-    }
-
     private Document toDocument(Task task){
         return new Document()
                 .append("tid", task.tid())
                 .append("date", task.date())
                 .append("body", task.body())
                 .append("priority", task.priority())
-                .append("status", task.status());
+                .append("status", task.status())
+                .append("notice", task.notice());
     }
 
     private Task toTask(Document document){
@@ -148,7 +107,9 @@ public class TaskModel extends BaseModel{
                 document.getString("body"),
                 document.getDate("date"),
                 document.getInteger("priority"),
-                document.getString("status"));
+                document.getString("status"),
+                document.getBoolean("notice")
+                );
     }
 
     public void changeTaskStatus(int tid) {
@@ -167,5 +128,24 @@ public class TaskModel extends BaseModel{
                 .append("body", body)
                 .append("priority", priority);
         tasks().updateOne(eq("tid", tid), new Document("$set", updDoc));
+    }
+
+    //noticeを更新する
+    public Tasks noticeTasks() {
+        Tasks resultTasks = new Tasks();
+        Document updDoc = new Document("notice", true);
+        BasicDBObject sort = new BasicDBObject();
+        sort.put("date", -1);
+        Tasks tasks = new Tasks(toList(tasks().find()
+                .sort(sort)
+                ));
+        for(Task task: tasks.toArray()) {
+            if(!task.notice()) 
+                if(task.checkTime()) 
+                    tasks().updateOne(eq("tid", task.tid()), new Document("$set", updDoc));
+            if(task.notice())
+                resultTasks.addList(task);
+        }
+        return resultTasks;
     }
 }
