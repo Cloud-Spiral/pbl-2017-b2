@@ -15,7 +15,7 @@ var updateList = function(){
 		success: function(json){
 			$('#userlist').empty();			
 			for(var i=0; i<json.users.length;i++){
-				var str = '<li><span style="color:' + wordcolor[i%5]+ '">　・ ' + json.users[i].name+  '</span></li>' ;
+				var str = '<li><span style="color:' + "#000000"/*wordcolor[i%5]*/ + '">　・ ' + json.users[i].name+  '</span></li>' ;
 				$('#userlist').append(str);
 			}
 		}

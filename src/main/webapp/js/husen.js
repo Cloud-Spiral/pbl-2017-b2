@@ -331,18 +331,26 @@ function draggable(count, handle, container) {
 		}
 		*/
 		//ホワイトボードから付箋がはみ出さないように
-		if (isMouseDown == true) {					
+		if (isMouseDown == true) {
 			var rect = cont.getBoundingClientRect();
-			var x = event.screenX - offsetX - canvasX;//husenの位置x
-			var y = event.screenY - offsetY -  canvasY;//husenの位置y
-			console.log("x:" + x);
-			console.log("y:" + y);
+			var hwidth = 240;
+			var hheight = 200;
+			var xleft = event.screenX - offsetX - canvasX;//canvasからのhusenの位置x
+			var ytop = event.screenY - offsetY -  canvasY;//canvasからのhusenの位置y
+			var xright = xleft  +  hwidth ;
+			var ybottom = ytop   +  hheight;
+			var canvas = document.getElementById("my_canvas");
+			var cwidth = canvas.width;
+			var cheight = canvas.height;
+			
+			
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
-			if(x < 0) cont.style.left = canvasX+1 + "px";
-			if(y < 0) cont.style.top = canvasY+1 + "px";
-			if(x > 965) cont.style.left = 1025 + "px";
-			if(y > 608) cont.style.top = 670 + "px";
+			
+			if(xleft < 0) cont.style.left = canvasX+1 + "px";
+			if(ytop < 0) cont.style.top = canvasY+1 + "px";
+			if(xright > cwidth + 5) cont.style.left = cwidth - hwidth + 5 + canvasX + "px";
+			if(ybottom > cheight + 10) cont.style.top = cheight - hheight + 10 + canvasY + "px";
 		}	
 	}
 }
@@ -353,8 +361,8 @@ function husenGrandOrder(){
 		url : endpoint+'/husens/order',
 		data:{
 			number: 4,
-			left: "175px",
-			top: "65px",
+			left: "75px",
+			top: "75px",
 			width: "245px",
 			height: "200px" 
 		},
