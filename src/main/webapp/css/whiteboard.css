@@ -7,8 +7,12 @@
 
 #my_canvas{
     position:relative;
-    /* left:60px; */
-	border:1px solid #000;
+    /* left:60px; */ 
+	border-top:3px solid #d900a9;
+	border-bottom:3px solid #5c239b;
+	border-left:3px solid #108904;
+	border-right:3px solid #0078d7;
+	z-index:0;
 }
 nav#interface{
 	width:60px;
@@ -33,52 +37,57 @@ ul#size li{
 	-khtml-user-select: none;
 }
 ul#swbutton li{
-	width:29px;
+	width:26px;
+	height:27px;
 	float:left;
 	padding:8px 0;
 	text-align:center;
-	background:#efefef;
+	background:#ffffff;
 	display:table-cell;
 	font-size:12px;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	border-right:4px solid #efefef; 
+	border-top:3px solid #efefef;
+	border-bottom:4px solid #efefef;
 	cursor:pointer;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 }
 ul#colorbutton li{
-	width:29px;
-	height:29px;
+	width:26px;
+	height:27px;
 	float:left;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	cursor:pointer;
 }
 ul#colorbutton li#black{
 	background:#000000;
+
 }
 ul#colorbutton li#red{
 	background:#FF0000;
+
 }
 ul#colorbutton li#blue{
 	background:#0000FF;
+
 }
 ul#colorbutton li#yellow{
-	background:#FFEE00;
+	background:#ffffff; 
 }
 ul#colorbutton li#green{
 	background:#00ff00;
 }
 ul#undoredo li{
-	width:29px;
-	height:29px;
+	width:26px;
+	height:27px;
 	line-height:29px;
 	float:left;
 	text-align:center;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	cursor:pointer;
 	font-size:10px;
 	-moz-user-select: none;
@@ -86,11 +95,11 @@ ul#undoredo li{
 	-khtml-user-select: none;
 }
 ul#clear li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -100,11 +109,11 @@ ul#clear li{
 	-khtml-user-select: none;
 }
 ul#straight li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;
@@ -114,11 +123,11 @@ ul#straight li{
 	-khtml-user-select: none;
 }
 ul#freehand li{
-	width:59px;
+	width:56px;
 	height:29px;
-	background:#efefef;
-	border-right:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
 	line-height:29px;
 	text-align:center;
 	cursor:pointer;

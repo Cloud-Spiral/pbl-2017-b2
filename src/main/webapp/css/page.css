@@ -1,7 +1,8 @@
 /* 参考 https://webkikaku.co.jp/blog/htmlcss/footer-bottom/ */
 
 body{
-	height: 100%;
+	float: bottom;
+	height: 90%;
 }
 
 div#container{
@@ -22,6 +23,7 @@ div#contents {
 div#side {
 	width: 510px;
 	float: right;
+	z-index: -1;
 }
 
 div#footer{

@@ -21,6 +21,9 @@ window.onload = function(){
 $("#postit").mousedown(function (e){new Card();});
 $("#allResize").mousedown(function (e){allResizeHusen();});
 $("#FGO").mousedown(function (e){husenGrandOrder();});
+
+
+
 //websocketオブジェクト
 var hws;
 
@@ -255,6 +258,13 @@ function getBackColor(count){
 }
 
 var clickCount = 0;
+//画面の位置用
+var targetElement = document.getElementById( "my_canvas" ) ;
+var clientRect = targetElement.getBoundingClientRect() ;
+// 画面内のキャンバスの位置
+var canvasX = clientRect.left ;
+var canvasY = clientRect.top ;
+
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
 	var containerId = container.id;
@@ -274,7 +284,7 @@ function draggable(count, handle, container) {
 		offsetX = event.screenX - rect.left;
 		offsetY = event.screenY - rect.top;
 		cont = container;
-		isMouseDown = true;
+		isMouseDown = true;		
 		$('.husen').css('transition','all 0ms 0s ease');
 		if( !clickCount ) {
 			++clickCount ;
@@ -313,11 +323,27 @@ function draggable(count, handle, container) {
 		}
 		isMouseDown = false;
 	}
-	document.onmousemove = function(event) {
-		if (isMouseDown == true) {
+	document.onmousemove = function(event) {		
+		/* 変更前
+		if (isMouseDown == true) {			
+				cont.style.left = event.screenX - offsetX + "px";
+				cont.style.top = event.screenY - offsetY + "px";
+		}
+		*/
+		//ホワイトボードから付箋がはみ出さないように
+		if (isMouseDown == true) {					
+			var rect = cont.getBoundingClientRect();
+			var x = event.screenX - offsetX - canvasX;//husenの位置x
+			var y = event.screenY - offsetY -  canvasY;//husenの位置y
+			console.log("x:" + x);
+			console.log("y:" + y);
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
-		}
+			if(x < 0) cont.style.left = canvasX+1 + "px";
+			if(y < 0) cont.style.top = canvasY+1 + "px";
+			if(x > 965) cont.style.left = 1025 + "px";
+			if(y > 608) cont.style.top = 670 + "px";
+		}	
 	}
 }
 
@@ -327,8 +353,8 @@ function husenGrandOrder(){
 		url : endpoint+'/husens/order',
 		data:{
 			number: 4,
-			left: "70px",
-			top: "20px",
+			left: "175px",
+			top: "65px",
 			width: "245px",
 			height: "200px" 
 		},
