@@ -8,6 +8,11 @@ window.onload = function() {
 	loadHusens();
 	hwsConnection();
 	twsConnection();
+	
+	//ホワイトボード
+	whiteWsConnection();	
+	//loadWhite();
+
 	ywsConnection();
   
 	userName = getCookie('userName');
@@ -25,6 +30,8 @@ function twsConnection(){
 	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
 	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
+		
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,
@@ -58,6 +65,7 @@ function twsConnection(){
 function onUnload(){
 	  tws.close();
 	  hws.close();
+	  whiteWs.close();
 }
 
 window.addEventListener("unload",onUnload,false);
