@@ -1,0 +1,24 @@
+.userlist ul {
+  border: solid 2px skyblue;/*線の設定*/
+  padding: 0.5em 1em 0.5em 2.3em;
+  position: relative;
+}
+
+.userlist ul li {
+  line-height: 1.5;
+  padding: 0.5em 0;
+  list-style-type: none!important;
+}
+
+
+.userslist {
+	background: #ffffff;
+	border-top:4px solid #108904;
+	border-bottom:4px solid #ffb900;
+	border-left:4px solid #5c239b;
+	border-right:4px solid #d900a9;
+}
+
+#userlist {
+	font-size: 20px;
+}

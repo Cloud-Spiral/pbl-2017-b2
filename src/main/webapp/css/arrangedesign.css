@@ -1,0 +1,48 @@
+#container {
+	background: #efefef;
+}
+
+.start_logo {
+	position: relative; 
+	top: 100px;
+	left: 100px;
+}
+
+.facitter_header {
+	float: top;
+	height: 10%;
+	background: #ffff88;
+	border-bottom:4px solid #ffb900;
+}
+
+.facitter_header_logo img {
+	position: relative; 
+	top: 4px;
+	left: 5px;
+}
+
+.arrow_box {
+  display: none;
+  position: absolute;
+  padding: 8px;
+ /* -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;  
+  border-radius: 8px; */
+  background: #cceeff;
+  color: #0078d7;
+  border-color: #0078d7;
+  z-index: 1;
+  font-size: 18px;
+  font-family: arial, sans-serif;
+}
+
+.check1 {
+	position: relative; 
+	top: 40px;
+	left: 1250px;
+}
+.check2 {
+	position: relative; 
+	top: 140px;
+	left: 1180px;
+}

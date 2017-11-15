@@ -1,3 +1,5 @@
+//一定時間ごとにユーザ一覧の更新
+
 var endpoint = 'http://localhost:8080/facitter/api';
 // 本番環境用
 // var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
@@ -41,11 +43,19 @@ var register = function() {
 			password : password
 		},
 		success : function() {
+<<<<<<< HEAD
 			// flag = true;
 			// 本番環境へ
 			// window.location.href =
 			// "https://team2017-2.spiral.cloud/lama/";
 			window.location.href = "../facitter/";
+=======
+				// flag = true;
+				// 本番環境へ
+				// window.location.href =
+				// "https://team2017-2.spiral.cloud/lama/";
+				window.location.href = "../facitter/facitter.html";
+>>>>>>> refs/heads/master
 		}
 	});
 
@@ -138,6 +148,7 @@ var login = function() {
 		}
 		pass = response['password'];
 	});
+<<<<<<< HEAD
 
 	// console.log(password);
 	// console.log(pass);
@@ -171,4 +182,15 @@ var logout = function() {
 			alert("msg: "+thrownError.message+" , status: "+xhr.status)
 		}
 	});
+=======
+	
+	console.log(password);
+	console.log(pass);
+	
+	if(password == pass) {
+		document.cookie = 'userName='+userName;
+		window.location.href = "../facitter/facitter.html";
+	}
+	else window.location.reload();
+>>>>>>> refs/heads/master
 }

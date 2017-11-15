@@ -1,4 +1,4 @@
-package jp.enpit.lama.entities;
+package jp.enpit.facitter.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +34,10 @@ public class Tasks {
 
     public Task[] toArray(){
         return list.toArray(new Task[size()]);
+    }
+    
+    public void addList(Task task) {
+        list.add(task);
     }
     
 }

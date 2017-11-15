@@ -1,4 +1,4 @@
-package jp.enpit.lama.ws;
+package jp.enpit.facitter.ws;
 
 
 import java.io.IOException;
@@ -15,8 +15,8 @@ import javax.websocket.server.ServerEndpoint;
 
 //参考サイト　https://www.rocher.kyoto.jp/arbr/?p=286
 //@ServerEndpoint(value = "/ws", decoders = { TaskDecoder.class }, encoders = { TaskEncoder.class })
-@ServerEndpoint(value = "/ws")
-public class LamaWs {
+@ServerEndpoint(value = "/whiteWs")
+public class WhiteWs {
 
     /**
      * チャット接続者一覧を保持するスレッドセーフなSetオブジェクト<br>

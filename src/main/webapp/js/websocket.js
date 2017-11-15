@@ -1,15 +1,37 @@
 
 // websocketオブジェクト
-var ws;
-
-// ws接続押下時の処理
+var tws;
+var userName;
+// tws接続押下時の処理
 window.onload = function() {
-
-	// WebSocketオブジェクト作成
-	ws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
-	//　本番環境用
-	//ws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	//ふせん
+	loadHusens();
+	hwsConnection();
+	twsConnection();
 	
+	//ホワイトボード
+	whiteWsConnection();	
+	//loadWhite();
+
+	ywsConnection();
+  
+	userName = getCookie('userName');
+	if(userName == null){
+		userName = 'Guest';
+	}
+	console.log("userName="+userName);
+}
+/* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
+ */
+
+
+function twsConnection(){
+	// WebSocketオブジェクト作成
+	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+	//　本番環境用
+	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
+		
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,
@@ -18,10 +40,10 @@ window.onload = function() {
 	update();
 
 	// サーバからのメッセージ受信時の処理
-	ws.onmessage = function(message) {
+	tws.onmessage = function(message) {
 		//message = JSON.parse(message.data)
 		message = message.data.split(":")
-		console.log(message)
+		//console.log(message)
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
@@ -35,20 +57,15 @@ window.onload = function() {
 			updateTaskBody(message[1]);
 	};
 	
-	ws.onclose = function(closeEvent) {
-	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	tws.onclose = function(closeEvent) {
+	    console.log('tws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
-
-
 }
 
-// send押下時の処理
-$('#send').click(function() {
-    // TODO
-	// テキストデータをinputフィールドから読み込む
-	var body = $('#body').val();
-	
-	// ws経由で送信
-	ws.send(body);
-});
+function onUnload(){
+	  tws.close();
+	  hws.close();
+	  whiteWs.close();
+}
 
+window.addEventListener("unload",onUnload,false);

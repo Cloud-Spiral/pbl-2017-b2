@@ -1,0 +1,95 @@
+ul#postit li{
+	width:56px;
+	height:29px;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+ul#allResize li{
+	width:56px;
+	height:29px;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+ul#FGO li{
+	width:56px;
+	height:29px;
+	background:#ffffff;
+	border-right:4px solid #efefef;
+	border-bottom:4px solid #efefef;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+.husen {
+	opacity: 0;
+	transition: all 300ms 0s ease;
+}
+
+.fadeIn {
+	opacity: 1;
+}
+
+.buttonContainer {
+	overflow: hidden;
+}
+
+.square_btn{
+	font-size: 14px;
+    display: inline-block;
+    text-decoration: none;
+    background: #f7f7f7;
+    border-left: solid 3px #ff7c5c;/*左線*/
+    color: #ff7c5c;/*文字色*/
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.29);
+    user-select: none;
+}
+.square_btn:active {
+    box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+    transform: translateY(2px);
+}
+
+.square_rmbtn{
+	font-size: 16px;
+    position: absokute;
+    right: 0px;
+    top: 0px;
+    height: 25px;
+    width: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    border-left: solid 3px #DDD;
+    border-right: solid 3px #DDD;
+    color: #668ad8;
+    text-align: center;
+    background: #e1f3ff;
+    transition: .4s;
+    float: right;
+    user-select: none;
+}
+
+.square_rmbtn:hover {
+    background: #999;
+    color: #000;
+}
