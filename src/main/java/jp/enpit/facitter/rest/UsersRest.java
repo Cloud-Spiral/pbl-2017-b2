@@ -70,6 +70,41 @@ public class UsersRest {
                 .build();
         }
     }
+    
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("logout/{name}")
+    public Response logout(@PathParam("name") String name) {
+    	
+    	try(UserModel model = createModel()) {
+    		User user = model.findUser(name);
+    		//System.out.println("aaaaaaaaaaaaaaa");
+    		user.logout();
+    		model.update(user);
+    		System.out.println("name: "+user.getName()+"  status: "+user.getStatus());
+    		return Response.status(201)
+    				.entity(user)
+    				.build();
+    	}
+    	
+    }
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("login/{name}")
+    public Response login(@PathParam("name") String name) {
+    	
+    	try(UserModel model = createModel()) {
+    		User user = model.findUser(name);
+    		//System.out.println("aaaaaaaaaaaaaaa");
+    		user.login();
+    		model.update(user);
+    		System.out.println("name: "+user.getName()+"  status: "+user.getStatus());
+    		return Response.status(201)
+    				.entity(user)
+    				.build();
+    	}
+    	
+    }
 
     private UserModel createModel(){
         return new UserModel();
