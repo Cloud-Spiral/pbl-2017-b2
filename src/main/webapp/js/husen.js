@@ -91,7 +91,8 @@ function allFadein(json){
 }
 function fadeInContainer(hid){
 	$("#container" + String(hid)).addClass("fadeIn");
-	$("#handle" + String(hid)).addClass("fadeIn");
+	$("#header" + String(hid)).addClass("fadeIn");
+	//$("#handle" + String(hid)).addClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.add("fadeIn");
 	$("#buttonContainer" + String(hid)).addClass("fadeIn");
@@ -104,7 +105,8 @@ function fadeOutContainer(hid){
 	var container = document.getElementById("container"+String(hid));
 	//console.log(container);
 	container.style.opacity = 0;
-	$("#handle" + String(hid)).removeClass("fadeIn");
+	$("#header" + String(hid)).removeClass("fadeIn");
+	//$("#handle" + String(hid)).removeClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.remove("fadeIn");
 	$("#buttonContainer" + String(hid)).removeClass("fadeIn");
@@ -485,13 +487,19 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;display:inline-block;" +
 	"left:"+xPosition+";top:"+yPosition;
 
+	this.header = document.createElement('div');
+	this.header.id = "header"+String(uniHusenCount);
+	this.header.className = 'husen';
+	this.header.style.width = "100%";
+	this.header.style.height = "25px";
+	
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
-	this.handle.className = 'husen';
-	this.handle.style.width = "100%";
+	this.handle.style.width = "85%";
 	this.handle.style.height = "25px";
 	this.handle.style.margin = "0px";
 	this.handle.style.backgroundColor = getHandleColor(colorCount);
+	this.handle.style.display = "inline-block";
 
 	this.txtarea = document.createElement('textarea');
 	this.txtarea.className = 'husen';
@@ -512,35 +520,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.buttonContainer.className = 'husen buttonContainer';
 	this.buttonContainer.style = "width:100%;height:25px;display:block;vertical-align:bottom;";
 	this.buttonContainer.id = "buttonContainer"+String(uniHusenCount);
-
-//	this.buttonGood = document.createElement('input');
-//	this.buttonGood.type = "button";
-//	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
-//	this.buttonGood.value = "Good:"+String(goodCount);
-//	this.buttonGood.style = "width:25%;height:100%;vertical-align:top";
-//	this.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
-
-//	this.buttonBad = document.createElement('input');
-//	this.buttonBad.type = "button";
-//	this.buttonBad.name = "button" + String(uniHusenCount*4-2);
-//	this.buttonBad.value = "Bad:"+String(badCount);
-//	this.buttonBad.style = "width:25%;height:100%;vertical-align:top";
-//	this.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
-
-//	this.buttonColor = document.createElement('input');
-//	this.buttonColor.type = "button";
-//	this.buttonColor.name = "button" + String(uniHusenCount*4-1);
-//	this.buttonColor.value = "Color";
-//	this.buttonColor.style = "width:25%;height:100%;vertical-align:top";
-//	this.buttonColor.onclick = function(){colorCounter(uniHusenCount,++colorCount)};
-//
-//	this.buttonRemove = document.createElement('input');
-//	this.buttonRemove.type = "button";
-//	this.buttonRemove.name = "button" + String(uniHusenCount*4);
-//	this.buttonRemove.value = "Delete";
-//	this.buttonRemove.style = "width:25%;height:100%;vertical-align:top";
-//	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
-
+	
 	this.buttonGood = document.createElement('a');
 	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
 	this.buttonGood.className = "square_btn";
@@ -570,14 +550,15 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 
 	this.buttonRemove = document.createElement('a');
 	this.buttonRemove.name = "button" + String(uniHusenCount*4);
-	this.buttonRemove.className = "square_btn";
-	this.buttonRemove.innerHTML = "Delete";
-	this.buttonRemove.style = "width:23.75%;height:85%;vertical-align:top";
+	this.buttonRemove.className = "square_rmbtn";
+	this.buttonRemove.innerHTML = "a";
+	this.buttonRemove.style = "width:14%;height:100%;vertical-align:top";
 	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
 	
-	this.container.appendChild(this.handle);
+	this.header.appendChild(this.handle);
+	this.header.appendChild(this.buttonRemove);
+	this.container.appendChild(this.header);
 	this.container.appendChild(this.txtarea);
-//	this.buttonContainer.appendChild(this.buttonRemove);
 	this.buttonContainer.appendChild(this.buttonColor);
 	this.buttonContainer.appendChild(this.buttonGood);
 	this.buttonContainer.appendChild(this.buttonBad);
