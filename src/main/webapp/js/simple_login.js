@@ -117,6 +117,25 @@ var login = function() {
 		// 含まれている
 		// console.log(response);
 		// console.log("Contain00");
+		var logout = function() {
+			var userName = $('#userName').val();
+
+			$.ajax({
+				type : 'PUT',
+				url : endpoint + '/users/login/'+userName,
+				data : $.param({name: userName}),
+				success : function() {
+					// flag = true;
+					// 本番環境へ
+					// window.location.href =
+					// "https://team2017-2.spiral.cloud/lama/";
+					//window.location.href = "#";
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert("msg: "+thrownError.message+" , status: "+xhr.status)
+				}
+			});
+		}
 		pass = response['password'];
 	});
 

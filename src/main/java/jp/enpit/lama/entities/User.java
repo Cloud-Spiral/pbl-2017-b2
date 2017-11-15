@@ -59,4 +59,7 @@ public class User {
 	public void logout() {
 		setStatus(false);
 	}
+	public void login() {
+		setStatus(true);
+	}
 }
