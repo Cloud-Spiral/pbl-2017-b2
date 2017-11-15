@@ -229,3 +229,4 @@ makeCardStart(0,"What's Facilitation?\n\nファシリテーションとは、な
 makeCardStart(0,"What's New?\n\n進捗ありません。","1250px","390px","400px",0,0,5,0);
 makeCardStart(0,"現在の議題\n\n「どうすれば開発が締め切りまでに終わるか」","15px","30px","250px",0,0,4,0);
 
+$("body").css("zoom","90%");
