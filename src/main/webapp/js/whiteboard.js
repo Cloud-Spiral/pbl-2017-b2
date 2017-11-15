@@ -188,12 +188,16 @@ function drawLine(event,isStart){
 		} else {
 			con.clearRect(0, 0, width, height);
 			load();
-			
+			//半透明
+			con.globalAlpha = 0.3;
+
 			con.beginPath();
 			console.log("直線の軌跡");
 			con.moveTo(mx,my);
 			con.lineTo(stx,sty);
 			con.stroke();
+			//戻す
+			con.globalAlpha = 1;
 
 		}
 		oldx = mx;
@@ -218,6 +222,9 @@ function drawLine(event,isStart){
 		var mx = event.pageX - offset.left;
 		var my = event.pageY - offset.top;
 		
+		//半透明
+		con.globalAlpha = 0.3;
+		
 		con.beginPath();
 		con.moveTo(mx,my);
 		con.lineTo(mx,my);
@@ -225,6 +232,8 @@ function drawLine(event,isStart){
 		oldxx = mx;
 		oldyy = my;
 
+		//戻す
+		con.globalAlpha = 1;		
 		
 		if (event.type == "mouseup"){
 			if(!freeHand){
