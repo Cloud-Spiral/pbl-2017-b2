@@ -36,18 +36,6 @@
   font-family: arial, sans-serif;
 }
 
-.userslist {
-	background: #cceeff;
-	border-top:4px solid #108904;
-	border-bottom:4px solid #ffb900;
-	border-left:4px solid #5c239b;
-	border-right:4px solid #d900a9;
-}
-
-#userlist {
-	font-size: 20px;
-}
-
 .check1 {
 	position: relative; 
 	top: 40px;
