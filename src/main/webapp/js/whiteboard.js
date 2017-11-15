@@ -36,7 +36,7 @@ function whiteWsConnection() {
 			console.log('updateきたからcanvasに反映すんで');
 			//record_index = message.index;
 			//recordArray = JSON.parse(message.history);
-			
+
 			loadWhite();
 			//load();
 		}
@@ -45,34 +45,33 @@ function whiteWsConnection() {
 
 function loadWhite(){
 	//今までのホワイトボードの履歴を取得して反映する
-	
+
 	$.ajax({
 		type: 'GET',
 		url: endpoint + '/lines',
 		success: function(json) {
 			//console.log("success json"+ JSON.stringify(json));
 			var latest_num = json.lines.length;
-			
-			console.log("length"+ latest_num);
+
+			console.log("line length: "+ latest_num);
 			//console.log("json.lines[latest_num-1].line: \n"+json.lines[latest_num-1].line);
-			
-			recordArray = JSON.parse(json.lines[latest_num-1].line);
-			record_index = json.lines[latest_num-1].index;
-			
+
+			if(latest_num !== 0){
+				recordArray = JSON.parse(json.lines[latest_num-1].line);
+				record_index = json.lines[latest_num-1].index;
+			}
 			//console.log("GET /lines lineString:"+recordArray);
 			console.log("GET /lines index:"+ record_index);
-			
-			//console.log("コールバック関数");
-			//callback();
+
 			load();
 		}
 	});
 
-	
+
 }
 
 //whiteWs.onclose = function(){
-//	console.log("closeしたよ");
+//console.log("closeしたよ");
 //};
 
 
@@ -210,14 +209,14 @@ function drawLine(event,isStart){
 			recordArray[record_index] = lineRecords;
 			historyJson = JSON.stringify(recordArray);
 			//console.log("historyJson: "+ historyJson);
-			
+
 			message = JSON.stringify({
 				type: 'update',
 				//history: historyJson,
 				//index: record_index + 1,
 
 			});
-			post();
+			post(record_index);
 			console.log("ws send type:update");
 			whiteWs.send(message);
 
@@ -292,7 +291,7 @@ function clear(e){
 		//index: record_index + 1,
 
 	});
-	post();
+	post(record_index);
 	console.log("ws send: clear");
 	whiteWs.send(message);
 
@@ -320,11 +319,11 @@ function freehand(e){
 function undo(e){
 	console.log("undo");
 	if(record_index > 0){
-		record_index--;
+		//record_index--;
 		load();
-		
-		
-		
+
+
+
 		historyJson = JSON.stringify(recordArray);
 		message = JSON.stringify({
 			type: 'update',
@@ -332,8 +331,9 @@ function undo(e){
 			//index: record_index,
 
 		});
-		post();
-		console.log("ws send: undo");
+		console.log("post前index: "+record_index);
+		post(record_index-1);
+		console.log("ws send: undo index = "+record_index);
 		whiteWs.send(message);
 	}
 }
@@ -345,16 +345,16 @@ function redo(e){
 		record_index++;
 		load();
 		historyJson = JSON.stringify(recordArray);
-		
-		
-		
+
+
+
 		message = JSON.stringify({
 			type: 'update',
 			//history: historyJson,
 			//index: record_index,
 
 		});
-		post();
+		post(record_index);
 		console.log("ws send: redo");
 		whiteWs.send(message);
 	}
@@ -364,11 +364,14 @@ function redo(e){
 function load(){
 	console.log("load");
 	console.log("index: "+ record_index);
-	console.log("recordArray[0]: "+ recordArray[0]);
+	//console.log("recordArray[0]: "+ recordArray[0]);
+	//console.log("recordArray: "+ recordArray);
 
-	
+	if(record_index === 0) return;
+
+
 	//console.log("もらったrecordArray: "+recordArray);
-	
+
 	//キャンバスを初期化
 	con.clearRect(0,0,width,height);
 
@@ -430,7 +433,7 @@ function draw(num,x,y,color){
 	oldy = my;
 }
 
-function post(){
+function post(record_index){
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/lines',
@@ -439,7 +442,7 @@ function post(){
 			line : historyJson
 		},
 		success: function(json){
-			console.log('post success');
+			console.log('post success index is: '+ record_index);
 			//console.log(json.line);
 			//whiteWs.send(""+json.line);
 		},
