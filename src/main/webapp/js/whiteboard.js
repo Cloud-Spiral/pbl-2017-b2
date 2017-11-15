@@ -4,6 +4,10 @@ var endpoint = "http://localhost:8080/facitter/api";
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
+//最初のフラグ
+var nowLoad = true;
+//最初のloadをwsで送信するのときに使う
+
 
 //$(document).ready(function(){
 
@@ -31,7 +35,7 @@ function whiteWsConnection() {
 		console.log("ws get: "+evt.data);
 
 		message = JSON.parse(evt.data);
-		if(message.type === 'load'){
+		if(message.type === 'load' && !nowLoad){
 			console.log('loadきたから履歴情報送ったげるで');
 			message = JSON.stringify({
 				type: 'update',
@@ -46,6 +50,7 @@ function whiteWsConnection() {
 			//recordArray = JSON.parse(message.history);
 			loadWhite();
 			//load();
+			nowLoad = false;
 		}
 	};
 }
@@ -84,6 +89,7 @@ var colorString;
 var eraser = false;
 var drawing;
 var sWidth = 5;
+var eWidth = 10;
 var swUpButton, swDownButton;
 var redButton;
 var record_index = 0;
@@ -218,27 +224,27 @@ function drawLine(event,isStart){
 		xy.eraser = eraser;
 		lineRecords.push(xy);
 	}else{
-			//ペンの状態を表示
-			con.clearRect(0, 0, width, height);
-			load();
+		//ペンの状態を表示
+		con.clearRect(0, 0, width, height);
+		load();
 
-			console.log("mousemove");
-			var offset = $(event.target).offset();
-			var mx = event.pageX - offset.left;
-			var my = event.pageY - offset.top;
+		console.log("mousemove");
+		var offset = $(event.target).offset();
+		var mx = event.pageX - offset.left;
+		var my = event.pageY - offset.top;
 
-			//半透明
-			con.globalAlpha = 0.3;
+		//半透明
+		con.globalAlpha = 0.3;
 
-			con.beginPath();
-			con.moveTo(mx,my);
-			con.lineTo(mx,my);
-			con.stroke();
-			oldxx = mx;
-			oldyy = my;
+		con.beginPath();
+		con.moveTo(mx,my);
+		con.lineTo(mx,my);
+		con.stroke();
+		oldxx = mx;
+		oldyy = my;
 
-			//戻す
-			con.globalAlpha = 1;
+		//戻す
+		con.globalAlpha = 1;
 
 		if (event.type == "mouseup"){
 			if(!freeHand){
@@ -280,13 +286,13 @@ function deletePointer(){
 	var mx = event.pageX;
 	var my = event.pageY;
 
-	console.log("left: " + offset.left + width + " top:" + offset.top + height);
-	console.log("mx :" + mx + "my :" + my);
+	//console.log("left: " + offset.left + width + " top:" + offset.top + height);
+	//console.log("mx :" + mx + "my :" + my);
 
 	if(mx >= offset.left && mx <= offset.left + width && my >= offset.top && my <= offset.top + height){
-		console.log("in canvas");
+		//console.log("in canvas");
 	} else {
-		console.log("out of canvas");
+		//console.log("out of canvas");
 		con.clearRect(0, 0, width, height);
 		load();
 	}
@@ -294,19 +300,35 @@ function deletePointer(){
 
 //線を太く
 function swUp(e){
-	sWidth++;
-	sWidth++;
-	sWidth++;
-	con.lineWidth = sWidth;
-	colorString.innerHTML = '<li>'+sWidth+'</li>';
+	if(eraser){
+		eWidth++;
+		eWidth++;
+		eWidth++;
+		con.lineWidth = eWidth;
+		colorString.innerHTML = '<li>'+eWidth+'</li>';
+	} else {
+		sWidth++;
+		sWidth++;
+		sWidth++;
+		con.lineWidth = sWidth;
+		colorString.innerHTML = '<li>'+sWidth+'</li>';
+	}
 }
 //線を細く
 function swDown(e){
-	if(sWidth > 0)sWidth--;
-	if(sWidth > 0)sWidth--;
-	if(sWidth > 0)sWidth--;
-	con.lineWidth = sWidth;
-	colorString.innerHTML = '<li>'+sWidth+'</li>';
+	if(eraser){
+		if(eWidth > 0)eWidth--;
+		if(eWidth > 0)eWidth--;
+		if(eWidth > 0)eWidth--;
+		con.lineWidth = eWidth;
+		colorString.innerHTML = '<li>'+eWidth+'</li>';
+	} else {
+		if(sWidth > 0)sWidth--;
+		if(sWidth > 0)sWidth--;
+		if(sWidth > 0)sWidth--;
+		con.lineWidth = sWidth;
+		colorString.innerHTML = '<li>'+sWidth+'</li>';
+	}
 }
 
 //カラーを変更
@@ -314,9 +336,15 @@ function colorChange(e, target){
 	var my_color = $(target).css("background-color");
 	console.log('いろ'+my_color);
 
-	if(my_color === 'rgba(0, 0, 0, 0)')　eraser = true;
-	else {
+	if(my_color === 'rgba(0, 0, 0, 0)')　{
+		eraser = true;
+		con.lineWidth = eWidth;
+		colorString.innerHTML = '<li>'+eWidth+'</li>';
+	} else {
 		eraser = false;
+		con.lineWidth = sWidth;
+		colorString.innerHTML = '<li>'+sWidth+'</li>';
+
 		con.strokeStyle = color = my_color;
 	}
 	switchEraser(eraser);
@@ -425,14 +453,9 @@ function load(){
 	//キャンバスを初期化
 	con.clearRect(0,0,width,height);
 
-
-	if(record_index === 0) {
-		return;
-	}
-
+	if(record_index === 0) return;
 
 	//console.log("もらったrecordArray: "+recordArray);
-
 
 	//線一本ずつ再現する
 	for(var i=0; i < record_index; i++){
