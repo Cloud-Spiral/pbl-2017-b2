@@ -34,7 +34,7 @@ function whiteWsConnection() {
 
 		} else if(message.type === 'update') {
 			console.log('updateきたからcanvasに反映すんで');
-			//record_index = message.index;
+			record_index = message.index;
 			//recordArray = JSON.parse(message.history);
 
 			loadWhite();
@@ -58,10 +58,10 @@ function loadWhite(){
 
 			if(latest_num !== 0){
 				recordArray = JSON.parse(json.lines[latest_num-1].line);
-				record_index = json.lines[latest_num-1].index;
+				//record_index = json.lines[latest_num-1].index;
 			}
 			//console.log("GET /lines lineString:"+recordArray);
-			console.log("GET /lines index:"+ record_index);
+			//console.log("GET /lines index:"+ record_index);
 
 			load();
 		}
@@ -69,11 +69,6 @@ function loadWhite(){
 
 
 }
-
-//whiteWs.onclose = function(){
-//console.log("closeしたよ");
-//};
-
 
 var oldx, oldy;
 var canvas, con, canvas_top = 20;
@@ -213,7 +208,7 @@ function drawLine(event,isStart){
 			message = JSON.stringify({
 				type: 'update',
 				//history: historyJson,
-				//index: record_index + 1,
+				index: record_index + 1,
 
 			});
 			post(record_index);
@@ -288,7 +283,7 @@ function clear(e){
 	message = JSON.stringify({
 		type: 'update',
 		//history: historyJson,
-		//index: record_index + 1,
+		index: record_index + 1,
 
 	});
 	post(record_index);
@@ -319,7 +314,7 @@ function freehand(e){
 function undo(e){
 	console.log("undo");
 	if(record_index > 0){
-		//record_index--;
+		record_index--;
 		load();
 
 
@@ -328,11 +323,11 @@ function undo(e){
 		message = JSON.stringify({
 			type: 'update',
 			//history: historyJson,
-			//index: record_index,
+			index: record_index,
 
 		});
 		console.log("post前index: "+record_index);
-		post(record_index-1);
+		post(record_index);
 		console.log("ws send: undo index = "+record_index);
 		whiteWs.send(message);
 	}
@@ -351,7 +346,7 @@ function redo(e){
 		message = JSON.stringify({
 			type: 'update',
 			//history: historyJson,
-			//index: record_index,
+			index: record_index,
 
 		});
 		post(record_index);
