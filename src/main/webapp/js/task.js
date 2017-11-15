@@ -139,11 +139,13 @@ var changeTaskStatus = function(button) {
 
 //シンボルを変える
 var changeSymbol = function(task) {
-	var currentDate = moment();
+/*	var currentDate = moment();
 	var taskDate = moment(task.date);
 	if(currentDate.diff(taskDate, "seconds") > 10) { //minutes１分以上たったら
 		document.getElementById("task-symbol"+task.tid).src = "image/warning-symbol.png";
-	}
+	}*/
+	if(task.notice)
+		document.getElementById("task-symbol"+task.tid).src = "image/warning-symbol.png";
 }
 
 //入力フォームを出す
@@ -275,6 +277,20 @@ var update = function() {
 	});
 }
 
+//通知を更新する
+var updateNotice = function() {
+	$.ajax({
+		type: 'GET',
+		url: endpoint + '/tasks/notice',
+		success: function(json)　{
+			var tasks = json.tasks;
+			for(var i = 0; i < tasks.length; i++) {
+				changeSymbol(tasks[i]);
+			}
+		}
+	});
+}
+
 //タブ切り替え
 var tabChange = function() { 
 	//.index()を使いクリックされたタブが何番目かを調べ、
@@ -295,7 +311,7 @@ var tabChange = function() {
 }
 
 
-//var l = window.setInterval(update, 10000);
+setInterval(updateNotice, 10001);
 
 $('#submit-task').click(postTask);
 $('.tab li').click(tabChange);
