@@ -1,13 +1,25 @@
 
 // websocketオブジェクト
 var tws;
-
+var userName;
 // tws接続押下時の処理
 window.onload = function() {
 	//ふせん
 	loadHusens();
 	hwsConnection();
 	twsConnection();
+	
+	//ホワイトボード
+	whiteWsConnection();	
+	//loadWhite();
+
+	ywsConnection();
+  
+	userName = getCookie('userName');
+	if(userName == null){
+		userName = 'Guest';
+	}
+	console.log("userName="+userName);
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */
@@ -18,6 +30,7 @@ function twsConnection(){
 	//tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
 	tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,
@@ -51,6 +64,7 @@ function twsConnection(){
 function onUnload(){
 	  tws.close();
 	  hws.close();
+	  whiteWs.close();
 }
 
 window.addEventListener("unload",onUnload,false);

@@ -1,12 +1,13 @@
-var endpoint = 'http://localhost:8080/facitter/api';
+//var endpoint = 'http://localhost:8080/facitter/api';
 
 //本番環境用
-//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
+var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
 /**
  * ユーザリスト（当選者リスト）を更新する
  * coded by Matsuzaki
  */
+var wordcolor = ["#d900a9", "#ffb900", "#108904", "#5c239b", "#0078d7"];
 var updateList = function(){
 	$.ajax({
 		type: 'GET',
@@ -14,7 +15,7 @@ var updateList = function(){
 		success: function(json){
 			$('#userlist').empty();			
 			for(var i=0; i<json.users.length;i++){
-				var str = '<li>' + (i+1) + ' ' + json.users[i].name+  '</li>' ;
+				var str = '<li><span style="color:' + "#000000"/*wordcolor[i%5]*/ + '">　・ ' + json.users[i].name+  '</span></li>' ;
 				$('#userlist').append(str);
 			}
 		}

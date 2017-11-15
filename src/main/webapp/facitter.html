@@ -3,63 +3,155 @@
 <head>
 <title>Facitter</title>
 <meta charset="utf-8">
-<link rel="shortcut icon" href="image/favicon-facitter.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="image/favicon-facitter-F.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="css/whiteboard.css">
 <link rel="stylesheet" href="css/tasks.css" />
 <link rel="stylesheet" href="css/page.css" />
 <link rel="stylesheet" href="css/husen.css" />
+<link rel="stylesheet" href="css/arrangedesign.css" />
+<link rel="stylesheet" href="css/timer.css" />
 </head>
 
-<body>
+
+<header class="facitter_header">
+	<div>
+	 	<div class="facitter_header_logo">
+			<a href="http://localhost:8080/facitter/"><img border="0" src="image/facitter-F.png" width="150" height="50"></a>　
+		</div>
+	</div>
+</header>
+
+<body >
 	<div id="container">
 		<div id="contents">
 			<nav id="interface">
-				<ul id="swbutton">
-					<li id="minus">-</li>
-					<li id="plus">+</li>
+
+        <ul id="size">
+					<li>5</li>
+				</ul>             
+				<ul id="swbutton">		
+					<li id="minus"> 
+						<div>
+							<span><img border="0" src="image/minus_icon.png" width="23" height="23"></span>
+							<p class="arrow_box"> Change line size - </p>	
+						</div>
+					</li>
+					<li id="plus"> 
+						<div>
+							<span><img border="0" src="image/plus_icon.png" width="23" height="23"></span>
+							<p class="arrow_box"> Change line size + </p>
+						</div>	
+					</li>	
 				</ul>
 				<ul id="freehand">
-					<li>FREEHAND</li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/freehand_icon.png" width="35" height="27"></span>
+							<p class="arrow_box"> Freehand line </p>
+						</div> 
+					</li>
 				</ul>
 				<ul id="straight">
-					<li>STRAIGHT</li>
+					<li> 
+						<div> 
+							<span><img border="0" src="image/straight_icon.png" width="35" height="27"></span>
+							<p class="arrow_box"> Straight line </p>
+						</div>
+					</li>
 				</ul>
 				<ul id="colorbutton">
-					<li id="black"></li>
-					<li id="red"></li>
-					<li id="blue"></li>
-					<li id="yellow"></li>
+
+					<li id="black"> 
+						<div> 
+							<span><img border="0" src="image/blackpen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Black pen </p>
+						</div>		
+					</li>
+					<li id="red"> 
+						<div> 
+							<span><img border="0" src="image/redpen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Red pen </p>
+						</div>		
+					</li>	
+					<li id="blue"> 
+						<div> 
+							<span><img border="0" src="image/bluepen_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Blue pen </p>
+						</div>		
+					</li>	
+					<li id="white"> 
+						<div> 
+							<span><img border="0" src="image/eraser_icon.png" width="26" height="26"></span>
+							<p class="arrow_box"> Eraser </p>
+						</div>
+					</li>
+
 				</ul>
 				<ul id="undoredo">
-					<li id="undo">&lt;</li>
-					<li id="redo">&gt;</li>
+					<li id="undo"> 
+						<div>
+							<span><img border="0" src="image/back_icon.png" width="25" height="25"></span>
+							<p class="arrow_box"> Undo </p>
+						</div>
+					</li>
+					<li id="redo"> 
+						<div>
+							<span><img border="0" src="image/next_icon.png" width="25" height="25"></span>
+							<p class="arrow_box"> Redo </p>
+						</div>
+					 </li>
 				</ul>
 				<ul id="clear">
-					<li>CLEAR</li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/allclear_icon.png" width="27" height="27"></span> 
+							<p class="arrow_box"> Clear all lines </p>
+						</div>		
+					</li>
 				</ul>
 				<ul id="postit">
-					<li>Post-it</li>
+					<li>
+						<div>
+							<span><img border="0" src="image/memo_icon.png" width="27" height="27"></span>
+							<p class="arrow_box"> New note </p>
+						</div>
+					</li>
 				</ul>
-<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
+				<!-- 	<input type="button" value="Click Me" onclick="new Card()"> -->
 				<ul id="allResize">
-					<li>allResize</li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/fold_icon.png" width="27" height="27"></span>
+							<p class="arrow_box"> Fold notes </p>
+						</div>
+					</li>
 				</ul>
 				<ul id="FGO">
-					<li>FGO</li>
+					<li> 
+						<div>
+							<span><img border="0" src="image/fix_icon.png" width="27" height="27"></span>
+							 <p class="arrow_box"> F G O </p>
+						</div>
+	
+					</li>
 				</ul>
 			</nav>
-			<canvas id="my_canvas" width="1000%" height="700%"></canvas>
+
+			<canvas id="my_canvas"  width="1000%" height="700%"></canvas>			
+
 		</div>
+		
+
 		<div id="side">
-			<input id="message" type="text" placeholder="タスク内容"> <span
-				id="priority"></span> <input id="submit-task" type="button"
+			<input class="post-task-form" id="message" type="text" placeholder="タスク内容"> <span
+				id="priority"></span> <input class="post-task-btn" id="submit-task" type="button"
 				value="追加">
 			<ul class="tab">
 				<li class="select"><span class=yubi>open</span></li>
 				<li><span class="yubi">close</span></li>
 			</ul>
 			<ul class="task-content">
-				<li>open
+				<li>
 					<div class="y_data_area">
 						<table class="task-table" id="open-tasks">
 							<thead>
@@ -78,7 +170,7 @@
 				</li>
 
 
-				<li class="hide">close
+				<li class="hide">
 					<table class="task-table" id="close-tasks">
 						<thead>
 							<tr>
@@ -94,23 +186,37 @@
 					</table>
 				</li>
 			</ul>
-			<div class="userslist">
-				<ul class="userlist">
-					<font size="5"> ユーザ一覧 </font>
+
+		<div>
+				<ul class="userslist">
+					<font size="6" color=#0078d7> User List </font>
 					<div id="userlist"></div>
 					<select id="lotterybox">
 					</select>
 					<input type=button value="抽選開始" onClick="startLottery()">
 				</ul>
 			</div>
+			<div class="timer">
+				<form name="timer">
+					<input id="min" type="text" value="0" size="5" pattern="\d*">分
+					<input id="sec" type="text" value="0" size="5" pattern="\d*">秒<br>
+					<input id="start" type="button" value="スタート"> <input
+						id="stop" type="button" value="ストップ"> <input id="reset"
+						type="button" value="リセット">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
 <script src="js/jquery-3.2.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script src="js/jquery.raty.js"></script>
 <script src="js/websocket.js"></script>
 <script src="js/whiteboard.js"></script>
 <script src="js/task.js"></script>
 <script src="js/userslist.js"></script>
 <script src="js/husen.js"></script>
+<script src="js/arrangedesign.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/wsTimer.js"></script>
 </html>
