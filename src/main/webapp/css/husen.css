@@ -54,7 +54,8 @@ ul#FGO li{
 }
 
 .square_btn{
-	font-size: 14px;
+	font-size: 15px;
+	font-family: 'Hiragino Maru Gothic Pro','ヒラギノ丸ゴ Pro W4', sans-serif;
     display: inline-block;
     text-decoration: none;
     background: #f7f7f7;
