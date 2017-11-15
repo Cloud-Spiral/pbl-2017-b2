@@ -7,7 +7,7 @@ var endpoint = 'http://localhost:8080/facitter/api';
  * ユーザリスト（当選者リスト）を更新する
  * coded by Matsuzaki
  */
-var wordcolor = ["#0078d7", "#d900a9", "#ffb900", "##bebebe", "#108904", "#5c239b"];
+var wordcolor = ["#d900a9", "#ffb900", "#108904", "#5c239b", "#0078d7"];
 var updateList = function(){
 	$.ajax({
 		type: 'GET',
@@ -15,7 +15,7 @@ var updateList = function(){
 		success: function(json){
 			$('#userlist').empty();			
 			for(var i=0; i<json.users.length;i++){
-				var str = '<li><span style="color:' + wordcolor[i%6]+ '">　・ ' + json.users[i].name+  '</span></li>' ;
+				var str = '<li><span style="color:' + wordcolor[i%5]+ '">　・ ' + json.users[i].name+  '</span></li>' ;
 				$('#userlist').append(str);
 			}
 		}

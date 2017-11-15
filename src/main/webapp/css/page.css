@@ -23,6 +23,7 @@ div#contents {
 div#side {
 	width: 510px;
 	float: right;
+	z-index: -1;
 }
 
 div#footer{

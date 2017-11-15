@@ -24,19 +24,19 @@
 	<div id="container">
 		<div id="contents">
 			<nav id="interface">
-				<ul id="swbutton">
-					<li id="plus"> 
-						<div>
-							<span><img border="0" src="image/plus_icon.png" width="23" height="23"></span>
-							<p class="arrow_box"> Change line size + </p>
-						</div>	
-					</li>			
+				<ul id="swbutton">		
 					<li id="minus"> 
 						<div>
 							<span><img border="0" src="image/minus_icon.png" width="23" height="23"></span>
 							<p class="arrow_box"> Change line size - </p>	
 						</div>
 					</li>
+					<li id="plus"> 
+						<div>
+							<span><img border="0" src="image/plus_icon.png" width="23" height="23"></span>
+							<p class="arrow_box"> Change line size + </p>
+						</div>	
+					</li>	
 				</ul>
 				<ul id="freehand">
 					<li> 
@@ -135,16 +135,6 @@
 		
 
 		<div id="side">
-			<div>
-				<ul class="userslist">
-					<font size="6" color=#d900a9> Participant List </font>
-					<div id="userlist"></div>
-					<select id="lotterybox">
-					</select>
-					<input type=button value="抽選開始" onClick="startLottery()">
-				</ul>
-			</div>
-		
 			<input id="message" type="text" placeholder="タスク内容"> <span
 				id="priority"></span> <input id="submit-task" type="button"
 				value="追加">
@@ -189,6 +179,15 @@
 				</li>
 			</ul>
 
+		<div>
+				<ul class="userslist">
+					<font size="6" color=#0078d7> User List </font>
+					<div id="userlist"></div>
+					<select id="lotterybox">
+					</select>
+					<input type=button value="抽選開始" onClick="startLottery()">
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

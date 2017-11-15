@@ -260,8 +260,6 @@ var clientRect = targetElement.getBoundingClientRect() ;
 var canvasX = clientRect.left ;
 var canvasY = clientRect.top ;
 
-
-
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
 
