@@ -11,9 +11,17 @@ function whiteWsConnection() {
 	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
 	//　本番環境用
 	//whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
-
+	
+	
 	//console.log("ws つなげる");
 	whiteWs.onopen = function(){
+		message = JSON.stringify({
+			type: 'load',
+			//history: historyJson,
+			//index: record_index
+		});
+		whiteWs.send(message);
+
 		loadWhite();
 		//load();
 	};
@@ -30,13 +38,12 @@ function whiteWsConnection() {
 				//history: historyJson,
 				index: record_index
 			});
-			//whiteWs.send(message);
+			whiteWs.send(message);
 
 		} else if(message.type === 'update') {
 			console.log('updateきたからcanvasに反映すんで');
 			record_index = message.index;
 			//recordArray = JSON.parse(message.history);
-
 			loadWhite();
 			//load();
 		}
@@ -62,15 +69,13 @@ function loadWhite(){
 			}
 			//console.log("GET /lines lineString:"+recordArray);
 			//console.log("GET /lines index:"+ record_index);
-
 			load();
 		}
 	});
-
-
 }
 
 var oldx, oldy;
+var oldxx, oldyy;
 var canvas, con, canvas_top = 20;
 var colors = ["black", "red", "blue", "white"];
 var color = colors[0];
@@ -192,6 +197,23 @@ function drawLine(event,isStart){
 		xy.eraser = eraser;
 		lineRecords.push(xy);
 	}else{
+		//ペンの状態を表示
+		con.clearRect(0, 0, width, height);
+		load();
+
+		console.log("mousemove");
+		var offset = $(event.target).offset();
+		var mx = event.pageX - offset.left;
+		var my = event.pageY - offset.top;
+		
+		con.beginPath();
+		con.moveTo(mx,my);
+		con.lineTo(mx,my);
+		con.stroke();
+		oldxx = mx;
+		oldyy = my;
+
+		
 		if (event.type == "mouseup"){
 			if(!freeHand){
 				console.log("直線かくで");
@@ -316,9 +338,6 @@ function undo(e){
 	if(record_index > 0){
 		record_index--;
 		load();
-
-
-
 		historyJson = JSON.stringify(recordArray);
 		message = JSON.stringify({
 			type: 'update',
@@ -340,9 +359,6 @@ function redo(e){
 		record_index++;
 		load();
 		historyJson = JSON.stringify(recordArray);
-
-
-
 		message = JSON.stringify({
 			type: 'update',
 			//history: historyJson,
@@ -357,19 +373,23 @@ function redo(e){
 
 //ロード
 function load(){
-	console.log("load");
-	console.log("index: "+ record_index);
+	//console.log("load");
+	//console.log("index: "+ record_index);
 	//console.log("recordArray[0]: "+ recordArray[0]);
 	//console.log("recordArray: "+ recordArray);
 
-	if(record_index === 0) return;
+	//キャンバスを初期化
+	con.clearRect(0,0,width,height);
+	
+	
+	if(record_index === 0) {
+		return;
+	}
 
 
 	//console.log("もらったrecordArray: "+recordArray);
 
-	//キャンバスを初期化
-	con.clearRect(0,0,width,height);
-
+	
 	//線一本ずつ再現する
 	for(var i=0; i < record_index; i++){
 		var record = recordArray[i];
@@ -378,7 +398,7 @@ function load(){
 		var xy = record[0];
 		line = xy.line;
 		var clear = xy.clear;
-		console.log("clear: "+clear);
+		//console.log("clear: "+clear);
 		//太さを描いたときの状態に戻す
 		con.lineWidth = xy.size;
 		con.strokeStyle = xy.color;
