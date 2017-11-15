@@ -27,6 +27,11 @@ public class User {
 		setStatus(true);
 	}
 	
+	public User(String name, String password, boolean status) {
+		this(name, password);
+		setStatus(status);
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

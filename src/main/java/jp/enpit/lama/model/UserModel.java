@@ -64,6 +64,13 @@ public class UserModel extends BaseModel {
         return user;
     }
     
+    // userを更新する機構
+    public User update(User user) {
+    	users().replaceOne(new BasicDBObject("name",user.getName()), toDocument(user));
+    	
+    	return user;
+    }
+    
     // Documentへの変換
     private Document toDocument(User user){
         return new Document()
@@ -78,8 +85,10 @@ public class UserModel extends BaseModel {
     		return null;
     	return new User(
     			document.getString("name"),
-    			document.getString("password")
+    			document.getString("password"),
+    			document.getBoolean("status")
     			);
+    	
     }
     
     // List形式への変換

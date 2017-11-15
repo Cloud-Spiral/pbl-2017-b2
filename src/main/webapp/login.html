@@ -3,10 +3,10 @@
  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
  <meta http-equiv="Content-Script-Type" content="text/javascript">
-
+ 
+ <script type="text/javascript" src="./js/jquery-3.2.1.js""></script>
  <link rel="stylesheet" type="text/css" href="./css/login.css"></link>
  <script type="text/javascript" src="./js/simple_login.js"></script>
- <script type="text/javascript" src="./js/jquery-3.2.1.js""></script>
 
 <!--
  <title>Simpleなログイン画面</title>
@@ -49,6 +49,11 @@
     <div class="button-panel">
       <input type="button" class="button" title="Sign In" value="Sign In" onClick="login()"></input>
     </div>
+    
+    <div class="button-panel">
+      <input type="button" class="button" title="Logout" value="Logout" onClick="logout()"></input>
+    </div>
+    
   </form>
   <div class="form-footer">
     <p><a href="signup.html">Create an account</a></p>
