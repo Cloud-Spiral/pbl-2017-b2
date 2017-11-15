@@ -207,8 +207,12 @@ function makeCardSign(hid,text,xPosition,yPosition,height,good,bad,color,canEdit
 	
 	this.linkarea = document.createElement('a');
 	this.linkarea.style = "color:"+getHandleColor(colorCount)+";" + "font-size:30px;font-family:Arial";
-	if(hid == 0) this.linkarea.href = "http://localhost:8080/facitter/login.html";　//ローカル用
-	else this.linkarea.href = "http://localhost:8080/facitter/signup.html";　//ローカル用
+	if(hid == 0) this.linkarea.href = "https://team2017-2.spiral.cloud/facitter/login.html";　//本番用
+	else this.linkarea.href = "https://team2017-2.spiral.cloud/facitter/signup.html";　//本番用
+	
+	//if(hid == 0) this.linkarea.href = "http://localhost:8080/facitter/login.html";　//ローカル用
+	//else this.linkarea.href = "http://localhost:8080/facitter/signup.html";　//ローカル用
+	
 	this.linktxt = document.createTextNode(text);
 	this.linkarea.appendChild(this.linktxt);
 	this.txtarea.appendChild(this.linkarea);
