@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/page.css" />
 <link rel="stylesheet" href="css/husen.css" />
 <link rel="stylesheet" href="css/arrangedesign.css" />
+<link rel="stylesheet" href="css/timer.css" />
 </head>
 
 
@@ -24,6 +25,10 @@
 	<div id="container">
 		<div id="contents">
 			<nav id="interface">
+
+        <ul id="size">
+					<li>5</li>
+				</ul>             
 				<ul id="swbutton">		
 					<li id="minus"> 
 						<div>
@@ -55,6 +60,7 @@
 					</li>
 				</ul>
 				<ul id="colorbutton">
+
 					<li id="black"> 
 						<div> 
 							<span><img border="0" src="image/blackpen_icon.png" width="26" height="26"></span>
@@ -73,12 +79,13 @@
 							<p class="arrow_box"> Blue pen </p>
 						</div>		
 					</li>	
-					<li id="yellow"> 
+					<li id="white"> 
 						<div> 
 							<span><img border="0" src="image/eraser_icon.png" width="26" height="26"></span>
 							<p class="arrow_box"> Eraser </p>
 						</div>
 					</li>
+
 				</ul>
 				<ul id="undoredo">
 					<li id="undo"> 
@@ -129,21 +136,22 @@
 					</li>
 				</ul>
 			</nav>
-			
+
 			<canvas id="my_canvas"  width="1000%" height="700%"></canvas>			
+
 		</div>
 		
 
 		<div id="side">
-			<input id="message" type="text" placeholder="タスク内容"> <span
-				id="priority"></span> <input id="submit-task" type="button"
+			<input class="post-task-form" id="message" type="text" placeholder="タスク内容"> <span
+				id="priority"></span> <input class="post-task-btn" id="submit-task" type="button"
 				value="追加">
 			<ul class="tab">
 				<li class="select"><span class=yubi>open</span></li>
 				<li><span class="yubi">close</span></li>
 			</ul>
 			<ul class="task-content">
-				<li>open
+				<li>
 					<div class="y_data_area">
 						<table class="task-table" id="open-tasks">
 							<thead>
@@ -162,7 +170,7 @@
 				</li>
 
 
-				<li class="hide">close
+				<li class="hide">
 					<table class="task-table" id="close-tasks">
 						<thead>
 							<tr>
@@ -188,10 +196,20 @@
 					<input type=button value="抽選開始" onClick="startLottery()">
 				</ul>
 			</div>
+			<div class="timer">
+				<form name="timer">
+					<input id="min" type="text" value="0" size="5" pattern="\d*">分
+					<input id="sec" type="text" value="0" size="5" pattern="\d*">秒<br>
+					<input id="start" type="button" value="スタート"> <input
+						id="stop" type="button" value="ストップ"> <input id="reset"
+						type="button" value="リセット">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
 <script src="js/jquery-3.2.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script src="js/jquery.raty.js"></script>
 <script src="js/websocket.js"></script>
 <script src="js/whiteboard.js"></script>
@@ -199,4 +217,6 @@
 <script src="js/userslist.js"></script>
 <script src="js/husen.js"></script>
 <script src="js/arrangedesign.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/wsTimer.js"></script>
 </html>

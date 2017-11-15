@@ -22,6 +22,20 @@ ul{
 	list-style:none;
 	overflow:hidden;
 }
+ul#size li{
+	width:59px;
+	height:29px;
+	background:#efefef;
+	border-right:1px solid #E1E1E1;
+	border-bottom:1px solid #E1E1E1;
+	line-height:29px;
+	text-align:center;
+	cursor:pointer;
+	font-size:10px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
 ul#swbutton li{
 	width:26px;
 	height:27px;

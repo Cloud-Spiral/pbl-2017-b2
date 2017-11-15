@@ -15,6 +15,10 @@ public class Task {
     private int priority;
     @XmlElement(name="status")
     private String status;
+    @XmlElement(name="notice")
+    private boolean notice = false; //タスクに通知をつけるかどうか
+    
+    private final long NOTICE_TIME = 1; //通知する時間
 
     public Task(){
         date = new Date();
@@ -32,13 +36,14 @@ public class Task {
     
     public Task(int tid, String body, Date date){
         this(tid, body);
-        this.date = date;    
+        this.date = date;
     }
     
-    public Task(int tid, String body, Date date, int priority, String status){
+    public Task(int tid, String body, Date date, int priority, String status, boolean notice){
         this(tid, body, date);
         this.priority = priority;
         this.status = status;
+        this.notice = notice;
     }
     
     public Task(String body,  int priority){
@@ -88,5 +93,21 @@ public class Task {
     public void setStatus(String status){
         this.status = status;
     }
-
+    
+    public boolean notice() {
+        return this.notice;
+    }
+    
+    public void setNotice(boolean notice) {
+        this.notice = notice;
+    }
+    
+    public boolean checkTime() {
+        long currentTime = new Date().getTime();
+        long taskTime = date.getTime();
+        long diff = ( currentTime - taskTime ) / (1000 * 60 );
+        if(diff >= NOTICE_TIME)
+            notice = true;
+        return notice;
+    }
 }
