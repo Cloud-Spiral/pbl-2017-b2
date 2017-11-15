@@ -279,13 +279,15 @@ var update = function() {
 
 //通知を更新する
 var updateNotice = function() {
+	console.log("notice")
 	$.ajax({
 		type: 'GET',
 		url: endpoint + '/tasks/notice',
 		success: function(json)　{
 			var tasks = json.tasks;
 			for(var i = 0; i < tasks.length; i++) {
-				changeSymbol(tasks[i]);
+				if(tasks[i].status == "open")
+					changeSymbol(tasks[i]);
 			}
 		}
 	});

@@ -63,7 +63,7 @@ public class TaskModel extends BaseModel{
                 .sort(sort)
                 ));
     }
-    
+
     //statusで検索する。
     public Tasks findStatus(Task task) {
         String status = task.status();
@@ -129,7 +129,7 @@ public class TaskModel extends BaseModel{
                 .append("priority", priority);
         tasks().updateOne(eq("tid", tid), new Document("$set", updDoc));
     }
-    
+
     //noticeを更新する
     public Tasks noticeTasks() {
         Tasks resultTasks = new Tasks();
@@ -141,11 +141,10 @@ public class TaskModel extends BaseModel{
                 ));
         for(Task task: tasks.toArray()) {
             if(!task.notice()) 
-                if(task.checkTime()) {
+                if(task.checkTime()) 
                     tasks().updateOne(eq("tid", task.tid()), new Document("$set", updDoc));
-                    if(task.notice())
-                        resultTasks.addList(task);
-                }
+            if(task.notice())
+                resultTasks.addList(task);
         }
         return resultTasks;
     }
