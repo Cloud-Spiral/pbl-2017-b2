@@ -48,9 +48,9 @@ function hwsOnMessage(message){
 		fadeOutContainer(parseInt(arrayStr[1]));
 		setTimeout(deleter, 300, parseInt(arrayStr[1]));
 	}else if(arrayStr[0] === 'good'){
-		document.getElementsByName(arrayStr[1])[0].value = "Good:"+arrayStr[2];
+		document.getElementsByName(arrayStr[1])[0].innerHTML = "Good:"+arrayStr[2];
 	}else if(arrayStr[0] === 'bad'){
-		document.getElementsByName(arrayStr[1])[0].value = "Bad:"+arrayStr[2];
+		document.getElementsByName(arrayStr[1])[0].innerHTML = "Bad:"+arrayStr[2];
 	}else if(arrayStr[0] === 'text'){
 		document.getElementsByName(arrayStr[1])[0].value = arrayStr[2];
 	}else if(arrayStr[0] === 'position'){
@@ -94,6 +94,7 @@ function allFadein(json){
 }
 function fadeInContainer(hid){
 	$("#container" + String(hid)).addClass("fadeIn");
+	$("#header" + String(hid)).addClass("fadeIn");
 	$("#handle" + String(hid)).addClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.add("fadeIn");
@@ -107,6 +108,7 @@ function fadeOutContainer(hid){
 	var container = document.getElementById("container"+String(hid));
 	//console.log(container);
 	container.style.opacity = 0;
+	$("#header" + String(hid)).removeClass("fadeIn");
 	$("#handle" + String(hid)).removeClass("fadeIn");
 	var txtarea = document.getElementsByName("txt"+String(hid))[0];
 	txtarea.classList.remove("fadeIn");
@@ -185,6 +187,16 @@ function colorSetter(count,color){
 	document.getElementById(container).style.backgroundColor = getBackColor(color);
 	document.getElementById(container).style.border = getBackColor(color);
 	document.getElementsByName(name)[0].style.backgroundColor = getBackColor(color);
+	
+	document.getElementsByName("button"+String(count*4-3))[0].style.color = getHandleColor(color);
+	document.getElementsByName("button"+String(count*4-2))[0].style.color = getHandleColor(color);
+	document.getElementsByName("button"+String(count*4-1))[0].style.color = getHandleColor(color);
+	
+	document.getElementsByName("button"+String(count*4-3))[0].style.borderLeftColor = getHandleColor(color);
+	document.getElementsByName("button"+String(count*4-2))[0].style.borderLeftColor = getHandleColor(color);
+	document.getElementsByName("button"+String(count*4-1))[0].style.borderLeftColor = getHandleColor(color);
+	
+	removeColorChange(document.getElementsByName("button"+count*4)[0],count,color);
 }
 
 function colorCounter(count,color){
@@ -230,7 +242,7 @@ function getHandleColor(count){
 	if(count % 6 === 0){
 		return "#FFB900";
 	}else if(count % 6 === 1){
-		return "#BEBEBE";
+		return "#9E9E9E";
 	}else if(count % 6 === 2){
 		return "#D900A9";
 	}else if(count % 6 === 3){
@@ -436,6 +448,8 @@ function minimizeHusen(cont){
 			document.getElementsByName(contArray[i].name)[0].style.height="25px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
 			document.getElementById(contArray[i].id).style.height="0px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "99px";
 		}
 	}
 }
@@ -451,6 +465,8 @@ function invisualizeHusen(cont){
 			document.getElementsByName(contArray[i].name)[0].style.height="25px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
 			document.getElementById(contArray[i].id).style.height="0px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "99px";
 		}
 	}
 }
@@ -465,9 +481,34 @@ function maximizeHusen(cont){
 		if(String(contArray[i].name).substring(0,3) === "txt"){
 			document.getElementsByName(contArray[i].name)[0].style.height="150px";
 		}else if(String(contArray[i].id).substring(0,15) === "buttonContainer"){
-			document.getElementById(contArray[i].id).style.height="20px";
+			document.getElementById(contArray[i].id).style.height="25px";
+		}else if(String(contArray[i].id).substring(0,6) === "header"){
+			document.getElementById(contArray[i].id).children[0].style.width = "204px";
 		}
 	}
+}
+
+function removeColorChange(remove,uniHusenCount,color){
+	remove.style.color = "#FFFFFF";
+	remove.style.background = getHandleColor(color);
+	remove.style.borderLeftColor = getHandleColor(color);
+	remove.style.borderRightColor = getHandleColor(color);
+	remove.onmouseover = function(){
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.background = "#AAAAAA";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.color= "#000000";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderLeftColor = "#000000";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderRightColor = "#000000";
+	};
+	remove.onmouseout = function(){
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.color = "#FFFFFF";
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.background = getHandleColor(color);
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderLeftColor = getHandleColor(color);
+		document.getElementsByName("button"+uniHusenCount*4)[0].style.borderRightColor = getHandleColor(color);
+	};
+
+//	this.buttonRemove.style.color = "#FFFFFF";
+//	this.buttonRemove.style.borderLeftColor = getHandleColor(color);
+//	this.buttonRemove.style.borderRightColor = getHandleColor(color);
 }
 
 function Card() {
@@ -508,16 +549,24 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.container.className = 'husen husenContainer';
 	this.container.id = "container"+String(uniHusenCount);
 	this.container.style="width:240px;background-color:"+ getBackColor(colorCount) +";" +
-	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;" +
+	"border:"+ getHandleColor(colorCount) +";box-shadow:4px 4px 8px #BBB;display:inline-block;" +
 	"left:"+xPosition+";top:"+yPosition;
 
+	this.header = document.createElement('div');
+	this.header.id = "header"+String(uniHusenCount);
+	this.header.className = 'husen';
+	this.header.style.width = "100%";
+	this.header.style.height = "25px";
+	
 	this.handle = document.createElement('div');
 	this.handle.id = "handle"+String(uniHusenCount);
 	this.handle.className = 'husen';
-	this.handle.style.width = "100%";
+	this.handle.style.width = "204px";
 	this.handle.style.height = "25px";
 	this.handle.style.margin = "0px";
 	this.handle.style.backgroundColor = getHandleColor(colorCount);
+	this.handle.style.display = "inline-block";
+	this.handle.style.position = "absolute";
 
 	this.txtarea = document.createElement('textarea');
 	this.txtarea.className = 'husen';
@@ -535,41 +584,50 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	var height = this.txtarea.style.height;
 
 	this.buttonContainer = document.createElement('div');
-	this.buttonContainer.className = 'husen';
-	this.buttonContainer.style = "width:100%;height:20px;display:block";
+	this.buttonContainer.className = 'husen buttonContainer';
+	this.buttonContainer.style = "width:100%;height:25px;display:block;vertical-align:bottom;";
 	this.buttonContainer.id = "buttonContainer"+String(uniHusenCount);
-
-	this.buttonGood = document.createElement('input');
-	this.buttonGood.type = "button";
+	
+	this.buttonGood = document.createElement('a');
 	this.buttonGood.name = "button" + String(uniHusenCount*4-3);
-	this.buttonGood.value = "Good:"+String(goodCount);
-	this.buttonGood.style = "width:25%;height:100%;vertical-align:top";
+	this.buttonGood.className = "square_btn";
+	this.buttonGood.innerHTML = "Good:"+String(goodCount);
+	this.buttonGood.style = "width:32.05%;height:85%;vertical-align:top";
 	this.buttonGood.onclick = function(){goodButtonCounter(this.name,uniHusenCount)};
-
-	this.buttonBad = document.createElement('input');
-	this.buttonBad.type = "button";
+	this.buttonGood.style.color = getHandleColor(color);
+	this.buttonGood.style.borderLeftColor = getHandleColor(color);
+	
+	this.buttonBad = document.createElement('a');
 	this.buttonBad.name = "button" + String(uniHusenCount*4-2);
-	this.buttonBad.value = "Bad:"+String(badCount);
-	this.buttonBad.style = "width:25%;height:100%;vertical-align:top";
+	this.buttonBad.className = "square_btn";
+	this.buttonBad.innerHTML = "Bad:"+String(badCount);
+	this.buttonBad.style = "width:32.05%;height:85%;vertical-align:top";
 	this.buttonBad.onclick = function(){badButtonCounter(this.name,uniHusenCount)};
-
-	this.buttonColor = document.createElement('input');
-	this.buttonColor.type = "button";
+	this.buttonBad.style.color = getHandleColor(color);
+	this.buttonBad.style.borderLeftColor = getHandleColor(color);
+	
+	this.buttonColor = document.createElement('a');
 	this.buttonColor.name = "button" + String(uniHusenCount*4-1);
-	this.buttonColor.value = "Color";
-	this.buttonColor.style = "width:25%;height:100%;vertical-align:top";
+	this.buttonColor.className = "square_btn";
+	this.buttonColor.innerHTML = "Color";
+	this.buttonColor.style = "width:32.05%;height:85%;vertical-align:top";
 	this.buttonColor.onclick = function(){colorCounter(uniHusenCount,++colorCount)};
+	this.buttonColor.style.color = getHandleColor(color);
+	this.buttonColor.style.borderLeftColor = getHandleColor(color);
 
-	this.buttonRemove = document.createElement('input');
-	this.buttonRemove.type = "button";
+	this.buttonRemove = document.createElement('a');
 	this.buttonRemove.name = "button" + String(uniHusenCount*4);
-	this.buttonRemove.value = "Delete";
-	this.buttonRemove.style = "width:25%;height:100%;vertical-align:top";
+	this.buttonRemove.className = "square_rmbtn";
+	this.buttonRemove.innerHTML = "×";
+	this.buttonRemove.style = "width:12.5%;height:100%;vertical-align:top";
 	this.buttonRemove.onclick = function(){deleteHusen(uniHusenCount)};
-
-	this.container.appendChild(this.handle);
+	
+	removeColorChange(this.buttonRemove,uniHusenCount,color);
+	
+	this.header.appendChild(this.handle);
+	this.header.appendChild(this.buttonRemove);
+	this.container.appendChild(this.header);
 	this.container.appendChild(this.txtarea);
-	this.buttonContainer.appendChild(this.buttonRemove);
 	this.buttonContainer.appendChild(this.buttonColor);
 	this.buttonContainer.appendChild(this.buttonGood);
 	this.buttonContainer.appendChild(this.buttonBad);
