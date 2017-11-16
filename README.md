@@ -51,9 +51,13 @@ Facitterとは、離れた人とでもファシリテーションを活用した
 
 
 ### TODOリスト
-
 ![todo_list](https://user-images.githubusercontent.com/19528049/32894622-a5e63410-cb20-11e7-9078-d2dfb2df1c09.png)
 ![todo_close](https://user-images.githubusercontent.com/19528049/32894624-a7f7dcea-cb20-11e7-9196-88997232dd6e.png)
+投稿フォームからTODOを投稿できます。  
+TODOは星のアイコンで1~5までの優先度を付けられます。  
+投稿されたTODOは優先度・投稿時間でソートされます。  
+TODOはopenとcloseの状態を持ち、タブで表示を切り替えられます。  
+TODOは投稿されてから約1分経過すると、シンボルが左側に表示されます。  
 
 ### ユーザーリストと抽選
 ![user_ist](https://user-images.githubusercontent.com/19528049/32894630-ac981a94-cb20-11e7-914f-91bb2f6fa90a.png)  
@@ -78,5 +82,6 @@ Facitterとは、離れた人とでもファシリテーションを活用した
 佐々木美和  
 すぎ  
 松崎継生  
-よし  
-よこ  
+よし  
+横井昂典  
+
