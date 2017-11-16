@@ -89,10 +89,10 @@ TODOリストの各TODOのタスク内容をクリックすると、編集用の
 [Facitter](https://team2017-2.spiral.cloud/facitter)
 
 ## author
-瀬村雄一  
+瀬村雄一  
 佐々木美和  
-すぎ  
+すぎ  
 松崎継生  
-よし  
+よし  
 横井昂典  
 
