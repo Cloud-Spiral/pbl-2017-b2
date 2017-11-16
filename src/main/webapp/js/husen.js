@@ -572,7 +572,7 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.txtarea.className = 'husen';
 	this.txtarea.value = text;
 	this.txtarea.name = "txt"+String(uniHusenCount);
-	this.txtarea.style = "width:98%;height:"+height+";" +
+	this.txtarea.style = "width:100%;height:"+height+";" +
 	"background-color:"+getBackColor(colorCount)+";" +
 	"display:block;resize:none;" +
 	"border:0px;" +
