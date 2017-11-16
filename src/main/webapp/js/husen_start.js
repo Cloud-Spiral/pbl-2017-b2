@@ -8,6 +8,25 @@ var husenCount = 1;
 var endpoint = "http://localhost:8080/facitter/api";
 var isAllMax = true;
 
+var agenda = "どうすれば鉄血のオルフェンズを盛り上げられるか";
+var whatsfacitter = "ファシリテーション支援アプリケーションです。\n" +
+		"ファシリテーションに必要なツールをPC上で再現しました。\n" +
+		"このアプリケーションの機能は以下の６つです。\n" + 
+		"・ホワイトボード\n" + 
+	"・ふせん\n" +
+	"・タイマー\n" +
+	"・TODOリスト管理\n" +
+	"・ユーザー管理\n" + 
+	"・抽選"; 
+var whatsfacilitation = "ファシリテーションの定義は、\n" +  
+		"・中立的な立場で\n" +
+		"・チームのプロセスを管理し\n" +
+		"・チームワークを醸成しながら\n" +
+		"・チームの成果が最大化するように支援すること\n" +
+		"です。";
+var whatsnew = "2017/11/16\n" +
+		"Version1.0 を本番環境にデプロイ\n";
+
 //本番環境用
 //var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
@@ -17,6 +36,8 @@ window.onload = function(){
 	loadHusens();
 	hwsConnection();
 }*/
+
+
 
 function setPositionFunc(array){
 	setPosition(array[0],array[1],array[2]);
@@ -220,13 +241,11 @@ function makeCardSign(hid,text,xPosition,yPosition,height,good,bad,color,canEdit
 	draggable(uniHusenCount, this.handle, this.container);
 }
 
-
 makeCardLogo(0,"LOGO","515px","100px","500px",0,0,0,0);
 makeCardSign(0,"Sign In","1400px","160px","100px",0,0,4,0);
 makeCardSign(1,"Create New Account","1380px","50px","100px",0,0,4,0);
-makeCardStart(0,"What's Facitter?\n\nファシリテーション用のアプリです。","60px","420px","400px",0,0,2,0);
-makeCardStart(0,"What's Facilitation?\n\nファシリテーションとは、なんかすごいやつです。","620px","400px","400px",0,0,3,0);
-makeCardStart(0,"What's New?\n\n進捗ありません。","1250px","390px","400px",0,0,5,0);
-makeCardStart(0,"現在の議題\n\n「どうすれば開発が締め切りまでに終わるか」","15px","30px","250px",0,0,4,0);
-
-$("body").css("zoom","90%");
+makeCardStart(0,"What's Facitter?\n\n" + whatsfacitter,"60px","420px","400px",0,0,2,0);
+makeCardStart(0,"What's Facilitation?\n\n" + whatsfacilitation,"620px","400px","400px",0,0,3,0);
+makeCardStart(0,"What's New?\n\n" + whatsnew,"1250px","390px","400px",0,0,5,0);
+makeCardStart(0,"現在の議題\n\n「" + agenda + "」","15px","30px","250px",0,0,4,0);
+$("#body_start").css("zoom","90%");
