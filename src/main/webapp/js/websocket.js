@@ -19,7 +19,7 @@ window.onload = function() {
 	if(userName == null){
 		userName = 'Guest';
 	}
-	console.log("userName="+userName);
+	////console.log("userName="+userName);
 }
 /* window.addEventListener( 'load', loadHusen);　で一つ一つ増やせるらしい
  */
@@ -42,7 +42,7 @@ function twsConnection(){
 	tws.onmessage = function(message) {
 		//message = JSON.parse(message.data)
 		message = message.data.split(":")
-		//console.log(message)
+		//////console.log(message)
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
@@ -57,7 +57,7 @@ function twsConnection(){
 	};
 	
 	tws.onclose = function(closeEvent) {
-	    console.log('tws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	    ////console.log('tws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
 }
 

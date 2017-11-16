@@ -280,7 +280,7 @@ var update = function() {
 
 //通知を更新する
 var updateNotice = function() {
-	console.log("notice")
+	//console.log("notice")
 	$.ajax({
 		type: 'GET',
 		url: endpoint + '/tasks/notice',
