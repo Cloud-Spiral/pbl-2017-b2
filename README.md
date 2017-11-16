@@ -64,7 +64,8 @@ Facitterとは、離れた人とでもファシリテーションを活用した
 
 
 ## アクセス
-
+以下のリンクから利用できます。  
+[Facitter](https://team2017-2.spiral.cloud/facitter)
 
 ## author
 せむ  
