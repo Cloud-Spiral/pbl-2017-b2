@@ -32,7 +32,7 @@ thead, tbody {
 
 tbody {
     overflow-y: scroll;
-    height: 150px;
+    height: 300px;
 }
 
 .symbol-cell{
