@@ -10,7 +10,7 @@ var endpoint = 'http://localhost:8080/facitter/api';
 var register = function() {
 
 	var userName = $('#userName').val();
-	var email = $('#email').val();
+	// var email = $('#email').val();
 	var password = $('#password').val();
 	var passwordConfirm = $('#passwordConfirm').val();
 	/*
@@ -20,20 +20,20 @@ var register = function() {
 	 * document.getElementById('passwordConfirm').value;
 	 */
 
-	if ((userName == '' || email == '') || password == ''
-			|| passwordConfirm == '') {
-		console.log("any one is empty\n");
+	// if ((userName == '' || email == '') || password == ''
+	if (userName == '' || password == '' || passwordConfirm == '') {
+		// console.log("any one is empty\n");
 		return;
 	}
 
 	if (!confirmCheck())
 		return;
-	
-	if( !checkContain() ) {
-		console.log("Contain01");
+
+	if (!checkContain()) {
+		// console.log("Contain01");
 		return;
 	}
-	
+
 	$.ajax({
 		type : 'POST',
 		url : endpoint + '/users',
@@ -42,14 +42,15 @@ var register = function() {
 			password : password
 		},
 		success : function() {
-				// flag = true;
-				// 本番環境へ
-				// window.location.href =
-				// "https://team2017-2.spiral.cloud/lama/";
-				window.location.href = "../facitter/facitter.html";
+
+			// flag = true;
+			// 本番環境へ
+			// window.location.href =
+			// "https://team2017-2.spiral.cloud/lama/";
+			window.location.href = "../facitter/facitter.html";
 		}
 	});
-	
+
 }
 
 var confirmCheck = function() {
@@ -76,57 +77,110 @@ var checkContain = function() {
 
 	$.ajax({
 		type : 'GET',
-		url : endpoint + '/users/'+userName,
+		url : endpoint + '/users/' + userName,
 		data : {
 			name : userName
 		},
-		async: false
+		async : false
 	}).fail(function(response) {
 		// 含まれていない
-		console.log(response);
-		console.log("Not contain");
+		// console.log(response);
+		// console.log("Not contain");
 		error = true;
 	}).done(function(response) {
 		// 含まれている
-		console.log(response);
-		console.log("Contain00");
-		//return false;
+		// console.log(response);
+		// console.log("Contain00");
+		// return false;
 	});
-	
+
 	return error;
 }
 
 // login
 var login = function() {
 	var userName = $('#userName').val();
-	//var email = $('#email').val();
+	// var email = $('#email').val();
 	var password = $('#password').val();
 	var pass;
-	
+
 	$.ajax({
 		type : 'GET',
-		url : endpoint + '/users/'+userName,
+		url : endpoint + '/users/' + userName,
 		data : {
 			name : userName
 		},
-		async: false
+		async : false
 	}).fail(function(response) {
 		// 含まれていない
-		console.log(response);
-		console.log("Not contain");
-	}).done(function(response) {
-		// 含まれている
-		console.log(response);
-		console.log("Contain00");
-		pass = response['password'];
-	});
-	
-	console.log(password);
-	console.log(pass);
-	
-	if(password == pass) {
-		document.cookie = 'userName='+userName;
+		// console.log(response);
+		// console.log("Not contain");
+	}).done(
+			function(response) {
+				// 含まれている
+				// console.log(response);
+				// console.log("Contain00");
+				var logout = function() {
+					var userName = $('#userName').val();
+
+					$.ajax({
+						type : 'PUT',
+						url : endpoint + '/users/login/' + userName,
+						data : $.param({
+							name : userName
+						}),
+						success : function() {
+							// flag = true;
+							// 本番環境へ
+							// window.location.href =
+							// "https://team2017-2.spiral.cloud/lama/";
+							// window.location.href = "#";
+						},
+						error : function(xhr, ajaxOptions, thrownError) {
+							alert("msg: " + thrownError.message + " , status: "
+									+ xhr.status)
+						}
+					});
+				}
+				pass = response['password'];
+			});
+
+	// console.log(password);
+	// console.log(pass);
+
+	if (password == pass) {
+		document.cookie = 'userName=' + userName;
 		window.location.href = "../facitter/facitter.html";
 	}
-	else window.location.reload();
+	// else window.location.reload();
+}
+
+/*
+ * window.onbeforeunload = function() { logout(); return "本当に離れますか？"; };
+ */
+
+var logout = function() {
+	var userName = $('#userName').val();
+
+	$.ajax({
+		type : 'PUT',
+		url : endpoint + '/users/logout/' + userName,
+		data : $.param({
+			name : userName
+		}),
+		success : function() {
+			// flag = true;
+			// 本番環境へ
+			// window.location.href =
+			// "https://team2017-2.spiral.cloud/lama/";
+			window.location.href = "#";
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert("msg: " + thrownError.message + " , status: " + xhr.status)
+		}
+	});
+
+	//console.log(password);
+	//console.log(pass);
+
 }

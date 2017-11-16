@@ -3,11 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
+
+<script type="text/javascript" src="./js/jquery-3.2.1.js""></script>
 <link rel="shortcut icon" href="image/favicon-facitter-F.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="./css/login.css"></link>
 <link rel="stylesheet" type="text/css" href="./css/arrangedesign.css"></link>
 <script type="text/javascript" src="./js/simple_login.js"></script>
-<script type="text/javascript" src="./js/jquery-3.2.1.js""></script>
 
 <div class="facitter_header_logo">
 	<a href="http://localhost:8080/facitter/"><img border="0" src="image/facitter-F.png" width="135" height="45"></a>　<!-- ローカル環境用 -->
@@ -15,12 +16,13 @@
 <div class="form-wrapper">
 	<h1>Sign Up</h1>
 	<form>
+		<!--
 		<div class="form-item">
 			<label for="email"></label> <input type="email" name="email"
 				class="form-control validate[custom[email]]" required="required"
 				placeholder="Email Address" id="email"></input>
 		</div>
-
+		-->
 		<div class="form-item">
 			<label for="name"></label> <input type="name" name="name"
 				required="required" placeholder="User Name" id="userName"></input>
@@ -39,7 +41,7 @@
 		</div>
 
 		<div class="button-panel">
-			<input type="button" class="button" title="Sign Up" value="Sign Up" onClick="register()"></input>
+			<input type="button" class="button" title="Sign Up" value="Sign Up" onclick="register()" tabindex="0" id="signUp"></input>
 		</div>
 
 	</form>
