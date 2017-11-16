@@ -56,10 +56,10 @@ Facitterとは、離れた人とでもファシリテーションを活用した
 ![todo_close](https://user-images.githubusercontent.com/19528049/32894624-a7f7dcea-cb20-11e7-9196-88997232dd6e.png)
 
 ### ユーザーリストと抽選
-![user_ist](https://user-images.githubusercontent.com/19528049/32894630-ac981a94-cb20-11e7-914f-91bb2f6fa90a.png)
-会議に参加しているユーザ名が表示されます。
-また、参加しているユーザから一人を選択する抽選機能もあり、抽選ボタンを押すと選ばれたユーザ名が表示されます。
-選ばれたユーザ名の履歴は▼ボタンを押すと表示されます。
+![user_ist](https://user-images.githubusercontent.com/19528049/32894630-ac981a94-cb20-11e7-914f-91bb2f6fa90a.png)  
+会議に参加しているユーザ名が表示されます。  
+また、参加しているユーザから一人を選択する抽選機能もあり、抽選ボタンを押すと選ばれたユーザ名が表示されます。  
+選ばれたユーザ名の履歴は▼ボタンを押すと表示されます。  
 
 ### タイマー
 ![timer](https://user-images.githubusercontent.com/19528049/32894631-ae337650-cb20-11e7-92a0-2342f651f42a.png)
