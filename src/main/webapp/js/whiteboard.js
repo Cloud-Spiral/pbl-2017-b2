@@ -196,8 +196,8 @@ function drawLine(event,isStart){
 			con.lineTo(mx,my);
 			con.stroke();
 		} else {
-			//con.clearRect(0, 0, width, height);
-			//load();
+			con.clearRect(0, 0, width, height);
+			load();
 			//半透明
 			con.globalAlpha = 0.3;
 
@@ -225,8 +225,8 @@ function drawLine(event,isStart){
 		lineRecords.push(xy);
 	}else{
 		//ペンの状態を表示
-		//con.clearRect(0, 0, width, height);
-		//load();
+		con.clearRect(0, 0, width, height);
+		load();
 
 		//console.log("mousemove");
 		var offset = $(event.target).offset();
@@ -295,8 +295,8 @@ function deletePointer(){
 	} else {
 		//console.log("out of canvas");
 		
-		//con.clearRect(0, 0, width, height);
-		//load();
+		con.clearRect(0, 0, width, height);
+		load();
 	}
 }
 
