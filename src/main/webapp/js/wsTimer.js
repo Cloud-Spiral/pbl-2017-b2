@@ -6,9 +6,9 @@ var yws;
 
 function ywsConnection(){
 	// WebSocketオブジェクト作成
-	yws = new WebSocket('ws://' +  window.location.host + '/facitter/ws');
+	//yws = new WebSocket('ws://' +  window.location.host + '/facitter/ws');
 	//　本番環境用
-	//yws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	yws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 	
 	// サーバからのメッセージ受信時の処理
 	yws.onmessage = function(message) {

@@ -27,11 +27,10 @@ window.onload = function() {
 
 function twsConnection(){
 	// WebSocketオブジェクト作成
-	tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
+	//tws = new WebSocket('ws://' + window.location.host + '/facitter/ws');
 	//　本番環境用
-	//tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
+	tws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 	
-		
 	$.fn.raty.defaults.path="image";
 	$("#priority").raty({
 		number: 5,

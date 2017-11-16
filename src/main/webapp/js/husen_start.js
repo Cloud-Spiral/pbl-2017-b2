@@ -5,7 +5,7 @@ var isMouseDown = false;
 var offsetX, offsetY;
 var cont;
 var husenCount = 1;
-var endpoint = "http://localhost:8080/facitter/api";
+//var endpoint = "http://localhost:8080/facitter/api";
 var isAllMax = true;
 
 var agenda = "どうすれば鉄血のオルフェンズを盛り上げられるか";
@@ -28,7 +28,7 @@ var whatsnew = "2017/11/16\n" +
 		"Version1.0 を本番環境にデプロイ\n";
 
 //本番環境用
-//var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
+var endpoint = 'https://team2017-2.spiral.cloud/facitter/api';
 
 /*
  * websocket.jsに移動
@@ -228,8 +228,12 @@ function makeCardSign(hid,text,xPosition,yPosition,height,good,bad,color,canEdit
 	
 	this.linkarea = document.createElement('a');
 	this.linkarea.style = "color:"+getHandleColor(colorCount)+";" + "font-size:30px;font-family:Arial";
-	if(hid == 0) this.linkarea.href = "http://localhost:8080/facitter/login.html";　//ローカル用
-	else this.linkarea.href = "http://localhost:8080/facitter/signup.html";　//ローカル用
+	if(hid == 0) this.linkarea.href = "https://team2017-2.spiral.cloud/facitter/login.html";　//本番用
+	else this.linkarea.href = "https://team2017-2.spiral.cloud/facitter/signup.html";　//本番用
+	
+	//if(hid == 0) this.linkarea.href = "http://localhost:8080/facitter/login.html";　//ローカル用
+	//else this.linkarea.href = "http://localhost:8080/facitter/signup.html";　//ローカル用
+	
 	this.linktxt = document.createTextNode(text);
 	this.linkarea.appendChild(this.linktxt);
 	this.txtarea.appendChild(this.linkarea);
