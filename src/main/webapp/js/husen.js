@@ -332,6 +332,7 @@ function draggable(count, handle, container) {
 				}
 			});
 			$('.husen').css('transition','all 300ms 0s ease');
+			cont = null;
 		}
 		isMouseDown = false;
 	}
