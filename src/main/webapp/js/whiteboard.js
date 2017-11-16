@@ -12,9 +12,9 @@ var nowLoad = true;
 //$(document).ready(function(){
 
 function whiteWsConnection() {
-//	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
+	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
 	//　本番環境用
-	whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
+	//whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
 
 
 	//console.log("ws つなげる");
