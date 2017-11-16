@@ -153,7 +153,7 @@ function makeCardStart(hid,text,xPosition,yPosition,height,good,bad,colorCount,c
 	this.container.appendChild(this.txtarea);
 
 	document.body.appendChild(this.container);
-	//console.log(uniHusenCount);
+	////console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
 }
 
@@ -183,7 +183,7 @@ function makeCardLogo(hid,text,xPosition,yPosition,height,good,bad,color,canEdit
 	this.container.appendChild(this.txtarea);
 
 	document.body.appendChild(this.container);
-	//console.log(uniHusenCount);
+	////console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
 }
 function makeCardSign(hid,text,xPosition,yPosition,height,good,bad,color,canEditPerson){
@@ -241,7 +241,7 @@ function makeCardSign(hid,text,xPosition,yPosition,height,good,bad,color,canEdit
 	this.container.appendChild(this.linkarea);
 
 	document.body.appendChild(this.container);
-	//console.log(uniHusenCount);
+	////console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
 }
 

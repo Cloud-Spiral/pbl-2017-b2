@@ -22,7 +22,7 @@ var register = function() {
 
 	if ((userName == '' || email == '') || password == ''
 			|| passwordConfirm == '') {
-		console.log("any one is empty\n");
+		//console.log("any one is empty\n");
 		return;
 	}
 
@@ -30,7 +30,7 @@ var register = function() {
 		return;
 	
 	if( !checkContain() ) {
-		console.log("Contain01");
+		//console.log("Contain01");
 		return;
 	}
 	
@@ -59,7 +59,7 @@ var confirmCheck = function() {
 	// パスワードの一致確認
 	if (form.password.value != form.passwordConfirm.value) {
 		// 一致していなかったら、エラーメッセージを表示する
-		console.log("一致してない\n");
+		//console.log("一致してない\n");
 		form.password.setCustomValidity("パスワードと確認用パスワードが一致しません");
 		return false;
 	} else {
@@ -83,13 +83,13 @@ var checkContain = function() {
 		async: false
 	}).fail(function(response) {
 		// 含まれていない
-		console.log(response);
-		console.log("Not contain");
+		//console.log(response);
+		//console.log("Not contain");
 		error = true;
 	}).done(function(response) {
 		// 含まれている
-		console.log(response);
-		console.log("Contain00");
+		//console.log(response);
+		//console.log("Contain00");
 		//return false;
 	});
 	
@@ -112,17 +112,17 @@ var login = function() {
 		async: false
 	}).fail(function(response) {
 		// 含まれていない
-		console.log(response);
-		console.log("Not contain");
+		//console.log(response);
+		//console.log("Not contain");
 	}).done(function(response) {
 		// 含まれている
-		console.log(response);
-		console.log("Contain00");
+		//console.log(response);
+		//console.log("Contain00");
 		pass = response['password'];
 	});
 	
-	console.log(password);
-	console.log(pass);
+	//console.log(password);
+	//console.log(pass);
 	
 	if(password == pass) {
 		document.cookie = 'userName='+userName;

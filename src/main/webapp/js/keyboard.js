@@ -16,8 +16,8 @@ function keydown() {
 	}
 	if(shiftKeyDown && enterKeyDown){
 		var doc = document.activeElement;
-		console.log("同時説");
-		console.log(doc);
+		//console.log("同時説");
+		//console.log(doc);
 		doc.blur();
 	}
 }

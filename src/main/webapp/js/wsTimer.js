@@ -14,7 +14,7 @@ function ywsConnection(){
 	yws.onmessage = function(message) {
 		//message = JSON.parse(message.data)
 		var str = message.data.split(":");
-		console.log(str);
+		//console.log(str);
 		// TODO
 		// DOM操作してHTMLに反映
 		//$('#log').append('<p>' + message.data + '</p>');	
@@ -28,7 +28,7 @@ function ywsConnection(){
 	};
 	
 	yws.onclose = function(closeEvent) {
-	    console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	    //console.log('code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
 }
 
@@ -44,7 +44,7 @@ $('#start').click(function() {
 		$('#sec').val("0");
 	} else {
 		var str = "start" + ":" + min + ":" + sec;
-		console.log(min + "   " + sec);
+		//console.log(min + "   " + sec);
 		// yws経由で送信
 		yws.send(str);
 	}

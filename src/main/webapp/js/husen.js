@@ -36,7 +36,7 @@ function hwsConnection() {
 	hws = new WebSocket('wss://' + window.location.host + '/facitter/ws');
 	hws.onmessage = hwsOnMessage;
 	hws.onclose = function(closeEvent) {
-	    console.log('hws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
+	    //console.log('hws close code = ' + closeEvent.code + ', reason = ' + closeEvent.reason);
 	};
 }
 
@@ -106,7 +106,7 @@ function fadeInContainer(hid){
 function fadeOutContainer(hid){
 	//$("#container" + String(hid)).removeClass("fadeIn");
 	var container = document.getElementById("container"+String(hid));
-	//console.log(container);
+	////console.log(container);
 	container.style.opacity = 0;
 	$("#header" + String(hid)).removeClass("fadeIn");
 	$("#handle" + String(hid)).removeClass("fadeIn");
@@ -127,11 +127,11 @@ function updateText(name,count){
 			text: document.getElementsByName(name)[0].value
 		},
 		success : function() {
-			//console.log('text-a');
+			////console.log('text-a');
 			hws.send("text "+name+" "+document.getElementsByName(name)[0].value);
 		},
 		error: function() {
-			//console.log('text-b');
+			////console.log('text-b');
 		}
 	});
 }
@@ -144,11 +144,11 @@ function goodButtonCounter(name,count){
 			good: true
 		},
 		success : function(good) {
-			//console.log('good-a');
+			////console.log('good-a');
 			hws.send("good "+name+" "+good);
 		},
 		error: function(good) {
-			//console.log('good-b');
+			////console.log('good-b');
 		}
 	});
 }
@@ -171,11 +171,11 @@ function badButtonCounter(name,count){
 			bad: true
 		},
 		success : function(bad) {
-			//console.log('bad-a');
+			////console.log('bad-a');
 			hws.send("bad "+name+" "+bad);
 		},
 		error: function(bad) {
-			//console.log('bad-b');
+			////console.log('bad-b');
 		}
 	});
 }
@@ -208,11 +208,11 @@ function colorCounter(count,color){
 			color: color
 		},
 		success : function(data) {
-			//console.log('put-a');
+			////console.log('put-a');
 			hws.send("color "+count+" "+color);
 		},
 		error: function(data) {
-			//console.log('put-b');
+			////console.log('put-b');
 		}
 	});
 }
@@ -228,11 +228,11 @@ function deleteHusen(count){
 		type : 'DELETE',
 		url : endpoint+'/husens/'+count,
 		success : function(data) {
-			//console.log('delete-a');
+			////console.log('delete-a');
 			hws.send("delete "+count);
 		},
 		error: function(data) {
-			//console.log('delete-b');
+			////console.log('delete-b');
 		}
 	});
 }
@@ -281,7 +281,7 @@ function draggable(count, handle, container) {
 	container.style.position = "absolute";
 	var containerId = container.id;
 	container.onmousedown = function(event){
-		//console.log(container.nextElementSibling.id);
+		////console.log(container.nextElementSibling.id);
 		while(container.nextElementSibling != null &&
 				container.nextElementSibling.classList.contains("husenContainer")){
 			if (container.nextElementSibling != null) {
@@ -306,7 +306,7 @@ function draggable(count, handle, container) {
 		// ダブルクリックの場合
 		} else {
 			$('.husen').css('transition','all 300ms 0s ease');
-			//console.log(cont + " doubleClick");
+			////console.log(cont + " doubleClick");
 			resizeContainer(cont);
 			clickCount = 0 ;
 		}
@@ -323,11 +323,11 @@ function draggable(count, handle, container) {
 					yPosition : cont.style.top
 				},
 				success : function(data) {
-					//console.log('move-a');
+					////console.log('move-a');
 					hws.send("position "+cont.id+" "+cont.style.left+" "+cont.style.top);
 				},
 				error : function(data) {
-					//console.log('move-b');
+					////console.log('move-b');
 					// hws.send("post-task:"+tid);
 				}
 			});
@@ -380,11 +380,11 @@ function husenGrandOrder(){
 			height: "200px" 
 		},
 		success : function(data) {
-			//console.log('order-a');
+			////console.log('order-a');
 			hws.send("order");
 		},
 		error: function(data) {
-			//console.log('order-b');
+			////console.log('order-b');
 		}
 	});
 }
@@ -528,11 +528,11 @@ function Card() {
 			canEdit : 0
 		},
 		success: function(json){
-			//console.log(json);
+			////console.log(json);
 			hws.send("new "+String(json.hid));
 		},
 		error: function(json){
-			//console.log(json);
+			////console.log(json);
 		}
 	});
 	//return this.container;
@@ -635,6 +635,6 @@ function makeCard(hid,text,xPosition,yPosition,height,good,bad,color,canEditPers
 	this.container.appendChild(this.buttonContainer);
 
 	document.body.appendChild(this.container);
-	//console.log(uniHusenCount);
+	////console.log(uniHusenCount);
 	draggable(uniHusenCount, this.handle, this.container);
 }

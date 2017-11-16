@@ -17,7 +17,7 @@ function whiteWsConnection() {
 	whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
 
 
-	//console.log("ws つなげる");
+	//////console.log("ws つなげる");
 	whiteWs.onopen = function(){
 		message = JSON.stringify({
 			type: 'load',
@@ -32,11 +32,11 @@ function whiteWsConnection() {
 
 	whiteWs.onmessage = function(evt) {
 		//return;
-		console.log("ws get: "+evt.data);
+		//////console.log("ws get: "+evt.data);
 
 		message = JSON.parse(evt.data);
 		if(message.type === 'load' && !nowLoad){
-			console.log('loadきたから履歴情報送ったげるで');
+			//////console.log('loadきたから履歴情報送ったげるで');
 			message = JSON.stringify({
 				type: 'update',
 				//history: historyJson,
@@ -45,7 +45,7 @@ function whiteWsConnection() {
 			whiteWs.send(message);
 
 		} else if(message.type === 'update') {
-			console.log('updateきたからcanvasに反映すんで');
+			//////console.log('updateきたからcanvasに反映すんで');
 			record_index = message.index;
 			//recordArray = JSON.parse(message.history);
 			loadWhite();
@@ -62,18 +62,18 @@ function loadWhite(){
 		type: 'GET',
 		url: endpoint + '/lines',
 		success: function(json) {
-			//console.log("success json"+ JSON.stringify(json));
+			//////console.log("success json"+ JSON.stringify(json));
 			var latest_num = json.lines.length;
 
-			console.log("line length: "+ latest_num);
-			//console.log("json.lines[latest_num-1].line: \n"+json.lines[latest_num-1].line);
+			//////console.log("line length: "+ latest_num);
+			//////console.log("json.lines[latest_num-1].line: \n"+json.lines[latest_num-1].line);
 
 			if(latest_num !== 0){
 				recordArray = JSON.parse(json.lines[latest_num-1].line);
 				//record_index = json.lines[latest_num-1].index;
 			}
-			console.log("GET /lines record:"+JSON.stringify(recordArray[0]));
-			console.log("GET /lines index:"+record_index);
+			//////console.log("GET /lines record:"+JSON.stringify(recordArray[0]));
+			//////console.log("GET /lines index:"+record_index);
 			load();
 		}
 	});
@@ -120,8 +120,8 @@ var oldGCO = con.globalCompositeOperation;
 //キャンパスの描画領域の横幅を取得
 var width = canvas.width;
 var height = canvas.height;
-//console.log("width: "+width);
-//console.log("height: "+height);
+//////console.log("width: "+width);
+//////console.log("height: "+height);
 
 swUpButton = $("#plus");
 swDownButton = $("#minus");
@@ -149,7 +149,7 @@ function stop(event) {
 	if (!drawing) return;
 	if (event.type == "mouseup"){
 		if(!freeHand){
-			console.log("直線かくで");
+			////console.log("直線かくで");
 			con.beginPath();
 			con.moveTo(stx,sty);
 			con.lineTo(oldx,oldy);
@@ -169,7 +169,7 @@ function stop(event) {
 }
 
 function drawLine(event,isStart){
-	//console.log("drawLine");
+	//////console.log("drawLine");
 
 	if(event.type == "mousedown"){
 		drawing = true;
@@ -177,7 +177,7 @@ function drawLine(event,isStart){
 	if(event.type == "mouseup")drawing = false;
 	event.preventDefault();
 	if(drawing){
-		//console.log(drawing);
+		//////console.log(drawing);
 		var offset = $(event.target).offset();
 		var mx = event.pageX - offset.left;
 		var my = event.pageY - offset.top;
@@ -202,7 +202,7 @@ function drawLine(event,isStart){
 			con.globalAlpha = 0.3;
 
 			con.beginPath();
-			//console.log("直線の軌跡");
+			//////console.log("直線の軌跡");
 			con.moveTo(mx,my);
 			con.lineTo(stx,sty);
 			con.stroke();
@@ -228,7 +228,7 @@ function drawLine(event,isStart){
 		con.clearRect(0, 0, width, height);
 		load();
 
-		//console.log("mousemove");
+		//////console.log("mousemove");
 		var offset = $(event.target).offset();
 		var mx = event.pageX - offset.left;
 		var my = event.pageY - offset.top;
@@ -248,7 +248,7 @@ function drawLine(event,isStart){
 
 		if (event.type == "mouseup"){
 			if(!freeHand){
-				console.log("直線かくで");
+				////console.log("直線かくで");
 				con.beginPath();
 				con.moveTo(stx,sty);
 				con.lineTo(oldx,oldy);
@@ -257,7 +257,7 @@ function drawLine(event,isStart){
 			//履歴を記録
 			recordArray[record_index] = lineRecords;
 			historyJson = JSON.stringify(recordArray);
-			//console.log("historyJson: "+ historyJson);
+			//////console.log("historyJson: "+ historyJson);
 			
 			record_index++;
 			
@@ -268,7 +268,7 @@ function drawLine(event,isStart){
 //
 //			});
 			post(record_index);
-//			console.log("ws send type:update");
+//			////console.log("ws send type:update");
 //			whiteWs.send(message);
 
 			//座標初期化
@@ -287,13 +287,13 @@ function deletePointer(){
 	var mx = event.pageX;
 	var my = event.pageY;
 
-	//console.log("left: " + offset.left + width + " top:" + offset.top + height);
-	//console.log("mx :" + mx + "my :" + my);
+	//////console.log("left: " + offset.left + width + " top:" + offset.top + height);
+	//////console.log("mx :" + mx + "my :" + my);
 
 	if(mx >= offset.left && mx <= offset.left + width && my >= offset.top && my <= offset.top + height){
-		//console.log("in canvas");
+		//////console.log("in canvas");
 	} else {
-		//console.log("out of canvas");
+		//////console.log("out of canvas");
 		
 		con.clearRect(0, 0, width, height);
 		load();
@@ -336,7 +336,7 @@ function swDown(e){
 //カラーを変更
 function colorChange(e, target){
 	var my_color = $(target).css("background-color");
-	console.log('いろ'+my_color);
+	////console.log('いろ'+my_color);
 
 	if(my_color === 'rgba(0, 0, 0, 0)')　{
 		eraser = true;
@@ -365,7 +365,7 @@ function switchEraser(eraser){
 
 //画面を全削除
 function clear(e){
-	console.log("clear");
+	////console.log("clear");
 	//キャンバスを初期化
 	con.clearRect(0,0,width,height);
 	//座標を配列に保存				
@@ -387,7 +387,7 @@ function clear(e){
 //
 //	});
 	post(record_index);
-//	console.log("ws send: clear");
+//	////console.log("ws send: clear");
 //	whiteWs.send(message);
 
 
@@ -402,16 +402,16 @@ function clear(e){
 //直線、フリーハンド切り替え
 function straight(e){
 	freeHand = false;
-	console.log(freeHand);
+	////console.log(freeHand);
 }
 function freehand(e){
 	freeHand = true;
-	console.log(freeHand);
+	////console.log(freeHand);
 }
 
 //アンドゥ
 function undo(e){
-	console.log("undo");
+	////console.log("undo");
 	if(record_index > 0){
 		record_index--;
 		load();
@@ -423,16 +423,16 @@ function undo(e){
 //			index: record_index,
 //
 //		});
-//		console.log("post前index: "+record_index);
+//		////console.log("post前index: "+record_index);
 		post(record_index);
-//		console.log("ws send: undo index = "+record_index);
+//		////console.log("ws send: undo index = "+record_index);
 //		whiteWs.send(message);
 	}
 }
 
 //リドゥ
 function redo(e){
-	console.log("redo");
+	////console.log("redo");
 	if(record_index < recordArray.length){
 		record_index++;
 		load();
@@ -445,24 +445,24 @@ function redo(e){
 //
 //		});
 		post(record_index);
-//		console.log("ws send: redo");
+//		////console.log("ws send: redo");
 //		whiteWs.send(message);
 	}
 }
 
 //ロード
 function load(){
-	//console.log("load");
-	//console.log("index: "+ record_index);
-	//console.log("recordArray[0]: "+ recordArray[0]);
-	//console.log("recordArray: "+ recordArray);
+	//////console.log("load");
+	//////console.log("index: "+ record_index);
+	//////console.log("recordArray[0]: "+ recordArray[0]);
+	//////console.log("recordArray: "+ recordArray);
 
 	//キャンバスを初期化
 	con.clearRect(0,0,width,height);
 
 	if(record_index === 0) return;
 
-	//console.log("もらったrecordArray: "+recordArray);
+	//////console.log("もらったrecordArray: "+recordArray);
 
 	//線一本ずつ再現する
 	//recordArray: 線の集まり（履歴）
@@ -471,15 +471,15 @@ function load(){
 	for(var i=0; i < record_index; i++){
 		var record = recordArray[i];
 		
-		console.log("index: "+record_index);
-		console.log("record: "+JSON.stringify(record));
-		console.log("record[0]: "+JSON.stringify(record[0]));
+		//////console.log("index: "+record_index);
+		//////console.log("record: "+JSON.stringify(record));
+		//////console.log("record[0]: "+JSON.stringify(record[0]));
 		
 		//描いていたときの状況を再現する
 		var xy = record[0];
 		line = xy.line;
 		var clear = xy.clear;
-		//console.log("clear: "+clear);
+		//////console.log("clear: "+clear);
 		//太さを描いたときの状態に戻す
 		con.lineWidth = xy.size;
 		con.strokeStyle = xy.color;
@@ -497,7 +497,7 @@ function load(){
 					}
 				}
 			} else {
-				//console.log("直線の履歴やで");
+				//////console.log("直線の履歴やで");
 				var start = record[0];
 				var end = record[record.length-1];
 				con.beginPath();
@@ -507,7 +507,7 @@ function load(){
 			}
 		}
 		
-		//console.log("文字サイズ: "+con.lineWidth);
+		//////console.log("文字サイズ: "+con.lineWidth);
 		
 		//現在の設定に戻す
 		if(eraser){
@@ -545,8 +545,8 @@ function post(record_index){
 			line : historyJson
 		},
 		success: function(json){
-			console.log('post success index is: '+ record_index);
-			//console.log(json.line);
+			////console.log('post success index is: '+ record_index);
+			//////console.log(json.line);
 			//whiteWs.send(""+json.line);
 			
 			
@@ -556,7 +556,7 @@ function post(record_index){
 				index: record_index,
 
 			});
-			console.log("ws send type:update");
+			//////console.log("ws send type:update");
 			whiteWs.send(message);			
 		},
 		error: function(json){
