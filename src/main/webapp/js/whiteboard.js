@@ -12,9 +12,9 @@ var nowLoad = true;
 //$(document).ready(function(){
 
 function whiteWsConnection() {
-	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
+//	whiteWs = new WebSocket('ws://' + window.location.host + '/facitter/whiteWs');
 	//　本番環境用
-	//whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
+	whiteWs = new WebSocket('wss://' + window.location.host + '/facitter/whiteWs');
 
 
 	//console.log("ws つなげる");
@@ -72,8 +72,8 @@ function loadWhite(){
 				recordArray = JSON.parse(json.lines[latest_num-1].line);
 				//record_index = json.lines[latest_num-1].index;
 			}
-			//console.log("GET /lines lineString:"+recordArray);
-			//console.log("GET /lines index:"+ record_index);
+			console.log("GET /lines record:"+JSON.stringify(recordArray[0]));
+			console.log("GET /lines index:"+record_index);
 			load();
 		}
 	});
@@ -196,8 +196,8 @@ function drawLine(event,isStart){
 			con.lineTo(mx,my);
 			con.stroke();
 		} else {
-			con.clearRect(0, 0, width, height);
-			load();
+			//con.clearRect(0, 0, width, height);
+			//load();
 			//半透明
 			con.globalAlpha = 0.3;
 
@@ -225,8 +225,8 @@ function drawLine(event,isStart){
 		lineRecords.push(xy);
 	}else{
 		//ペンの状態を表示
-		con.clearRect(0, 0, width, height);
-		load();
+		//con.clearRect(0, 0, width, height);
+		//load();
 
 		//console.log("mousemove");
 		var offset = $(event.target).offset();
@@ -258,21 +258,22 @@ function drawLine(event,isStart){
 			recordArray[record_index] = lineRecords;
 			historyJson = JSON.stringify(recordArray);
 			//console.log("historyJson: "+ historyJson);
-
-			message = JSON.stringify({
-				type: 'update',
-				//history: historyJson,
-				index: record_index + 1,
-
-			});
+			
+			record_index++;
+			
+//			message = JSON.stringify({
+//				type: 'update',
+//				//history: historyJson,
+//				index: record_index + 1,
+//
+//			});
 			post(record_index);
-			console.log("ws send type:update");
-			whiteWs.send(message);
+//			console.log("ws send type:update");
+//			whiteWs.send(message);
 
 			//座標初期化
 			lineRecords = new Array();
 			//履歴を更新された場合最新の
-			record_index++;
 			if(record_index < recordArray.length){
 				recordArray.splice(record_index,recordArray.length);
 			}
@@ -293,8 +294,9 @@ function deletePointer(){
 		//console.log("in canvas");
 	} else {
 		//console.log("out of canvas");
-		con.clearRect(0, 0, width, height);
-		load();
+		
+		//con.clearRect(0, 0, width, height);
+		//load();
 	}
 }
 
@@ -374,21 +376,24 @@ function clear(e){
 	recordArray[record_index] = lineRecords;
 
 	historyJson = JSON.stringify(recordArray);
-	message = JSON.stringify({
-		type: 'update',
-		//history: historyJson,
-		index: record_index + 1,
+	
+	record_index++;
 
-	});
+	
+//	message = JSON.stringify({
+//		type: 'update',
+//		//history: historyJson,
+//		index: record_index + 1,
+//
+//	});
 	post(record_index);
-	console.log("ws send: clear");
-	whiteWs.send(message);
+//	console.log("ws send: clear");
+//	whiteWs.send(message);
 
 
 	//座標初期化
 	lineRecords = new Array();
 	//履歴を更新された場合最新の
-	record_index++;
 	if(record_index < recordArray.length){
 		recordArray.splice(record_index,recordArray.length);
 	}
@@ -411,16 +416,17 @@ function undo(e){
 		record_index--;
 		load();
 		historyJson = JSON.stringify(recordArray);
-		message = JSON.stringify({
-			type: 'update',
-			//history: historyJson,
-			index: record_index,
 
-		});
-		console.log("post前index: "+record_index);
+//		message = JSON.stringify({
+//			type: 'update',
+//			//history: historyJson,
+//			index: record_index,
+//
+//		});
+//		console.log("post前index: "+record_index);
 		post(record_index);
-		console.log("ws send: undo index = "+record_index);
-		whiteWs.send(message);
+//		console.log("ws send: undo index = "+record_index);
+//		whiteWs.send(message);
 	}
 }
 
@@ -431,15 +437,16 @@ function redo(e){
 		record_index++;
 		load();
 		historyJson = JSON.stringify(recordArray);
-		message = JSON.stringify({
-			type: 'update',
-			//history: historyJson,
-			index: record_index,
 
-		});
+//		message = JSON.stringify({
+//			type: 'update',
+//			//history: historyJson,
+//			index: record_index,
+//
+//		});
 		post(record_index);
-		console.log("ws send: redo");
-		whiteWs.send(message);
+//		console.log("ws send: redo");
+//		whiteWs.send(message);
 	}
 }
 
@@ -458,9 +465,16 @@ function load(){
 	//console.log("もらったrecordArray: "+recordArray);
 
 	//線一本ずつ再現する
+	//recordArray: 線の集まり（履歴）
+	//record = recordArray[i]: 一本の線＝点の集まり
+	//record[0]: 一点
 	for(var i=0; i < record_index; i++){
 		var record = recordArray[i];
-
+		
+		console.log("index: "+record_index);
+		console.log("record: "+JSON.stringify(record));
+		console.log("record[0]: "+JSON.stringify(record[0]));
+		
 		//描いていたときの状況を再現する
 		var xy = record[0];
 		line = xy.line;
@@ -471,7 +485,9 @@ function load(){
 		con.strokeStyle = xy.color;
 		switchEraser(xy.eraser);
 
-		if(!clear){
+		if(clear){
+			con.clearRect(0,0,width,height);
+		} else {
 			if(line){
 				for(var v=0; v<record.length; v++){
 					if(typeof record[v] == "object"){
@@ -489,8 +505,6 @@ function load(){
 				con.lineTo(end.x,end.y);
 				con.stroke();
 			}
-		} else {
-			con.clearRect(0,0,width,height);
 		}
 		
 		//console.log("文字サイズ: "+con.lineWidth);
@@ -534,11 +548,20 @@ function post(record_index){
 			console.log('post success index is: '+ record_index);
 			//console.log(json.line);
 			//whiteWs.send(""+json.line);
+			
+			
+			message = JSON.stringify({
+				type: 'update',
+				//history: historyJson,
+				index: record_index,
+
+			});
+			console.log("ws send type:update");
+			whiteWs.send(message);			
 		},
 		error: function(json){
 		}
 	});
-
 }
 
 //});
