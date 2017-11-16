@@ -18,6 +18,17 @@ import jp.enpit.facitter.model.TaskModel;
 public class TasksRest {
     public TasksRest(){
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("notice")
+    public Response getNotices(){
+        try(TaskModel model = createModel()){
+            return Response.status(200)
+                    .entity(model.noticeTasks())
+                    .build();
+        }
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

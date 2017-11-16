@@ -21,6 +21,9 @@ window.onload = function(){
 $("#postit").mousedown(function (e){new Card();});
 $("#allResize").mousedown(function (e){allResizeHusen();});
 $("#FGO").mousedown(function (e){husenGrandOrder();});
+
+
+
 //websocketオブジェクト
 var hws;
 
@@ -267,6 +270,13 @@ function getBackColor(count){
 }
 
 var clickCount = 0;
+//画面の位置用
+var targetElement = document.getElementById( "my_canvas" ) ;
+var clientRect = targetElement.getBoundingClientRect() ;
+// 画面内のキャンバスの位置
+var canvasX = clientRect.left ;
+var canvasY = clientRect.top ;
+
 function draggable(count, handle, container) {
 	container.style.position = "absolute";
 	var containerId = container.id;
@@ -286,7 +296,7 @@ function draggable(count, handle, container) {
 		offsetX = event.screenX - rect.left;
 		offsetY = event.screenY - rect.top;
 		cont = container;
-		isMouseDown = true;
+		isMouseDown = true;		
 		$('.husen').css('transition','all 0ms 0s ease');
 		if( !clickCount ) {
 			++clickCount ;
@@ -325,11 +335,35 @@ function draggable(count, handle, container) {
 		}
 		isMouseDown = false;
 	}
-	document.onmousemove = function(event) {
+	document.onmousemove = function(event) {		
+		/* 変更前
+		if (isMouseDown == true) {			
+				cont.style.left = event.screenX - offsetX + "px";
+				cont.style.top = event.screenY - offsetY + "px";
+		}
+		*/
+		//ホワイトボードから付箋がはみ出さないように
 		if (isMouseDown == true) {
+			var rect = cont.getBoundingClientRect();
+			var hwidth = 240;
+			var hheight = 200;
+			var xleft = event.screenX - offsetX - canvasX;//canvasからのhusenの位置x
+			var ytop = event.screenY - offsetY -  canvasY;//canvasからのhusenの位置y
+			var xright = xleft  +  hwidth ;
+			var ybottom = ytop   +  hheight;
+			var canvas = document.getElementById("my_canvas");
+			var cwidth = canvas.width;
+			var cheight = canvas.height;
+			
+			
 			cont.style.left = event.screenX - offsetX + "px";
 			cont.style.top = event.screenY - offsetY + "px";
-		}
+			
+			if(xleft < 0) cont.style.left = canvasX+1 + "px";
+			if(ytop < 0) cont.style.top = canvasY+1 + "px";
+			if(xright > cwidth + 5) cont.style.left = cwidth - hwidth + 5 + canvasX + "px";
+			if(ybottom > cheight + 10) cont.style.top = cheight - hheight + 10 + canvasY + "px";
+		}	
 	}
 }
 
@@ -339,8 +373,8 @@ function husenGrandOrder(){
 		url : endpoint+'/husens/order',
 		data:{
 			number: 4,
-			left: "70px",
-			top: "20px",
+			left: "75px",
+			top: "75px",
 			width: "245px",
 			height: "200px" 
 		},

@@ -36,4 +36,8 @@ public class Tasks {
         return list.toArray(new Task[size()]);
     }
     
+    public void addList(Task task) {
+        list.add(task);
+    }
+    
 }
